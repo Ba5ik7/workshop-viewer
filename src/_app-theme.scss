@@ -1,8 +1,9 @@
 @use '@angular/material' as mat;
 
 @use 'sass:map';
-@use './app/shared/components/navbar/navbar-theme';
 @use './app/pages/not-found/not-found-theme';
+@use './app/shared/components/footer/footer-theme';
+@use './app/shared/components/navbar/navbar-theme';
 
 // Styles for the docs app that are based on the current theme.
 @mixin theme($theme) {
@@ -13,6 +14,7 @@
   $foreground: map.get($theme, foreground);
   $next-theme: mat.define-palette(mat.$red-palette);
 
+  @include footer-theme.theme($theme);
   @include navbar-theme.theme($theme);
   @include not-found-theme.theme($theme);
 }
