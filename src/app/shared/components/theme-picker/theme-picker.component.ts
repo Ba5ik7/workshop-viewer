@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { SiteTheme } from './site-theme';
 
 @Component({
   selector: 'theme-picker',
@@ -9,19 +8,18 @@ import { SiteTheme } from './site-theme';
 })
 export class ThemePickerComponent implements OnInit {
 
-  themes: Map<string, SiteTheme> = new Map([
-    ['deeppurple-amber', { displayName: 'Deep Purple & Amber', isDefault: false }],
-    ['indigo-pink', { displayName: 'Indigo & Pink', isDefault: true }],
-    ['pink-bluegrey', { displayName: 'Pink & Blue-grey', isDefault: false }],
-    ['purple-green', { displayName: 'Purple & Green', isDefault: false }]
+  themes: Map<string, string> = new Map([
+    ['deeppurple-amber', 'Deep Purple & Amber'],
+    ['indigo-pink', 'Indigo & Pink'],
+    ['pink-bluegrey', 'Pink & Blue-grey'],
+    ['purple-green', 'Purple & Green']
   ]);
 
   constructor() { }
 
   ngOnInit(): void { }
 
-  selectTheme(themeName: string) {
-    const theme = this.themes.get(themeName);
+  selectTheme(theme: string) {
     console.log(theme);
   }
 
