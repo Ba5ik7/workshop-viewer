@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemePickerComponent } from './theme-picker.component';
-
+import { ThemePickerService } from './theme-picker.service';
 
 
 @NgModule({
-  declarations: [ThemePickerComponent],
-  exports: [ThemePickerComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  declarations: [ThemePickerComponent],
+  exports: [ThemePickerComponent],
+  providers: [ThemePickerService]
 })
 export class ThemePickerModule { }
