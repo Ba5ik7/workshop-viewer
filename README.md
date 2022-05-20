@@ -6,13 +6,23 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
+## Description
+
+Client UI Angular App for displaying coding themed workshops.
+
+## Installation
+
+```bash
+$ npm install
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 Clone and follow the README of the workshop-view-node repo found <a href="https://github.com/Ba5ik7/workshop-viewer-node" target="_blank" >here</a>.
 
-Requests that will be made from the UI to the API locally will need to be passed to a different port using a reverse proxy. I use Nginx to complete this task. If you want to use Nginx install and use the below settings for the config file.
+Requests that will be made from the UI to the API locally will need to be passed to a different port using a reverse proxy. I use Nginx to complete this task. If you want to use Nginx, install and use the below settings for the config file.
 
 ```config
   server {
