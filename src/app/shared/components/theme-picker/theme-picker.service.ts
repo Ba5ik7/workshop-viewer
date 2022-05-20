@@ -20,7 +20,7 @@ export class ThemePickerService {
   }
 
   _getLinkElementForKey(key: string): HTMLLinkElement {
-    return this._getExistingLinkElementByKey(key) || this._createLinkElementWithKey(key);
+    return this._getExistingLinkElementByKey(key) ?? this._createLinkElementWithKey(key);
   }
   
   _getExistingLinkElementByKey(key: string): HTMLLinkElement | null {
