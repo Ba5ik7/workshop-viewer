@@ -16,13 +16,17 @@ export class ThemePickerComponent implements OnInit {
     ['purple-green', 'Purple & Green']
   ]);
 
-  constructor(private themePickerService: ThemePickerService) { }
+  constructor(private themePickerService: ThemePickerService) {
+    const themeName = themePickerService.getStoredThemeName();
+    this.selectTheme(themeName !== ThemePickerService.NOT_FOUND ? themeName : ThemePickerService.DEFAULT_THEME);
+  }
 
   ngOnInit(): void { }
 
   selectTheme(theme: string): void {
     console.log(theme);
     this.themePickerService.setStyle('theme', `${theme}.css`);
+    this.themePickerService.storeTheme(theme);
   }
 
 }

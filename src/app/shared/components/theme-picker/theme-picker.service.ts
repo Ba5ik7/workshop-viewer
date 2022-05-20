@@ -3,31 +3,40 @@ import { Inject, Injectable } from '@angular/core';
 
 @Injectable()
 export class ThemePickerService {
+  static DEFAULT_THEME = 'indigo-pink';
+  static STRORAGE_KEY: string = 'theme-picker-current-name';
+  static NOT_FOUND: string = 'NOT_FOUND';
 
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
+  storeTheme(theme: string ): void {
+    window.localStorage[ThemePickerService.STRORAGE_KEY] = theme;
+  }
 
+  getStoredThemeName(): string {
+    return window.localStorage[ThemePickerService.STRORAGE_KEY] ?? ThemePickerService.NOT_FOUND;
+  }
 
   setStyle(key: string, href: string): void {
-    this._getLinkElementForKey(key).setAttribute('href', href);
+    this.getLinkElementForKey(key).setAttribute('href', href);
   }
 
   removeStyle(key: string): void {
-    const existingLinkElement = this._getExistingLinkElementByKey(key);
+    const existingLinkElement = this.getExistingLinkElementByKey(key);
     if (existingLinkElement) {
       this.document.head.removeChild(existingLinkElement);
     }
   }
 
-  _getLinkElementForKey(key: string): HTMLLinkElement {
-    return this._getExistingLinkElementByKey(key) ?? this._createLinkElementWithKey(key);
+  private getLinkElementForKey(key: string): HTMLLinkElement {
+    return this.getExistingLinkElementByKey(key) ?? this.createLinkElementWithKey(key);
   }
   
-  _getExistingLinkElementByKey(key: string): HTMLLinkElement | null {
+  private getExistingLinkElementByKey(key: string): HTMLLinkElement | null {
     return this.document.head.querySelector(`link[rel="stylesheet"].style-manager-${key}`);
   }
   
-  _createLinkElementWithKey(key: string): HTMLLinkElement {
+  private createLinkElementWithKey(key: string): HTMLLinkElement {
     const linkEl = this.document.createElement('link');
     linkEl.setAttribute('rel', 'stylesheet');
     linkEl.classList.add(`style-manager-${key}`);
