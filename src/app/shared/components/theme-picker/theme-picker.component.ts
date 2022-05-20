@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ThemePickerService } from './theme-picker.service';
 
 @Component({
   selector: 'theme-picker',
@@ -15,12 +16,13 @@ export class ThemePickerComponent implements OnInit {
     ['purple-green', 'Purple & Green']
   ]);
 
-  constructor() { }
+  constructor(private themePickerService: ThemePickerService) { }
 
   ngOnInit(): void { }
 
-  selectTheme(theme: string) {
+  selectTheme(theme: string): void {
     console.log(theme);
+    this.themePickerService.setStyle('theme', `${theme}.css`);
   }
 
 }
