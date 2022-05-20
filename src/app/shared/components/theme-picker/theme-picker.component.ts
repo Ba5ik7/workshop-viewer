@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThemePickerService } from './theme-picker.service';
@@ -7,10 +7,12 @@ import { ThemePickerService } from './theme-picker.service';
   selector: 'theme-picker',
   templateUrl: './theme-picker.component.html',
   styleUrls: ['./theme-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class ThemePickerComponent implements OnInit {
 
+  currentTheme: string | undefined;
   themes: Map<string, string> = new Map([
     ['deeppurple-amber', 'Deep Purple & Amber'],
     ['indigo-pink', 'Indigo & Pink'],
@@ -33,9 +35,9 @@ export class ThemePickerComponent implements OnInit {
   ngOnInit(): void { }
 
   selectTheme(theme: string): void {
-    console.log(theme);
     this.themePickerService.setStyle('theme', `${theme}.css`);
     this.themePickerService.storeTheme(theme);
+    this.currentTheme = theme;
   }
 
 }
