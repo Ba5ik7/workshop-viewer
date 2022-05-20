@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ThemePickerService } from './theme-picker.service';
 
 @Component({
@@ -16,7 +18,14 @@ export class ThemePickerComponent implements OnInit {
     ['purple-green', 'Purple & Green']
   ]);
 
-  constructor(private themePickerService: ThemePickerService) {
+  constructor(
+      private themePickerService: ThemePickerService,
+      iconRegistry: MatIconRegistry,
+      sanitizer: DomSanitizer
+  ) {
+    const themeExampleIconURL = sanitizer.bypassSecurityTrustResourceUrl(ThemePickerService.THEME_EXAMPLE_ICON);
+    iconRegistry.addSvgIcon('theme-example', themeExampleIconURL);
+
     const themeName = themePickerService.getStoredThemeName();
     this.selectTheme(themeName !== ThemePickerService.NOT_FOUND ? themeName : ThemePickerService.DEFAULT_THEME);
   }

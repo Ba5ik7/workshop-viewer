@@ -7,5 +7,6 @@
 <mat-menu #themeMenu="matMenu" xPosition="before" class="theme-picker-menu">
   <button mat-menu-item *ngFor="let theme of themes | keyvalue" (click)="selectTheme(theme.key)">
     <span>{{theme.value}}</span>
+    <mat-icon [class]="'theme-example-icon ' + theme.value" svgIcon="theme-example"></mat-icon>
   </button>
 </mat-menu>

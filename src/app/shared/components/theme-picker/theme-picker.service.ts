@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 
 @Injectable()
 export class ThemePickerService {
+  static THEME_EXAMPLE_ICON = 'assets/img/theme-demo-icon.svg';
   static DEFAULT_THEME = 'indigo-pink';
   static STRORAGE_KEY: string = 'theme-picker-current-name';
   static NOT_FOUND: string = 'NOT_FOUND';
