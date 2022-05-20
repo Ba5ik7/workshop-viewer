@@ -14,6 +14,10 @@
   $foreground: map.get($theme, foreground);
   $next-theme: mat.define-palette(mat.$red-palette);
 
+  .app-background {
+    background: mat.get-color-from-palette($background, background);
+  }
+
   @include footer-theme.theme($theme);
   @include navbar-theme.theme($theme);
   @include not-found-theme.theme($theme);
