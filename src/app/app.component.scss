@@ -13,7 +13,7 @@ app-navbar {
 }
 
 workshop-app > router-outlet + .main-content,
-workshop-app > router-outlet + app-component-sidenav {
+workshop-app > router-outlet + workshop-sidenav {
   margin-top: 56px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

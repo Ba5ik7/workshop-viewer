@@ -1,0 +1,25 @@
+.workshop-sidenav-container {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.workshop-sidenav {
+  overflow: auto;
+}
+
+.workshop-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.workshop-sidenav-inner-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.workshop-sidenav-body-content {
+  display: flex;
+  flex: 1 1 auto;
+}

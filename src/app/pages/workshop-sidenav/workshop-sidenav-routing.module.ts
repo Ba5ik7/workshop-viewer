@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { WorkshopCategoryListComponent } from './workshop-category-list/workshop-category-list.component';
 import { WorkshopSidenavComponent } from './workshop-sidenav.component';
 
 const routes: Routes = [
@@ -10,7 +11,7 @@ const routes: Routes = [
       {
         path: 'categories',
         children: [
-          { path: '', component: WorkshopSidenavComponent },
+          { path: '', component: WorkshopCategoryListComponent },
         ],
       },
     ]
