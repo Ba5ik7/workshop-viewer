@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)
   },
   {
-    path: 'workshop-sidenav',
+    path: ':section',
     loadChildren: () => import('./pages/workshop-sidenav/workshop-sidenav.module').then(m => m.WorkshopSidenavModule)
   },
   { path: '**', redirectTo: '/404' },
