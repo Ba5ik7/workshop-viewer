@@ -22,5 +22,9 @@
     .header-start {
       color: mat.get-color-from-palette($primary);
     }
+
+    .home-row {
+      color: mat.get-color-from-palette($foreground, secondary-text);
+    }
   }
 }
