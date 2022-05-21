@@ -2,6 +2,8 @@
 
 @use 'sass:map';
 @use './app/pages/not-found/not-found-theme';
+@use './app/pages/home/home-theme';
+
 @use './app/shared/components/footer/footer-theme';
 @use './app/shared/components/navbar/navbar-theme';
 
@@ -18,7 +20,9 @@
     background: mat.get-color-from-palette($background, background);
   }
 
+  @include home-theme.theme($theme);
+  @include not-found-theme.theme($theme);
+
   @include footer-theme.theme($theme);
   @include navbar-theme.theme($theme);
-  @include not-found-theme.theme($theme);
 }
