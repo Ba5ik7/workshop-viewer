@@ -20,6 +20,14 @@
     background: mat.get-color-from-palette($background, background);
   }
 
+  .primary-header {
+    background: mat.get-color-from-palette($primary);
+
+    h1 {
+      color: mat.get-color-from-palette($primary, default-contrast);
+    }
+  }
+
   @include home-theme.theme($theme);
   @include not-found-theme.theme($theme);
 
