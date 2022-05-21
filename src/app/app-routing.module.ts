@@ -7,7 +7,11 @@ const routes: Routes = [
     pathMatch: 'full',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
-  // This needs to before the workshop-sidenav route becuase missing routes in that module will redirect to this 404 route
+  // Navbar links to redirect to workshop-sidenav module
+  {path: 'angular', pathMatch: 'full', redirectTo: '/angular/categories'},
+  {path: 'nestjs', pathMatch: 'full', redirectTo: '/nestjs/categories'},
+  {path: 'rxjs', pathMatch: 'full', redirectTo: '/rxjs/categories'},
+  // This ne`eds to before the workshop-sidenav route becuase missing routes in that module will redirect to this 404 route
   {
     path: '404',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule)
