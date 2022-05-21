@@ -1,0 +1,20 @@
+workshop-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+workshop-app > router-outlet + .main-content,
+workshop-app > router-outlet + app-component-sidenav {
+  margin-top: 56px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { FooterModule } from 'src/app/shared/components/footer/footer.module';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { FooterModule } from 'src/app/shared/components/footer/footer.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    FooterModule
+    FooterModule,
+    MatButtonModule
   ]
 })
 export class HomeModule { }

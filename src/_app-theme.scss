@@ -16,12 +16,6 @@
   $foreground: map.get($theme, foreground);
   $next-theme: mat.define-palette(mat.$red-palette);
 
-  workshop-app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-
   .app-background {
     background: mat.get-color-from-palette($background, background);
   }
