@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-workshop-sidenav',
+  selector: 'workshop-sidenav',
   templateUrl: './workshop-sidenav.component.html',
   styleUrls: ['./workshop-sidenav.component.scss']
 })

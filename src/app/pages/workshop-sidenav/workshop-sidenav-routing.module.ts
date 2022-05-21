@@ -10,7 +10,7 @@ const routes: Routes = [
       {
         path: 'categories',
         children: [
-          {path: '', component: WorkshopSidenavComponent},
+          { path: '', component: WorkshopSidenavComponent },
         ],
       },
     ]
