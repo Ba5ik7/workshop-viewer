@@ -4,10 +4,12 @@ import { NavbarComponent } from './navbar.component';
 import { ThemePickerModule } from '../theme-picker/theme-picker.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     ThemePickerModule,
     MatButtonModule,
     MatIconModule
