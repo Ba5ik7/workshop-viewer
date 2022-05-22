@@ -1,8 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, map, merge, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Section } from 'src/app/shared/interfaces/section.interface';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { NavigationService } from 'src/app/shared/services/navigation.service';
   styleUrls: ['./workshop-sidenav.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class WorkshopSidenavComponent implements OnInit, OnDestroy {
+export class WorkshopSidenavComponent implements OnDestroy {
 
   isScreenSmall: Observable<boolean>;
   destory: Subject<boolean> = new Subject();
@@ -49,9 +48,6 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
       this.headerSvgPath = headerSvgPath;
       this.navList = navList;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
