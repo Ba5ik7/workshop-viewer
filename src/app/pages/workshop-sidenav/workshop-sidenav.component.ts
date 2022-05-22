@@ -17,7 +17,8 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
   destory: Subject<boolean> = new Subject();
 
   sectionTitle!: string;
-  idTitle!: string;
+  categoryTitle!: string;
+  headerSvgPath!: string;
 
   constructor(breakpoints: BreakpointObserver, activatedRoute: ActivatedRoute, navigationService: NavigationService) {
     this.isScreenSmall = breakpoints.observe(`(max-width: 959px)`)
@@ -44,8 +45,10 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
         }
       }),
     )
-    .subscribe((data) => {
-      console.log(data);
+    .subscribe(({ sectionTitle, categoryTitle, headerSvgPath }) => {
+      this.sectionTitle = sectionTitle;
+      this.categoryTitle = categoryTitle;
+      this.headerSvgPath = headerSvgPath;
     });
   }
 
