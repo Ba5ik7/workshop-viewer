@@ -34,17 +34,15 @@ export class WorkshopSidenavComponent implements OnDestroy {
       map(([params, sections, categories]) => {
         return {
           section: params['section'], 
-          categoryTitle: categories[params['section']].name ?? 'Categories',
           sectionTitle:sections[params['section']].sectionTitle ?? 'ERROR',
           headerSvgPath: sections[params['section']].headerSvgPath,
           navList: categories[params['section']]
         }
       }),
     )
-    .subscribe(({ section, sectionTitle, categoryTitle, headerSvgPath, navList }) => {
+    .subscribe(({ section, sectionTitle, headerSvgPath, navList }) => {
       this.section = section;
       this.sectionTitle = sectionTitle;
-      this.categoryTitle = categoryTitle;
       this.headerSvgPath = headerSvgPath;
       this.navList = navList;
     });
@@ -54,4 +52,7 @@ export class WorkshopSidenavComponent implements OnDestroy {
     this.destory.next(true);
   }
 
+  updateCategory(categoryName: string): void {
+    this.categoryTitle = categoryName;
+  }
 }

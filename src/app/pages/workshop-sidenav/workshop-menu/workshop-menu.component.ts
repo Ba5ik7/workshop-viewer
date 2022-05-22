@@ -12,7 +12,5 @@ export class WorkshopMenuComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

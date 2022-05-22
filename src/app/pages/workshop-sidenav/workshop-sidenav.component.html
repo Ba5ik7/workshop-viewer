@@ -20,7 +20,7 @@
       <main class="workshop-sidenav-body-content">
         <!-- If on large screen, menu resides to left of content -->
         <workshop-menu
-          *ngIf="(isScreenSmall | async) === false" 
+          *ngIf="(isScreenSmall | async) === false"
           [navList]="navList"
           [section]="section"></workshop-menu>
         <router-outlet></router-outlet>

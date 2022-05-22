@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-workshop-detail',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkshopDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(activatedRoute: ActivatedRoute) {
+    combineLatest([
+      activatedRoute.params,
+    ]).subscribe((data) => console.log(data))
+  }
 
   ngOnInit(): void {
   }
