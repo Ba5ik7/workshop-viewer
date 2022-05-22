@@ -17,6 +17,10 @@
       & a:hover, & a:focus {
         background: rgba(0, 0, 0, 0.4);
       }
+
+      .navbar-menu-item-selected {
+        background: rgba(0, 0, 0, 0.2);
+      }
     }
   }
 }

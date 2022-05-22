@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { NavigationService } from './shared/services/navigation.service';
 
 @Component({
   selector: 'workshop-app',
@@ -8,4 +9,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
   title = 'workshop-viewer';
+
+  constructor(navigationService: NavigationService) {
+    navigationService.initializeAppData();
+  }
 }

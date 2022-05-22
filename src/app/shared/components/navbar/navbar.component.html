@@ -3,21 +3,16 @@
     <mat-icon class="workshop-logo">tips_and_updates</mat-icon>
     <span>Workshop</span>
   </a>
-  <a mat-button routerLink="/nestjs">
-    <img class="workshop-logo"
-         src="/assets/img/nestjs-white.svg">
-    <span>Nest JS</span>
+
+  <a mat-button class="docs-navbar-hide-small docs-button"
+      *ngFor="let section of sections$ | async | keyvalue;"
+      [routerLink]="section.key"
+      routerLinkActive="navbar-menu-item-selected">
+    <img class="workshop-logo" [src]="section.value.menuSvgPath">
+    <span>{{section.value.name}}</span>
   </a>
-  <a mat-button routerLink="/angular">
-    <img class="workshop-logo"
-         src="/assets/img/angular-white-transparent.svg">
-    <span>Angular</span>
-  </a>
-  <a mat-button routerLink="/rxjs">
-    <img class="workshop-logo"
-         src="/assets/img/rxjs-white.svg">
-    <span>RxJS</span>
-  </a>
+
+
   <div class="flex-spacer"></div>
   <theme-picker></theme-picker>
   <a mat-button href="https://github.com/Ba5ik7/workshop-viewer" target="_blank">
