@@ -1,7 +1,9 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, ParamMap } from '@angular/router';
-import { combineLatest, forkJoin, map, Observable, of, Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest, map, merge, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { Section } from 'src/app/shared/interfaces/section.interface';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'workshop-sidenav',
@@ -17,15 +19,32 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
   sectionTitle!: string;
   idTitle!: string;
 
-  constructor(breakpoints: BreakpointObserver, private activatedRoute: ActivatedRoute) {
+  constructor(breakpoints: BreakpointObserver, activatedRoute: ActivatedRoute, navigationService: NavigationService) {
     this.isScreenSmall = breakpoints.observe(`(max-width: 959px)`)
     .pipe(map(breakpoint => breakpoint.matches));
 
-    this.activatedRoute.params
-    .pipe(takeUntil(this.destory))
-    .subscribe((params) => {
-      this.sectionTitle = params['section'] ?? 'ERROR';
-      this.idTitle = params['id'] ?? 'categories';
+    // activatedRoute.params
+    // .pipe(takeUntil(this.destory))
+    // .subscribe((params) => {
+    //   this.sectionTitle = params['section'] ?? 'ERROR';
+    //   this.idTitle = params['id'] ?? 'categories';
+    // });
+
+    combineLatest([
+      activatedRoute.params,
+      navigationService.sections$])
+    .pipe(
+      takeUntil(this.destory),
+      map(([params, sections]) => {
+        return {
+          categoryTitle: sections[params['section']].categoryTitle ?? 'Categories',
+          sectionTitle:sections[params['section']].sectionTitle ?? 'ERROR',
+          headerSvgPath: sections[params['section']].headerSvgPath 
+        }
+      }),
+    )
+    .subscribe((data) => {
+      console.log(data);
     });
   }
 

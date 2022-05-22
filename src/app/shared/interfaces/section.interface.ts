@@ -1,5 +1,5 @@
 export interface Section {
-  name: string;
+  sectionTitle: string;
   summary: string;
   menuSvgPath?: string;
   headerSvgPath?: string;
