@@ -19,6 +19,7 @@ export class NavigationService {
 
   initializeAppData(): void {
     this.getSections();
+    this.getCategories();
   }
 
   getSections(): void {

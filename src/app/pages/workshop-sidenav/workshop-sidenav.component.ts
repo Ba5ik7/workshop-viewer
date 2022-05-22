@@ -32,12 +32,13 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
 
     combineLatest([
       activatedRoute.params,
-      navigationService.sections$])
+      navigationService.sections$,
+      navigationService.categories$])
     .pipe(
       takeUntil(this.destory),
-      map(([params, sections]) => {
+      map(([params, sections, categories]) => {
         return {
-          categoryTitle: sections[params['section']].categoryTitle ?? 'Categories',
+          categoryTitle: categories[params['section']].name ?? 'Categories',
           sectionTitle:sections[params['section']].sectionTitle ?? 'ERROR',
           headerSvgPath: sections[params['section']].headerSvgPath 
         }
