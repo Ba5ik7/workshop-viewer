@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-workshop-menu',
+  selector: 'workshop-menu',
   templateUrl: './workshop-menu.component.html',
   styleUrls: ['./workshop-menu.component.scss']
 })

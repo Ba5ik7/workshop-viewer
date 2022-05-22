@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { WorkshopMenuModule } from './workshop-menu/workshop-menu.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     RouterModule,
     WorkshopSidenavRoutingModule,
+    WorkshopMenuModule,
     FooterModule,
     MatButtonModule,
     MatIconModule,

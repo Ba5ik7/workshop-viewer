@@ -7,6 +7,7 @@
               [fixedInViewport]="(isScreenSmall | async)"
               fixedTopGap="56">
     <!-- <app-component-nav [params]="params"></app-component-nav> -->
+    <workshop-menu></workshop-menu>
   </mat-sidenav>
   <div class="workshop-sidenav-content">
     <!-- <component-page-header (toggleSidenav)="toggleSidenav(sidenav)"></component-page-header> -->
@@ -24,6 +25,7 @@
           *ngIf="(isScreenSmall | async) === false"
           [params]="params">
         </app-component-nav> -->
+        <workshop-menu></workshop-menu>
         <router-outlet></router-outlet>
       </main>
       <app-footer></app-footer>

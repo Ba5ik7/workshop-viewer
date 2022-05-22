@@ -72,3 +72,39 @@
     color: white;
   }
 }
+
+
+.workshop-menu-nav {
+  position: sticky;
+  top: 0;
+
+  .workshop-menu-nav-content {
+    width: 240px;
+    height: calc(100vh - 56px);
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0 0 5px 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    li {
+      font-size: 13px;
+      line-height: 16px;
+      margin: 0;
+      padding: 5px 15px 5px 20px;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+    }
+  }
+}
