@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { combineLatest, distinct, Subject } from 'rxjs';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'app-workshop-detail',
   templateUrl: './workshop-detail.component.html',
   styleUrls: ['./workshop-detail.component.scss']
 })
-export class WorkshopDetailComponent implements OnInit {
+export class WorkshopDetailComponent implements OnInit,OnDestroy {
 
-  constructor(activatedRoute: ActivatedRoute) {
-    combineLatest([
-      activatedRoute.params,
-    ]).subscribe((data) => console.log(data))
+  destory: Subject<boolean> = new Subject();
+
+  constructor(activatedRoute: ActivatedRoute, navigationService: NavigationService) {
+    activatedRoute.params.subscribe((data) => {
+      navigationService.currentCategoryRouteSubject.next(data['categoryId']);
+    });
+
+    navigationService.currentCategory$
+    .pipe(distinct())
+    .subscribe((data) => {
+      // console.log(data);
+    });
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.destory.next(true);
   }
 
 }
