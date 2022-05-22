@@ -3,7 +3,6 @@
     <mat-icon class="workshop-logo">tips_and_updates</mat-icon>
     <span>Workshop</span>
   </a>
-
   <a mat-button class="docs-navbar-hide-small docs-button"
       *ngFor="let section of sections$ | async | keyvalue;"
       [routerLink]="section.key"
@@ -11,8 +10,6 @@
     <img class="workshop-logo" [src]="section.value.menuSvgPath">
     <span>{{section.value.name}}</span>
   </a>
-
-
   <div class="flex-spacer"></div>
   <theme-picker></theme-picker>
   <a mat-button href="https://github.com/Ba5ik7/workshop-viewer" target="_blank">
