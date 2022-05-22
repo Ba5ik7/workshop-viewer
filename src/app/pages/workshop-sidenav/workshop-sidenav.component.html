@@ -6,11 +6,9 @@
               [mode]="(isScreenSmall | async) ? 'over' : 'side'"
               [fixedInViewport]="(isScreenSmall | async)"
               fixedTopGap="56">
-    <!-- <app-component-nav [params]="params"></app-component-nav> -->
-    <workshop-menu></workshop-menu>
+    <workshop-menu [navList]="navList" [section]="section"></workshop-menu>
   </mat-sidenav>
   <div class="workshop-sidenav-content">
-    <!-- <component-page-header (toggleSidenav)="toggleSidenav(sidenav)"></component-page-header> -->
     <header class="primary-header workshop-page-header">
       <button mat-button class="sidenav-toggle">
         <mat-icon>menu</mat-icon>
@@ -21,11 +19,10 @@
     <div class="workshop-sidenav-inner-content">
       <main class="workshop-sidenav-body-content">
         <!-- If on large screen, menu resides to left of content -->
-        <!-- <app-component-nav
-          *ngIf="(isScreenSmall | async) === false"
-          [params]="params">
-        </app-component-nav> -->
-        <workshop-menu></workshop-menu>
+        <workshop-menu
+          *ngIf="(isScreenSmall | async) === false" 
+          [navList]="navList"
+          [section]="section"></workshop-menu>
         <router-outlet></router-outlet>
       </main>
       <app-footer></app-footer>

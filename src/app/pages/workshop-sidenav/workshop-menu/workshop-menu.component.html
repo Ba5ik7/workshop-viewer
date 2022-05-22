@@ -1,13 +1,11 @@
 <div class="workshop-menu-nav">
   <div class="workshop-menu-nav-content">
-    <p>workshop-menu works!</p>
-      <!-- <mat-nav-list>
-        <a mat-list-item *ngFor="let component of docItems.getItems(section)"
-           [routerLink]="'/' + section+ '/' + component.id"
-           routerLinkActive="docs-component-viewer-sidenav-item-selected"
-           [attr.aria-current]="currentItemId === component.id ? 'page': 'false'">
-          {{component.name}}
-        </a>
-      </mat-nav-list> -->
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let navItem of navList"
+          [routerLink]="'/' + section + '/' + navItem.id"
+          routerLinkActive="docs-component-viewer-sidenav-item-selected">
+        {{navItem.name}}
+      </a>
+    </mat-nav-list>
   </div>
 </div>

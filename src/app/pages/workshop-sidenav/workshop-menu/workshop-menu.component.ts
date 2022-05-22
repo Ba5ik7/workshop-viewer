@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'workshop-menu',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workshop-menu.component.scss']
 })
 export class WorkshopMenuComponent implements OnInit {
+
+  @Input() navList!: any[];
+  @Input() section!: string;
 
   constructor() { }
 

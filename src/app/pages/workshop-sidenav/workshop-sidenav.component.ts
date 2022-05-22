@@ -16,20 +16,15 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
   isScreenSmall: Observable<boolean>;
   destory: Subject<boolean> = new Subject();
 
+  section!: string;
   sectionTitle!: string;
   categoryTitle!: string;
   headerSvgPath!: string;
+  navList!: any[];
 
   constructor(breakpoints: BreakpointObserver, activatedRoute: ActivatedRoute, navigationService: NavigationService) {
     this.isScreenSmall = breakpoints.observe(`(max-width: 959px)`)
     .pipe(map(breakpoint => breakpoint.matches));
-
-    // activatedRoute.params
-    // .pipe(takeUntil(this.destory))
-    // .subscribe((params) => {
-    //   this.sectionTitle = params['section'] ?? 'ERROR';
-    //   this.idTitle = params['id'] ?? 'categories';
-    // });
 
     combineLatest([
       activatedRoute.params,
@@ -39,16 +34,20 @@ export class WorkshopSidenavComponent implements OnInit, OnDestroy {
       takeUntil(this.destory),
       map(([params, sections, categories]) => {
         return {
+          section: params['section'], 
           categoryTitle: categories[params['section']].name ?? 'Categories',
           sectionTitle:sections[params['section']].sectionTitle ?? 'ERROR',
-          headerSvgPath: sections[params['section']].headerSvgPath 
+          headerSvgPath: sections[params['section']].headerSvgPath,
+          navList: categories[params['section']]
         }
       }),
     )
-    .subscribe(({ sectionTitle, categoryTitle, headerSvgPath }) => {
+    .subscribe(({ section, sectionTitle, categoryTitle, headerSvgPath, navList }) => {
+      this.section = section;
       this.sectionTitle = sectionTitle;
       this.categoryTitle = categoryTitle;
       this.headerSvgPath = headerSvgPath;
+      this.navList = navList;
     });
   }
 
