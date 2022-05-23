@@ -15,71 +15,31 @@ export class WorkshopSidenavComponent implements OnDestroy {
   isScreenSmall: Observable<boolean>;
   destory: Subject<boolean> = new Subject();
 
-  section!: string;
-  sectionTitle!: string;
-  categoryTitle!: string;
-  headerSvgPath!: string;
-  navList!: any[];
+  section!: Observable<string>;
+  sectionTitle!: Observable<string>;
+  categoryTitle!: Observable<string>;
+  headerSvgPath!: Observable<string>;
+  navList!: Observable<any[]>;
 
-  constructor(breakpoints: BreakpointObserver, activatedRoute: ActivatedRoute, navigationService: NavigationService) {
+  constructor(breakpoints: BreakpointObserver,
+              activatedRoute: ActivatedRoute,
+              navigationService: NavigationService) {
+
     this.isScreenSmall = breakpoints.observe(`(max-width: 959px)`)
-    .pipe(map(breakpoint => breakpoint.matches));
+    .pipe(takeUntil(this.destory), map(breakpoint => breakpoint.matches));
 
     activatedRoute.params
-    .pipe(
-      takeUntil(this.destory),
-      distinct()
-    )
-    .subscribe((params) => {
-      console.log('activatedRoute');
-      this.section = params['section'];
-      this.navList = navigationService.categories[this.section];
-      navigationService.currentSectionRouteSubject.next(this.section);
-    });
+    .pipe(takeUntil(this.destory), distinct())
+    .subscribe(params => navigationService.sectionRouteSub.next(params['section']));
 
-    combineLatest([
-      navigationService.currentSection$,
-      navigationService.currentCategory$
-    ])
-    .pipe(
-      takeUntil(this.destory),
-      distinct()
-    )
-    .subscribe(([ section, category ]) => {
-      console.log('navigationService', category);
-      this.sectionTitle = section.sectionTitle;
-      this.headerSvgPath = section.headerSvgPath;
-      this.categoryTitle = category[0]?.name;
-    });
-
-    // combineLatest([
-    //   activatedRoute.params,
-    //   navigationService.sections$,
-    //   navigationService.categories$])
-    // .pipe(
-    //   takeUntil(this.destory),
-    //   map(([params, sections, categories]) => {
-    //     return {
-    //       section: params['section'], 
-    //       sectionTitle:sections[params['section']].sectionTitle ?? 'ERROR',
-    //       headerSvgPath: sections[params['section']].headerSvgPath,
-    //       navList: categories[params['section']]
-    //     }
-    //   }),
-    // )
-    // .subscribe(({ section, sectionTitle, headerSvgPath, navList }) => {
-    //   this.section = section;
-    //   this.sectionTitle = sectionTitle;
-    //   this.headerSvgPath = headerSvgPath;
-    //   this.navList = navList;
-    // });
+    this.section = navigationService.sectionRoute$;
+    this.navList = navigationService.sectionNavList$;
+    this.sectionTitle = navigationService.sectionTitle$;
+    this.headerSvgPath = navigationService.headerSvgPath$;
+    this.categoryTitle = navigationService.categoryTitle$;
   }
 
   ngOnDestroy(): void {
     this.destory.next(true);
-  }
-
-  updateCategory(categoryName: string): void {
-    this.categoryTitle = categoryName;
   }
 }

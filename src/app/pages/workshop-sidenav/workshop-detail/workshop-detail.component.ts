@@ -14,10 +14,10 @@ export class WorkshopDetailComponent implements OnInit,OnDestroy {
 
   constructor(activatedRoute: ActivatedRoute, navigationService: NavigationService) {
     activatedRoute.params.subscribe((data) => {
-      navigationService.currentCategoryRouteSubject.next(data['categoryId']);
+      navigationService.categoryRouteSub.next(data['categoryId']);
     });
 
-    navigationService.currentCategory$
+    navigationService.category$
     .pipe(distinct())
     .subscribe((data) => {
       // console.log(data);

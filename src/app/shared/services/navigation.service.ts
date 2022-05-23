@@ -1,66 +1,99 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, filter, firstValueFrom, Observable, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, firstValueFrom, lastValueFrom, Observable, OperatorFunction, pipe, tap, UnaryFunction } from 'rxjs';
 import { Category } from '../interfaces/category.interface';
 import { Section } from '../interfaces/section.interface';
+
+// RXJS Doesn't have something to filter out null and undefined values
+function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
+  return pipe(
+    filter(x => x != null) as OperatorFunction<T | null |  undefined, T>
+  );
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
 
-  sectionsSubject = new BehaviorSubject<{ [key: string]: Section } | undefined>(undefined);
-  sections$: Observable<any> = this.sectionsSubject.asObservable();
+  sectionsSub = new BehaviorSubject<{ [key: string]: Section } | undefined>(undefined);
+  sections$: Observable<any> = this.sectionsSub.asObservable();
   sections!: { [key: string]: Section };
 
-  categoriesSubject = new BehaviorSubject<{ [key: string]: Category[] } | undefined>(undefined);
-  categories$: Observable<any> = this.categoriesSubject.asObservable();
+  categoriesSub = new BehaviorSubject<{ [key: string]: Category[] } | undefined>(undefined);
+  categories$: Observable<any> = this.categoriesSub.asObservable();
   categories!: { [key: string]: Category[] };
 
-  currentSectionSubject = new BehaviorSubject<any>(undefined);
-  currentSection$: Observable<any> = this.currentSectionSubject.asObservable();
+  sectionSub = new BehaviorSubject<any>(undefined);
+  section$: Observable<any> = this.sectionSub.asObservable();
   
-  currentCategorySubject = new BehaviorSubject<any>(undefined);
-  currentCategory$: Observable<any> = this.currentCategorySubject.asObservable();
+  categorySub = new BehaviorSubject<any>(undefined);
+  category$: Observable<any> = this.categorySub.asObservable();
   
-  currentSectionRouteSubject = new BehaviorSubject<string | undefined>(undefined);
-  currentSectionRoute$: Observable<any> = this.currentSectionRouteSubject.asObservable();
-  
-  currentCategoryRouteSubject = new BehaviorSubject<string | undefined>(undefined);
-  currentCategoryRoute$: Observable<any> = this.currentCategoryRouteSubject.asObservable();
+  sectionRouteSub = new BehaviorSubject<string | undefined>(undefined);
+  sectionRoute$: Observable<any> = this.sectionRouteSub.asObservable();
+  sectionRoute: string = '';
+
+  categoryRouteSub = new BehaviorSubject<string | undefined>(undefined);
+  categoryRoute$: Observable<any> = this.categoryRouteSub.asObservable();
+  categoryRoute: string = '';
+
+  sectionNavListSub = new BehaviorSubject<any>(undefined);
+  sectionNavList$: Observable<any> = this.sectionNavListSub.asObservable();
+
+  sectionTitleSub = new BehaviorSubject<any>(undefined);
+  sectionTitle$: Observable<any> = this.sectionTitleSub.asObservable();
+
+  headerSvgPathSub = new BehaviorSubject<any>(undefined);
+  headerSvgPath$: Observable<any> = this.headerSvgPathSub.asObservable();
+
+  categoryTitleSub = new BehaviorSubject<any>(undefined);
+  categoryTitle$: Observable<any> = this.categoryTitleSub.asObservable();
+
 
   constructor(private httpClient: HttpClient) { }
 
-  initializeAppData(): void {
-    this.getSections();
-    this.getCategories();
+  async initializeAppData(): Promise<void> {
+    await this.getSections();
+    await this.getCategories();
 
-    combineLatest([
-      this.currentSectionRoute$,
-      this.currentCategoryRoute$
-    ])
-    .subscribe(([section, category]) => {
-      this.currentSectionSubject
-      .next(this.sections ? this.sections[section] : {});
-
-      this.currentCategorySubject
-      .next(this.categories ? this.categories[section].filter(({ id }) => id === category) : {});
-    })
+    this.sectionRoute$
+    .pipe(filterNullish())
+    .subscribe((section) => this.setSectionProperties(section));
+    
+    this.categoryRoute$
+    .pipe(filterNullish())
+    .subscribe((category) => this.setCategoryProperties(category));
   }
 
-  getSections(): void {
-    this.httpClient.get<{ [key: string]: Section }>('/api/navigation/sections')
-    .subscribe((res) => {
+  private async getSections(): Promise<void> {
+    return await lastValueFrom(this.httpClient.get<{ [key: string]: Section }>('/api/navigation/sections'))
+    .then((res) => {
       this.sections = res;
-      this.sectionsSubject.next(res)
+      this.sectionsSub.next(res);
     });
   }
 
-  getCategories(): void {
-    this.httpClient.get<{ [key: string]: Category[] }>('/api/navigation/categories')
-    .subscribe((res) => {
+  private async getCategories(): Promise<void> {
+    return await lastValueFrom(this.httpClient.get<{ [key: string]: Category[] }>('/api/navigation/categories'))
+    .then((res) => {
       this.categories = res;
-      this.categoriesSubject.next(res)
+      this.categoriesSub.next(res);
     });
+  }
+
+  private setSectionProperties(section: string): void {
+    this.sectionRoute = section;
+    this.sectionSub.next(this.sections[section]);    
+    this.sectionNavListSub.next(this.categories[section]);
+    this.sectionTitleSub.next(this.sections[section].sectionTitle);
+    this.headerSvgPathSub.next(this.sections[section].headerSvgPath);
+  }
+
+  private setCategoryProperties(category: string): void {
+    const categoryObject = this.categories[this.sectionRoute].find(({ id }) => id === category);
+    this.categoryRoute = category;
+    this.categorySub.next(categoryObject);
+    this.categoryTitleSub.next(categoryObject?.name);
   }
 }
