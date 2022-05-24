@@ -3,6 +3,7 @@
 @use 'sass:map';
 @use './app/pages/not-found/not-found-theme';
 @use './app/pages/home/home-theme';
+@use './app/pages/workshop-sidenav/workshop-sidenav';
 
 @use './app/shared/components/footer/footer-theme';
 @use './app/shared/components/navbar/navbar-theme';
@@ -30,6 +31,7 @@
 
   @include home-theme.theme($theme);
   @include not-found-theme.theme($theme);
+  @include workshop-sidenav.theme($theme);
 
   @include footer-theme.theme($theme);
   @include navbar-theme.theme($theme);
