@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: ':categoryId',
         children: [
-          {path: '', component: WorkshopDetailComponent },
+          {path: '', data: { alwaysRefresh: true }, component: WorkshopDetailComponent },
         ],
       },
       {path: '**', redirectTo: '/404'}

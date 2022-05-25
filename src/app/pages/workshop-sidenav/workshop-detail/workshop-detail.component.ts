@@ -12,16 +12,15 @@ export class WorkshopDetailComponent implements OnInit, OnDestroy {
 
   destory: Subject<boolean> = new Subject();
 
-  constructor(activatedRoute: ActivatedRoute, navigationService: NavigationService) {
-    activatedRoute.params
-    .pipe(takeUntil(this.destory))
-    .subscribe((data) => navigationService.categoryRouteSub.next(data['categoryId']));
-  }
+  constructor(private activatedRoute: ActivatedRoute, private navigationService: NavigationService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.activatedRoute.params
+    .pipe(takeUntil(this.destory))
+    .subscribe((data) => this.navigationService.categoryRouteSub.next(data['categoryId']));
+  }
 
   ngOnDestroy(): void {
     this.destory.next(true);
   }
-
 }
