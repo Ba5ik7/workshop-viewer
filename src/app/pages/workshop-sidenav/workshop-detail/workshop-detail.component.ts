@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, distinct, Subject } from 'rxjs';
+import { combineLatest, distinct, Subject, takeUntil } from 'rxjs';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
@@ -8,24 +8,17 @@ import { NavigationService } from 'src/app/shared/services/navigation.service';
   templateUrl: './workshop-detail.component.html',
   styleUrls: ['./workshop-detail.component.scss']
 })
-export class WorkshopDetailComponent implements OnInit,OnDestroy {
+export class WorkshopDetailComponent implements OnInit, OnDestroy {
 
   destory: Subject<boolean> = new Subject();
 
   constructor(activatedRoute: ActivatedRoute, navigationService: NavigationService) {
-    activatedRoute.params.subscribe((data) => {
-      navigationService.categoryRouteSub.next(data['categoryId']);
-    });
-
-    navigationService.category$
-    .pipe(distinct())
-    .subscribe((data) => {
-      // console.log(data);
-    });
+    activatedRoute.params
+    .pipe(takeUntil(this.destory))
+    .subscribe((data) => navigationService.categoryRouteSub.next(data['categoryId']));
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     this.destory.next(true);
