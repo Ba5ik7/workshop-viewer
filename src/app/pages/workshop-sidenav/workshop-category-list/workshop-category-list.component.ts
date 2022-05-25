@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'workshop-category-list',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkshopCategoryListComponent implements OnInit {
 
-  constructor() { }
+  constructor(navigationService: NavigationService) {
+    navigationService.categoryRouteSub.next('categories');
+  }
 
   ngOnInit(): void {
   }

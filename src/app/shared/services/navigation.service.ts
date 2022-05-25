@@ -94,6 +94,6 @@ export class NavigationService {
     const categoryObject = this.categories[this.sectionRoute].find(({ id }) => id === category);
     this.categoryRoute = category;
     this.categorySub.next(categoryObject);
-    this.categoryTitleSub.next(categoryObject?.name);
+    this.categoryTitleSub.next(categoryObject?.name ?? 'Categories');
   }
 }
