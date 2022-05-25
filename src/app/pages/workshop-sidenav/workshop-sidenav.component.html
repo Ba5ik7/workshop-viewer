@@ -10,7 +10,7 @@
   </mat-sidenav>
   <div class="workshop-sidenav-content">
     <header class="primary-header workshop-page-header">
-      <button mat-button class="sidenav-toggle">
+      <button mat-button class="sidenav-toggle" (click)="toggleSideNav()">
         <mat-icon>menu</mat-icon>
       </button>
       <img class="workshop-page-header-section-img" [src]="headerSvgPath | async">

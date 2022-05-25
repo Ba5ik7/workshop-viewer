@@ -29,20 +29,20 @@
   display: flex;
   align-items: center;
 
-  // @media (max-width: constants.$small-breakpoint-width) {
-  //   padding-left: 0;
-  // }
+  @media (max-width: 959px) {
+    padding-left: 0;
+  }
   h1 {
     outline: none;
     font-weight: 300;
     margin: 0;
     padding: 28px 8px;
     font-size: 20px;
-    // height:24px;
-    // @media (max-width: constants.$small-breakpoint-width) {
-    //   padding: 24px 8px;
-    //   font-size: 20px;
-    // }
+    height:24px;
+    @media (max-width: 959px) {
+      padding: 24px 8px;
+      font-size: 20px;
+    }
   }
 
   img {
@@ -58,11 +58,11 @@
   min-width: 64px;
   display: none;
 
-  // @media (max-width: constants.$small-breakpoint-width) {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  // }
+  @media (max-width: 959px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   mat-icon {
     font-size: 30px;

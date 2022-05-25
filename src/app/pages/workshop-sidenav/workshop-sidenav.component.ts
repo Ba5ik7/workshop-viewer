@@ -1,5 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, distinct, map, merge, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
@@ -11,6 +12,8 @@ import { NavigationService } from 'src/app/shared/services/navigation.service';
   encapsulation: ViewEncapsulation.None
 })
 export class WorkshopSidenavComponent implements OnDestroy {
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
   isScreenSmall: Observable<boolean>;
   destory: Subject<boolean> = new Subject();
@@ -41,5 +44,9 @@ export class WorkshopSidenavComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destory.next(true);
+  }
+
+  toggleSideNav() {
+    this.sidenav.toggle();
   }
 }
