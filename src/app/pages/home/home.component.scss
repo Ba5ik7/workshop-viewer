@@ -56,10 +56,10 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  width: 75%;
-  max-width: 1080px;
-  margin: auto;
+  // padding: 16px;
+  // width: 75%;
+  // max-width: 1080px;
+  // margin: auto;
 
   a {
     text-decoration: none;
@@ -92,21 +92,17 @@
 .home-row {
   display: flex;
   flex-direction: row;
-  margin: 8px 0;
+  margin: 25px 0;
   gap: 50px;
 }
 
 .home-row-column {
   display: flex;
   flex-direction: column;
-  width: 32%;
   align-items: center;
   justify-content: flex-end;
 
   img {
     width: 250px;
-  }
-  & + & {
-    margin-left: 2%;
   }
 }
