@@ -4,7 +4,7 @@ import { combineLatest, distinct, Subject, takeUntil } from 'rxjs';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
-  selector: 'app-workshop-detail',
+  selector: 'workshop-detail',
   templateUrl: './workshop-detail.component.html',
   styleUrls: ['./workshop-detail.component.scss']
 })
