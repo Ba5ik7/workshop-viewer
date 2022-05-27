@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'workshop-viewer',
+  selector: 'workshop-viewer-terrence-dusell',
   templateUrl: './workshop-viewer.component.html',
   styleUrls: ['./workshop-viewer.component.scss']
 })
