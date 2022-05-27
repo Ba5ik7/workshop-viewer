@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkshopCategoryListComponent } from './workshop-category-list/workshop-category-list.component';
-// import { WorkshopDetailComponent } from './workshop-detail/workshop-detail.component';
 import { WorkshopSidenavComponent } from './workshop-sidenav.component';
 
 const routes: Routes = [
@@ -25,7 +24,7 @@ const routes: Routes = [
           },
         ],
       },
-      {path: '**', redirectTo: '/404'}
+      { path: '**', redirectTo: '/404' }
     ]
   }
 ];
