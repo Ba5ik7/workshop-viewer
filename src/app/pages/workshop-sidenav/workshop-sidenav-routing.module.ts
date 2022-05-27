@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WorkshopCategoryListComponent } from './workshop-category-list/workshop-category-list.component';
-import { WorkshopDetailComponent } from './workshop-detail/workshop-detail.component';
+// import { WorkshopDetailComponent } from './workshop-detail/workshop-detail.component';
 import { WorkshopSidenavComponent } from './workshop-sidenav.component';
 
 const routes: Routes = [
@@ -18,7 +18,11 @@ const routes: Routes = [
       {
         path: ':categoryId',
         children: [
-          {path: '', data: { alwaysRefresh: true }, component: WorkshopDetailComponent },
+          {
+            path: '',
+            data: { alwaysRefresh: true },
+            loadChildren: () => import('./workshop-detail/workshop-detail.module').then(m => m.WorkshopDetailModule)
+          },
         ],
       },
       {path: '**', redirectTo: '/404'}
