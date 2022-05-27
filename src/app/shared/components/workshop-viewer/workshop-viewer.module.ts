@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkshopViewerComponent } from './workshop-viewer.component';
+import { WorkshopViewerService } from './workshop-viewer.service';
 
 
 
@@ -8,7 +9,8 @@ import { WorkshopViewerComponent } from './workshop-viewer.component';
   declarations: [WorkshopViewerComponent],
   exports: [WorkshopViewerComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+  ],
+  providers: [WorkshopViewerService]
 })
 export class WorkshopViewerModule { }
