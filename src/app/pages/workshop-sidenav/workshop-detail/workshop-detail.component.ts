@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { NavigationService } from '../../../shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'workshop-detail',

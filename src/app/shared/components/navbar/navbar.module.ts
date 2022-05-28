@@ -5,7 +5,6 @@ import { ThemePickerModule } from '../theme-picker/theme-picker.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { NavigationService } from '../../services/navigation.service';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { NavigationService } from '../../services/navigation.service';
     MatIconModule
   ],
   declarations: [NavbarComponent],
-  exports: [NavbarComponent],
-  providers: [NavigationService]
+  exports: [NavbarComponent]
 })
 export class NavbarModule { }

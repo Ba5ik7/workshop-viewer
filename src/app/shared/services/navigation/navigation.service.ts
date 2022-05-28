@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, filter, firstValueFrom, lastValueFrom, Observable, OperatorFunction, pipe, tap, UnaryFunction } from 'rxjs';
-import { Category } from '../interfaces/category.interface';
-import { Section } from '../interfaces/section.interface';
+import { BehaviorSubject, filter, lastValueFrom, Observable, OperatorFunction, pipe, UnaryFunction } from 'rxjs';
+import { Category } from '../../interfaces/category.interface';
+import { Section } from '../../interfaces/section.interface';
 
 // RXJS Doesn't have something to filter out null and undefined values
 function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {

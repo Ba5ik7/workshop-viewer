@@ -2,8 +2,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, distinct, map, merge, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { distinct, map, Observable, Subject, takeUntil } from 'rxjs';
+import { NavigationService } from '../../shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'workshop-sidenav',
