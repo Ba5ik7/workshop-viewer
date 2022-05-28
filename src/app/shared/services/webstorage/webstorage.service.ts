@@ -7,27 +7,29 @@ export interface LocalStorage {
   value: any
 }
 
+export interface SessionStorage {
+  key: string,
+  value: any
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebstorageService {
 
-  LOCALSTORAGE_ITEM_NOT_FOUND_ERROR = 'LOCALSTORAGE_ITEM_NOT_FOUND_ERROR';
-  LOCALSTORAGE_MAX_SIZE_REACHED = 'LOCALSTORAGE_MAX_SIZE_REACHED';
-  
-
-  constructor() { }
+  LOCAL_STORAGE_ITEM_NOT_FOUND_ERROR = 'LOCAL_STORAGE_ITEM_NOT_FOUND_ERROR';
+  LOCAL_STORAGE_MAX_SIZE_REACHED = 'LOCAL_STORAGE_MAX_SIZE_REACHED';
 
   localStorageValueChangeSub: Subject<LocalStorage> = new Subject();
   localStorageValueChange$: Observable<LocalStorage> = this.localStorageValueChangeSub.asObservable();
 
-  getLocalStorageSize(): any {
+  getLocalStorageSize(): number {
     return new Blob(Object.values(localStorage)).size;
   }
 
   getLocalstorageItem(key: string): LocalStorage {
-    const item = { key, value: localStorage.getItem(key) ?? this.LOCALSTORAGE_ITEM_NOT_FOUND_ERROR };
+    const item = { key, value: localStorage.getItem(key) ?? this.LOCAL_STORAGE_ITEM_NOT_FOUND_ERROR };
     this.localStorageValueChangeSub.next(item);
     return item;
   }
@@ -38,12 +40,43 @@ export class WebstorageService {
   }
   
   removeLocalstorageItem(key: string): void {
-    const item = { key, value: localStorage.getItem(key) ?? this.LOCALSTORAGE_ITEM_NOT_FOUND_ERROR };
-    item.value !== this.LOCALSTORAGE_ITEM_NOT_FOUND_ERROR && localStorage.removeItem(key); 
+    const item = { key, value: localStorage.getItem(key) ?? this.LOCAL_STORAGE_ITEM_NOT_FOUND_ERROR };
+    item.value !== this.LOCAL_STORAGE_ITEM_NOT_FOUND_ERROR && localStorage.removeItem(key); 
     this.localStorageValueChangeSub.next(item);
   }
 
-  private clearLocalstorage(): void {
+  clearLocalstorage(): void {
     localStorage.clear();
+  }
+
+  SESSION_STORAGE_ITEM_NOT_FOUND_ERROR = 'SESSION_STORAGE_ITEM_NOT_FOUND_ERROR';
+  SESSIONSTORAGE_MAX_SIZE_REACHED = 'SESSIONSTORAGE_MAX_SIZE_REACHED';
+
+  sessionStorageValueChangeSub: Subject<SessionStorage> = new Subject();
+  sessionStorageValueChange$: Observable<SessionStorage> = this.sessionStorageValueChangeSub.asObservable();
+
+  getSessionStorageSize(): number {
+    return new Blob(Object.values(sessionStorage)).size;
+  }
+
+  getSessionStorageItem(key: string): SessionStorage {
+    const item = { key, value: sessionStorage.getItem(key) ?? this.SESSION_STORAGE_ITEM_NOT_FOUND_ERROR };
+    this.sessionStorageValueChangeSub.next(item);
+    return item;
+  }
+  
+  setSessionStorageItem({ key, value }: SessionStorage): void {
+    sessionStorage.setItem(key, value);
+    this.sessionStorageValueChangeSub.next({ key, value });
+  }
+  
+  removeSessionStorageItem(key: string): void {
+    const item = { key, value: sessionStorage.getItem(key) ?? this.SESSION_STORAGE_ITEM_NOT_FOUND_ERROR };
+    item.value !== this.SESSION_STORAGE_ITEM_NOT_FOUND_ERROR && sessionStorage.removeItem(key); 
+    this.sessionStorageValueChangeSub.next(item);
+  }
+
+  clearSessionStorage(): void {
+    sessionStorage.clear();
   }
 }
