@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { IndexDbService } from './shared/services/indexed-db/indexed-db.service';
 import { NavigationService } from './shared/services/navigation/navigation.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { NavigationService } from './shared/services/navigation/navigation.servi
 export class AppComponent {
   title = 'workshop-viewer';
 
-  constructor(navigationService: NavigationService) {
+  constructor(navigationService: NavigationService, indexDbService: IndexDbService) {
     navigationService.initializeAppData();
+    indexDbService.initializeAppData();
   }
 }
