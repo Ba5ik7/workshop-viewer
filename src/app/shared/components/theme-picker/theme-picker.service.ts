@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { LocalStorage, WebstorageService } from '../../services/webstorage/webstorage.service';
 
 @Injectable()
 export class ThemePickerService {
@@ -8,14 +9,14 @@ export class ThemePickerService {
   static STRORAGE_KEY: string = 'theme-picker-current-name';
   static NOT_FOUND: string = 'NOT_FOUND';
 
-  constructor(@Inject(DOCUMENT) private document: Document) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private webstorageService: WebstorageService ) { }
 
-  storeTheme(theme: string ): void {
-    window.localStorage[ThemePickerService.STRORAGE_KEY] = theme;
+  storeTheme(theme: string): void {
+    this.webstorageService.setLocalstorageItem({ key: ThemePickerService.STRORAGE_KEY, value: theme });
   }
-
-  getStoredThemeName(): string {
-    return window.localStorage[ThemePickerService.STRORAGE_KEY] ?? ThemePickerService.NOT_FOUND;
+  
+  getStoredThemeName(): LocalStorage {
+    return this.webstorageService.getLocalstorageItem(ThemePickerService.STRORAGE_KEY) ?? ThemePickerService.NOT_FOUND;
   }
 
   setStyle(key: string, href: string): void {

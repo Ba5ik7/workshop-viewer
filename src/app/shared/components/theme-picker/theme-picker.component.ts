@@ -29,7 +29,7 @@ export class ThemePickerComponent implements OnInit {
     iconRegistry.addSvgIcon('theme-example', themeExampleIconURL);
 
     const themeName = themePickerService.getStoredThemeName();
-    this.selectTheme(themeName !== ThemePickerService.NOT_FOUND ? themeName : ThemePickerService.DEFAULT_THEME);
+    this.selectTheme(themeName.value !== ThemePickerService.NOT_FOUND ? themeName : ThemePickerService.DEFAULT_THEME);
   }
 
   ngOnInit(): void { }
