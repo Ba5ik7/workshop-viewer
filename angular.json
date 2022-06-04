@@ -172,6 +172,37 @@
           }
         }
       }
+    },
+    "workshop-live-examples": {
+      "projectType": "library",
+      "root": "projects/workshop-live-examples",
+      "sourceRoot": "projects/workshop-live-examples/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/workshop-live-examples/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/workshop-live-examples/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/workshop-live-examples/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/workshop-live-examples/src/test.ts",
+            "tsConfig": "projects/workshop-live-examples/tsconfig.spec.json",
+            "karmaConfig": "projects/workshop-live-examples/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "workshop-viewer"

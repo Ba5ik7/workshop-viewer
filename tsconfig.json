@@ -21,7 +21,13 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "workshop-live-examples": [
+        "dist/workshop-live-examples/workshop-live-examples",
+        "dist/workshop-live-examples"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
