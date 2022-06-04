@@ -16,7 +16,7 @@ export class ThemePickerService {
   }
   
   getStoredThemeName(): LocalStorage {
-    return this.webstorageService.getLocalstorageItem(ThemePickerService.STRORAGE_KEY) ?? ThemePickerService.NOT_FOUND;
+    return this.webstorageService.getLocalstorageItem(ThemePickerService.STRORAGE_KEY);
   }
 
   setStyle(key: string, href: string): void {
