@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-workshop-live-examples',
-  template: `
-    <p>
-      workshop-live-examples works!
-    </p>
-  `,
-  styles: [
-  ]
+  selector: 'workshop-live-examples',
+  templateUrl: 'workshop-live-examples.component.html',
+  styleUrls: ['workshop-live-examples.component.scss']
 })
 export class WorkshopLiveExamplesComponent implements OnInit {
 

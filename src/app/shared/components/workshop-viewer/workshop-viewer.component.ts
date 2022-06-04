@@ -11,7 +11,9 @@ import {
   ViewContainerRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
+import { LiveExample } from 'workshop-live-examples';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
+import { LiveExampleComponent } from './live-example/live-example.component';
 import { WorkshopViewerService } from './workshop-viewer.service';
 
 @Component({
@@ -22,6 +24,29 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
   destory: Subject<boolean> = new Subject();
+
+  private static initExampleViewer(exampleViewerComponent: LiveExampleComponent,
+    example: string,
+    file: string | null,
+    region: string | null) {
+    exampleViewerComponent.example = example;
+    if (file) {
+      // if the html div has field `file` then it should be in compact view to show the code
+      // snippet
+      exampleViewerComponent.view = 'snippet';
+      exampleViewerComponent.showCompactToggle = true;
+      exampleViewerComponent.file = file;
+      if (region) {
+        // `region` should only exist when `file` exists but not vice versa
+        // It is valid for embedded example snippets to show the whole file (esp short files)
+        exampleViewerComponent.region = region;
+      }
+    } else {
+      // otherwise it is an embedded demo
+      exampleViewerComponent.view = 'demo';
+    }
+
+  }   
 
   constructor(
     private appRef: ApplicationRef,
@@ -54,8 +79,15 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     const exampleElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
     [...exampleElements].forEach((element: Element) => {
       const example = element.getAttribute(componentName);
+      const region = element.getAttribute('region');
+      const file = element.getAttribute('file');
       const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
       const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
+      const exampleViewer = portalHost.attach(examplePortal);
+      const exampleViewerComponent = exampleViewer.instance as LiveExampleComponent;
+      if (example !== null) {
+        WorkshopViewerComponent.initExampleViewer(exampleViewerComponent, example, file, region);
+      }
     });
   }
 
