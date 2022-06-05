@@ -11,7 +11,6 @@ import {
   ViewContainerRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
-import { LiveExample } from 'workshop-live-examples';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
 import { LiveExampleComponent } from './live-example/live-example.component';
 import { WorkshopViewerService } from './workshop-viewer.service';
@@ -64,7 +63,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     .subscribe((data) => {
       this.correctUrlPaths(data);
       this.elementRef.nativeElement.innerHTML = data.html;
-      this.loadLiveExamples('workshop-live-example', 'Test');
+      this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
     });
   }
 

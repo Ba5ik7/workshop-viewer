@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostBinding, Input, OnInit, ɵNgModuleFactory } from '@angular/core';
-import { EXAMPLE_COMPONENTS } from 'workshop-live-examples';
+import { EXAMPLE_COMPONENTS } from 'workshop-live-examples/dist/workshop-live-examples';
 
 export type Views = 'snippet' | 'full' | 'demo';
 
@@ -40,7 +40,7 @@ export class LiveExampleComponent implements OnInit {
       console.error(`Could not find example: ${exampleName}`);
     }
   }
-  private _example: string | undefined; 
+  private _example: any; 
 
   constructor(private readonly elementRef: ElementRef<HTMLElement>) { }
 
@@ -53,20 +53,24 @@ export class LiveExampleComponent implements OnInit {
   private async loadExampleComponent() {
     if (this._example != null) {
       const { componentName, module } = EXAMPLE_COMPONENTS[this._example];
+
+      module.importSpecifier = 'workshop-live-examples' 
       // Lazily loads the example package that contains the requested example. Webpack needs to be
       // able to statically determine possible imports for proper chunk generation. Explicitly
       // specifying the path to the `fesm2015` folder as first segment instructs Webpack to generate
       // chunks for each example flat esm2015 bundle. To avoid generating unnecessary chunks for
       // source maps (which would never be loaded), we instruct Webpack to exclude source map
       // files. More details: https://webpack.js.org/api/module-methods/#magic-comments.
+      // console.log(EXAMPLE_COMPONENTS[this._example]);
       const moduleExports: any = await import(
         /* webpackExclude: /\.map$/ */
-        module.importSpecifier);
+      'workshop-live-examples/dist/workshop-live-examples/fesm2020/' + module.importSpecifier);
       // this.exampleComponentType = moduleExports[componentName];
       // The components examples package is built with Ivy. This means that no factory files are
       // generated. To retrieve the factory of the AOT compiled module, we simply pass the module
       // class symbol to Ivy's module factory constructor. There is no equivalent for View Engine,
       // where factories are stored in separate files. Hence the API is currently Ivy-only.
+      
       this.exampleModuleFactory = new ɵNgModuleFactory(moduleExports[module.name]);
 
       // Since the data is loaded asynchronously, we can't count on the native behavior

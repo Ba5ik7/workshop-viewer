@@ -23,10 +23,6 @@
       "dom"
     ],
     "paths": {
-      "workshop-live-examples": [
-        "dist/workshop-live-examples/workshop-live-examples",
-        "dist/workshop-live-examples"
-      ]
     }
   },
   "angularCompilerOptions": {
