@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostBinding, Input, OnInit, ɵNgModuleFactory } from '@angular/core';
-import { EXAMPLE_COMPONENTS } from 'workshop-live-examples/dist/workshop-live-examples';
+import { Component, ElementRef, HostBinding, Input, OnInit, Type, ɵNgModuleFactory } from '@angular/core';
+import { EXAMPLE_COMPONENTS, LiveExample } from 'workshop-live-examples/dist/workshop-live-examples';
 
 export type Views = 'snippet' | 'full' | 'demo';
 
@@ -12,6 +12,12 @@ export class LiveExampleComponent implements OnInit {
 
   /** Module factory that declares the example component. */
   exampleModuleFactory: ɵNgModuleFactory<any> | null = null;
+
+  /** Component type for the current example. */
+  exampleComponentType: Type<any> | null = null;
+
+  /** Data for the currently selected example. */
+  exampleData: LiveExample | null = null;
 
   /** Whether to show toggle for compact view. */
   @Input() showCompactToggle = false;
@@ -34,6 +40,7 @@ export class LiveExampleComponent implements OnInit {
   set example(exampleName: string | undefined) {
     if (exampleName && exampleName !== this._example && EXAMPLE_COMPONENTS[exampleName]) {
       this._example = exampleName;
+      this.exampleData = EXAMPLE_COMPONENTS[exampleName];
       this.loadExampleComponent().catch((error) =>
         console.error(`Could not load example '${exampleName}': ${error}`));
     } else {
@@ -65,6 +72,7 @@ export class LiveExampleComponent implements OnInit {
       const moduleExports: any = await import(
         /* webpackExclude: /\.map$/ */
       'workshop-live-examples/dist/workshop-live-examples/fesm2020/' + module.importSpecifier);
+      this.exampleComponentType = moduleExports[componentName];
       // this.exampleComponentType = moduleExports[componentName];
       // The components examples package is built with Ivy. This means that no factory files are
       // generated. To retrieve the factory of the AOT compiled module, we simply pass the module

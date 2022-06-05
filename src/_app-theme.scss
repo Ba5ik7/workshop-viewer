@@ -7,6 +7,7 @@
 
 @use './app/shared/components/footer/footer-theme';
 @use './app/shared/components/navbar/navbar-theme';
+@use './app/shared/components/workshop-viewer/live-example/live-example-theme';
 
 // Styles for the docs app that are based on the current theme.
 @mixin theme($theme) {
@@ -35,4 +36,5 @@
 
   @include footer-theme.theme($theme);
   @include navbar-theme.theme($theme);
+  @include live-example-theme.theme($theme);
 }
