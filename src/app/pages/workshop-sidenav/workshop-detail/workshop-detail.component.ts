@@ -12,13 +12,17 @@ import { NavigationService } from '../../../shared/services/navigation/navigatio
 export class WorkshopDetailComponent implements OnDestroy {
 
   destory: Subject<boolean> = new Subject();
+  categoryId!: string;
 
-  constructor(private activatedRoute: ActivatedRoute, private navigationService: NavigationService) {
-    console.log('constructor');
-    
+  constructor(private activatedRoute: ActivatedRoute, private navigationService: NavigationService) {    
     this.activatedRoute.params
     .pipe(takeUntil(this.destory))
-    .subscribe((data) => this.navigationService.categoryRouteSub.next(data['categoryId']));
+    .subscribe((data) => {
+      console.log(data['categoryId']);
+      this.categoryId = data['categoryId']
+      
+      this.navigationService.categoryRouteSub.next(data['categoryId'])
+    });
   }
 
   ngOnDestroy(): void {

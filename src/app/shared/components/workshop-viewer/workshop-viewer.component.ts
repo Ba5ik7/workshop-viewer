@@ -5,6 +5,7 @@ import {
   ComponentFactoryResolver,
   ElementRef,
   Injector,
+  Input,
   OnDestroy,
   OnInit,
   SecurityContext,
@@ -21,6 +22,8 @@ import { WorkshopViewerService } from './workshop-viewer.service';
   styleUrls: ['./workshop-viewer.component.scss']
 })
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
+
+  @Input('categoryId') categoryId!: string;
 
   destory: Subject<boolean> = new Subject();
 
@@ -58,7 +61,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    this.workshopViewerService.fetchWorkshop('/api/workshop/example-document')
+    this.workshopViewerService.fetchWorkshop(`/api/workshop/example-document/${this.categoryId}`)
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);
