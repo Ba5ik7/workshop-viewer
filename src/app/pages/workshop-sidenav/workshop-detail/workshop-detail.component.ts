@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { NavigationService } from '../../../shared/services/navigation/navigation.service';
@@ -6,7 +6,8 @@ import { NavigationService } from '../../../shared/services/navigation/navigatio
 @Component({
   selector: 'workshop-detail',
   templateUrl: './workshop-detail.component.html',
-  styleUrls: ['./workshop-detail.component.scss']
+  styleUrls: ['./workshop-detail.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class WorkshopDetailComponent implements OnDestroy {
 
