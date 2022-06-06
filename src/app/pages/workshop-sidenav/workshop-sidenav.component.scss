@@ -1,3 +1,9 @@
+workshop-sidenav {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
 .workshop-sidenav-container {
   flex: 1;
   box-sizing: border-box;

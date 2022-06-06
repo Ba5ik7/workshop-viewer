@@ -11,6 +11,9 @@ app-navbar {
   right: 0;
   z-index: 2;
 }
+workshop-app > workshop-sidenav {
+  flex: 1;
+}
 
 workshop-app > router-outlet + .main-content,
 workshop-app > router-outlet + workshop-sidenav {

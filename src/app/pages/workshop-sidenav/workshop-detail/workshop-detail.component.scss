@@ -15,3 +15,14 @@ workshop-detail {
     padding-right: 15px;
   }
 }
+
+.workshop-detail-content {
+  position: relative;
+  min-height: 500px;
+
+  workshop-viewer-terrence-dusell {
+    display: flex;
+    align-items: flex-start;
+    overflow: visible;
+  }
+}
