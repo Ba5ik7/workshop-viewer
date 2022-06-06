@@ -72,14 +72,14 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  private correctUrlPaths(data: WorkshopDocument) {
+  private correctUrlPaths(data: WorkshopDocument): void {
     data.html = data.html.replace(/href="#([^"]*)"/g, (_m: string, fragmentUrl: string) => {
       const absoluteUrl = `${location.pathname}#${fragmentUrl}`;
       return `href="${this.domSanitizer.sanitize(SecurityContext.URL, absoluteUrl)}"`;
     });
   }
 
-  loadLiveExamples(componentName: string, componentClass: any) {
+  loadLiveExamples(componentName: string, componentClass: any): void {
     const exampleElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
     [...exampleElements].forEach((element: Element) => {
       const example = element.getAttribute(componentName);
