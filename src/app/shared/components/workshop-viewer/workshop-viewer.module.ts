@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WorkshopViewerComponent } from './workshop-viewer.component';
 import { WorkshopViewerService } from './workshop-viewer.service';
 import { LiveExampleComponent } from './live-example/live-example.component';
+import { CodeHighlighterModule } from '../code-highlighter/code-highlighter.module';
 
 
 
@@ -11,6 +12,7 @@ import { LiveExampleComponent } from './live-example/live-example.component';
   exports: [WorkshopViewerComponent],
   imports: [
     CommonModule,
+    CodeHighlighterModule
   ],
   providers: [WorkshopViewerService]
 })
