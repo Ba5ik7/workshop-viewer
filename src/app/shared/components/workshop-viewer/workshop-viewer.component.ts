@@ -99,7 +99,6 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     const highlightJsElements = this.elementRef.nativeElement.querySelectorAll(`${componentName}`);
     [...highlightJsElements].forEach((element: Element) => {
       const textContent = element.textContent;
-      console.log(textContent);
       const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
       const highlightJsPortal = new ComponentPortal(componentClass, this.viewContainerRef);
       const highlightJsViewer = portalHost.attach(highlightJsPortal);

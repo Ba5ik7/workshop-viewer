@@ -18,9 +18,7 @@ export class WorkshopDetailComponent implements OnDestroy {
     this.activatedRoute.params
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
-      console.log(data['categoryId']);
       this.categoryId = data['categoryId']
-      
       this.navigationService.categoryRouteSub.next(data['categoryId'])
     });
   }

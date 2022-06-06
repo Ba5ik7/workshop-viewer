@@ -68,7 +68,6 @@ export class LiveExampleComponent implements OnInit {
       // chunks for each example flat esm2015 bundle. To avoid generating unnecessary chunks for
       // source maps (which would never be loaded), we instruct Webpack to exclude source map
       // files. More details: https://webpack.js.org/api/module-methods/#magic-comments.
-      // console.log(EXAMPLE_COMPONENTS[this._example]);
       const moduleExports: any = await import(
         /* webpackExclude: /\.map$/ */
       'workshop-live-examples/dist/workshop-live-examples/fesm2020/' + module.importSpecifier);
