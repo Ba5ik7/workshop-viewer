@@ -10,6 +10,7 @@ import { HighlightLoader } from 'ngx-highlightjs';
 export class CodeHighlighterComponent {
 
   @Input() code: string = '';
+  @Input() languages: string = 'typescript';
 
   themeMap: Map<string, string> = new Map([
     ['gradient-dark', 'assets/css/highlight-themes/gradient-dark.css'],
