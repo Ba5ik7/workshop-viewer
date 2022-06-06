@@ -26,3 +26,15 @@ workshop-detail {
     overflow: visible;
   }
 }
+
+// Code highligther will overflow the screen with out this
+.code-highlighter-wrapper {
+  width: calc(100vw - 373px);
+  // Sidenav is hidden
+  @media (max-width: 959px) {
+    width: calc(100vw - 132px);
+  }
+  @media (max-width: 599px) {
+    width: calc(100vw - 62px);
+  }
+}

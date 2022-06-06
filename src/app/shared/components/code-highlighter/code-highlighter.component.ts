@@ -13,9 +13,9 @@ export class CodeHighlighterComponent {
   @Input() language: string = 'typescript';
 
   themeMap: Map<string, string> = new Map([
-    ['gradient-dark', 'assets/css/highlight-themes/gradient-dark.css'],
-    ['github-dark', 'assets/css/highlight-themes/github-dark.css'],
-    ['github', 'assets/css/highlight-themes/github.css']
+    ['gradient-dark', 'assets/css/highlightjs-themes/gradient-dark.css'],
+    ['github-dark', 'assets/css/highlightjs-themes/github-dark.css'],
+    ['github', 'assets/css/highlightjs-themes/github.css']
   ]);
 
   constructor(private hljsLoader: HighlightLoader) { }

@@ -30,7 +30,7 @@ import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
           css: () => import('highlight.js/lib/languages/css'),
           html: () => import('highlight.js/lib/languages/xml')
         },
-        themePath: 'assets/css/highlight-themes/gradient-dark.css'
+        themePath: 'assets/css/highlightjs-themes/gradient-dark.css'
       }
     }
   ],
