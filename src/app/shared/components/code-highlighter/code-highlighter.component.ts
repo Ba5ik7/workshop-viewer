@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { HighlightLoader } from 'ngx-highlightjs';
 
 @Component({
-  selector: 'app-code-highlighter',
+  selector: 'code-highlighter',
   templateUrl: './code-highlighter.component.html',
   styleUrls: ['./code-highlighter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -28,7 +28,7 @@ import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
           css: () => import('highlight.js/lib/languages/css'),
-          html: () => import('highlight.js/lib/languages/html')
+          html: () => import('highlight.js/lib/languages/xml')
         },
         themePath: 'assets/css/highlight-themes/gradient-dark.css'
       }
