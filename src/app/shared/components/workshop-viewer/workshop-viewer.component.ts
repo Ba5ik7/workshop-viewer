@@ -13,6 +13,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
+import { CodeHighlighterComponent } from '../code-highlighter/code-highlighter.component';
 import { LiveExampleComponent } from './live-example/live-example.component';
 import { WorkshopViewerService } from './workshop-viewer.service';
 
@@ -67,6 +68,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
       this.correctUrlPaths(data);
       this.elementRef.nativeElement.innerHTML = data.html;
       this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
+      this.loadCodeHighlighter('code-highlighter', CodeHighlighterComponent);
     });
   }
 
@@ -90,6 +92,14 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
       if (example !== null) {
         WorkshopViewerComponent.initExampleViewer(exampleViewerComponent, example, file, region);
       }
+    });
+  }
+
+  loadCodeHighlighter(componentName: string, componentClass: any): void {
+    const highlightJsElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
+    [...highlightJsElements].forEach((element: Element) => {
+      const textContent = element.textContent;
+      console.log(textContent);
     });
   }
 
