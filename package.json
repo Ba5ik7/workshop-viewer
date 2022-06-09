@@ -20,10 +20,10 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
+    "@tmdjr/workshop-examples": "https://github.com/Ba5ik7/workshop-viewer-examples-dist",
     "ngx-highlightjs": "^7.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "workshop-live-examples": "https://github.com/Ba5ik7/workshop-live-examples/tree/main/dist/workshop-live-examples",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

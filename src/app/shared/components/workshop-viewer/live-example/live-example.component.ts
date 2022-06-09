@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostBinding, Input, OnInit, Type, ɵNgModuleFactory } from '@angular/core';
-import { EXAMPLE_COMPONENTS, LiveExample } from 'workshop-live-examples/dist/workshop-live-examples';
+import { EXAMPLE_COMPONENTS, LiveExample } from '@tmdjr/workshop-examples';
 
 export type Views = 'snippet' | 'full' | 'demo';
 
@@ -61,7 +61,7 @@ export class LiveExampleComponent implements OnInit {
     if (this._example != null) {
       const { componentName, module } = EXAMPLE_COMPONENTS[this._example];
 
-      module.importSpecifier = 'workshop-live-examples' 
+      module.importSpecifier = 'feature-a';
       // Lazily loads the example package that contains the requested example. Webpack needs to be
       // able to statically determine possible imports for proper chunk generation. Explicitly
       // specifying the path to the `fesm2015` folder as first segment instructs Webpack to generate
@@ -70,7 +70,7 @@ export class LiveExampleComponent implements OnInit {
       // files. More details: https://webpack.js.org/api/module-methods/#magic-comments.
       const moduleExports: any = await import(
         /* webpackExclude: /\.map$/ */
-      'workshop-live-examples/dist/workshop-live-examples/fesm2020/' + module.importSpecifier);
+      '@tmdjr/workshop-examples' + module.importSpecifier);
       this.exampleComponentType = moduleExports[componentName];
       // this.exampleComponentType = moduleExports[componentName];
       // The components examples package is built with Ivy. This means that no factory files are
