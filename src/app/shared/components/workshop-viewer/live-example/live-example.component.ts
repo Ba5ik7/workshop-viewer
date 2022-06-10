@@ -1,4 +1,11 @@
-import { Component, ElementRef, HostBinding, Input, OnInit, Type, ɵNgModuleFactory } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  Type,
+  ɵNgModuleFactory
+} from '@angular/core';
 import { EXAMPLE_COMPONENTS, LiveExample } from '@tmdjr/workshop-examples';
 
 export type Views = 'snippet' | 'full' | 'demo';
@@ -8,7 +15,7 @@ export type Views = 'snippet' | 'full' | 'demo';
   templateUrl: './live-example.component.html',
   styleUrls: ['./live-example.component.scss']
 })
-export class LiveExampleComponent implements OnInit {
+export class LiveExampleComponent {
 
   /** Module factory that declares the example component. */
   exampleModuleFactory: ɵNgModuleFactory<any> | null = null;
@@ -51,33 +58,29 @@ export class LiveExampleComponent implements OnInit {
 
   constructor(private readonly elementRef: ElementRef<HTMLElement>) { }
 
-  ngOnInit(): void {
-
-  }
-
-
   /** Loads the component and module factory for the currently selected example. */
   private async loadExampleComponent() {
     if (this._example != null) {
-      const { componentName, module } = EXAMPLE_COMPONENTS[this._example];
-
-      module.importSpecifier = 'feature-a';
+      let { componentName, module } = EXAMPLE_COMPONENTS[this._example];
       // Lazily loads the example package that contains the requested example. Webpack needs to be
       // able to statically determine possible imports for proper chunk generation. Explicitly
       // specifying the path to the `fesm2015` folder as first segment instructs Webpack to generate
       // chunks for each example flat esm2015 bundle. To avoid generating unnecessary chunks for
       // source maps (which would never be loaded), we instruct Webpack to exclude source map
       // files. More details: https://webpack.js.org/api/module-methods/#magic-comments.
+      // module.importSpecifier = 'src/lib/feature-a';
       const moduleExports: any = await import(
         /* webpackExclude: /\.map$/ */
-      '@tmdjr/workshop-examples' + module.importSpecifier);
+      '@tmdjr/workshop-examples/esm2020/' + module.importSpecifier);
+
+      // componentName = AutocompleteSimpleExample
       this.exampleComponentType = moduleExports[componentName];
       // this.exampleComponentType = moduleExports[componentName];
       // The components examples package is built with Ivy. This means that no factory files are
       // generated. To retrieve the factory of the AOT compiled module, we simply pass the module
       // class symbol to Ivy's module factory constructor. There is no equivalent for View Engine,
       // where factories are stored in separate files. Hence the API is currently Ivy-only.
-      
+      // module.name = AutocompleteExamplesModule
       this.exampleModuleFactory = new ɵNgModuleFactory(moduleExports[module.name]);
 
       // Since the data is loaded asynchronously, we can't count on the native behavior
