@@ -8,6 +8,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class NextPageComponent implements OnInit {
 
+  title: string = 'Test';
+  icon: string = 'Test';
+  clickEvent: string = 'Test';
+
   constructor() { }
 
   ngOnInit(): void {

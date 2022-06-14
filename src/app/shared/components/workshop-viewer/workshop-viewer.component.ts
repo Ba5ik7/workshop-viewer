@@ -1,4 +1,4 @@
-import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
+import { CdkPortalOutlet, ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
   ApplicationRef,
   Component,
@@ -15,6 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
 import { CodeHighlighterComponent } from '../code-highlighter/code-highlighter.component';
 import { LiveExampleComponent } from './live-example/live-example.component';
+import { NextPageComponent } from './next-page/next-page.component';
 import { WorkshopViewerService } from './workshop-viewer.service';
 
 @Component({
@@ -69,6 +70,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
       this.elementRef.nativeElement.innerHTML = data.html;
       this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
       this.loadCodeHighlighter('code-highlighter', CodeHighlighterComponent);
+      this.loadNextPage();
     });
   }
 
@@ -79,7 +81,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadLiveExamples(componentName: string, componentClass: any): void {
+  private loadLiveExamples(componentName: string, componentClass: any): void {
     const exampleElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
     [...exampleElements].forEach((element: Element) => {
       const example = element.getAttribute(componentName);
@@ -95,7 +97,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadCodeHighlighter(componentName: string, componentClass: any): void {
+  private loadCodeHighlighter(componentName: string, componentClass: any): void {
     const highlightJsElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
     [...highlightJsElements].forEach((element: Element) => {
       // const textContent = element.textContent;
@@ -105,6 +107,22 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
       const highlightJsViewer = portalHost.attach(highlightJsPortal);
       const highlightJsComponent = highlightJsViewer.instance as CodeHighlighterComponent;
       highlightJsComponent.code = code ?? '';      
+    });
+  }
+
+  private loadNextPage() {
+    const nextPageElements = this.elementRef.nativeElement.querySelectorAll('next-page');
+    [...nextPageElements].forEach((element: Element) => {
+      const title = element.getAttribute('title');
+      const icon = element.getAttribute('icon');
+      const clickEvent = element.getAttribute('click-event');
+      const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
+      const nextPagePortal = new ComponentPortal(NextPageComponent, this.viewContainerRef);
+      const nextPageViewer = portalHost.attach(nextPagePortal);
+      const highlightJsComponent = nextPageViewer.instance as NextPageComponent;
+      // highlightJsComponent.title = title;
+      // highlightJsComponent.icon = icon;
+      // highlightJsComponent.clickEvent = clickEvent;
     });
   }
 
