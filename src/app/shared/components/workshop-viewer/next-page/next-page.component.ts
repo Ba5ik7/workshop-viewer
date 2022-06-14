@@ -17,4 +17,8 @@ export class NextPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleNextClick(clickEvent: any) {
+    console.log(clickEvent);
+  }
+
 }

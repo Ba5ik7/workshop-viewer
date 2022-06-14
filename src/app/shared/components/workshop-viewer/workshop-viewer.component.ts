@@ -120,9 +120,9 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
       const nextPagePortal = new ComponentPortal(NextPageComponent, this.viewContainerRef);
       const nextPageViewer = portalHost.attach(nextPagePortal);
       const highlightJsComponent = nextPageViewer.instance as NextPageComponent;
-      // highlightJsComponent.title = title;
-      // highlightJsComponent.icon = icon;
-      // highlightJsComponent.clickEvent = clickEvent;
+      highlightJsComponent.title = title ?? 'Missing Title';
+      highlightJsComponent.icon = icon ?? '';
+      highlightJsComponent.clickEvent = clickEvent ?? '';
     });
   }
 

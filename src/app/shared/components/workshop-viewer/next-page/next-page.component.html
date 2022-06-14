@@ -1,4 +1,4 @@
-<div class="mat-card workshop-next-page-button" routerLink="/parent-child-design">
-  Next Section: Parent-Child Design
-  <div class="next-icon">arrow_forward</div>
+<div class="mat-card workshop-next-page-button" (click)="handleNextClick(clickEvent)">
+  {{title}}
+  <div class="next-icon">{{icon}}</div>
 </div>
