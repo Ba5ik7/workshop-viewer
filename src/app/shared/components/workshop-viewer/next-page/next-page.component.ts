@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-next-page',
@@ -6,19 +6,15 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./next-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NextPageComponent implements OnInit {
+export class NextPageComponent {
 
-  title: string = 'Test';
-  icon: string = 'Test';
-  clickEvent: string = 'Test';
+  @Output() nextClick = new EventEmitter<string>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  @Input() title?: string;
+  @Input() icon?: string;
+  @Input() clickEvent?: string;
 
   handleNextClick(clickEvent: any) {
-    console.log(clickEvent);
+    this.nextClick.emit(clickEvent);
   }
-
 }
