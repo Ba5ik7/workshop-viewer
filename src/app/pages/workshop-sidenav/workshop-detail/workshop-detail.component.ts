@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { NavigationService } from '../../../shared/services/navigation/navigation.service';
 
 @Component({
@@ -12,15 +12,16 @@ import { NavigationService } from '../../../shared/services/navigation/navigatio
 export class WorkshopDetailComponent implements OnDestroy {
 
   destory: Subject<boolean> = new Subject();
-  categoryId!: string;
+  workshopDocuments!: Observable<string[]>
 
   constructor(private activatedRoute: ActivatedRoute, private navigationService: NavigationService) {    
     this.activatedRoute.params
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
-      this.categoryId = data['categoryId']
       this.navigationService.categoryRouteSub.next(data['categoryId'])
     });
+
+    this.workshopDocuments = navigationService.workshopDocuments$;
   }
 
   ngOnDestroy(): void {

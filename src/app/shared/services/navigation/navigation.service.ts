@@ -50,6 +50,9 @@ export class NavigationService {
   categoryTitleSub = new BehaviorSubject<any>(undefined);
   categoryTitle$: Observable<any> = this.categoryTitleSub.asObservable();
 
+  workshopDocumentsSub = new BehaviorSubject<any>(undefined);
+  workshopDocuments$: Observable<string[]> = this.workshopDocumentsSub.asObservable();
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -102,7 +105,8 @@ export class NavigationService {
     // When the pages frist loads we need to wait for the categories to be set
     // Once they are this method will be call again.
     if(this.categories === undefined) return;
-    const currentCategoryObject = this.categories.find(({ id }) => id === category);    
+    const currentCategoryObject = this.categories.find(({ id }) => id === category);
+    this.workshopDocumentsSub.next(currentCategoryObject?.workshopDocuments);
     this.categorySub.next(currentCategoryObject);
     this.categoryTitleSub.next(currentCategoryObject?.name ?? 'Categories');
   }

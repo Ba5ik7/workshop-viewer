@@ -27,4 +27,6 @@ export interface Category {
   overviewPath?: string;
   /** List of additional API docs. */
   additionalApiDocs?: AdditionalApiDoc[];
+  /** List of object ids for html documents */
+  workshopDocuments?: string[];
 }

@@ -25,8 +25,16 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 })
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
-  @Input('categoryId') categoryId!: string;
+  currentDocuments!: string[]
 
+  @Input('workshopDocuments')
+  set workshopDocuments(currentDocuments: string[] | null) {
+    // Null start :(
+    if(currentDocuments === null || currentDocuments === undefined) return;
+    this.currentDocuments = currentDocuments
+    this.fetchWorkshopDocuments();
+  }
+  
   destory: Subject<boolean> = new Subject();
 
   private static initExampleViewer(exampleViewerComponent: LiveExampleComponent,
@@ -62,8 +70,10 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer
     ) { }
 
-  ngOnInit(): void {
-    this.workshopViewerService.fetchWorkshop(`/api/workshop/example-document/${this.categoryId}`)
+  ngOnInit(): void { }
+
+  private fetchWorkshopDocuments():void {
+    this.workshopViewerService.fetchWorkshop(`/api/workshop/example-document/${this.currentDocuments[0]}`)
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);
