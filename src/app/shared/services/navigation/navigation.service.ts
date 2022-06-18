@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, lastValueFrom, Observable, OperatorFunction, pipe, UnaryFunction } from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
@@ -55,7 +55,7 @@ export class NavigationService {
 
   async initializeAppData(): Promise<void> {
     await this.getSections();
-    await this.getCategories();
+    // await this.getCategories();
 
     this.sectionRoute$
     .pipe(filterNullish())
@@ -74,8 +74,10 @@ export class NavigationService {
     });
   }
 
-  private async getCategories(): Promise<void> {
-    return await lastValueFrom(this.httpClient.get<{ [key: string]: Category[] }>('/api/navigation/categories'))
+  private async getCategories(currentSection: string): Promise<void> {
+    const params = new HttpParams().set('section', currentSection);
+    return await lastValueFrom(this.httpClient
+    .get<{ [key: string]: Category[] }>('/api/navigation/categories', { params }))
     .then((res) => {
       this.categories = res;
       this.categoriesSub.next(res);
