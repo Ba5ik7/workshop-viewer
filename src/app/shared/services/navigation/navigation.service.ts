@@ -20,9 +20,9 @@ export class NavigationService {
   sections$: Observable<any> = this.sectionsSub.asObservable();
   sections!: { [key: string]: Section };
 
-  categoriesSub = new BehaviorSubject<{ [key: string]: Category[] } | undefined>(undefined);
+  categoriesSub = new BehaviorSubject<Category[] | undefined>(undefined);
   categories$: Observable<any> = this.categoriesSub.asObservable();
-  categories!: { [key: string]: Category[] };
+  categories!: Category[];
 
   sectionSub = new BehaviorSubject<any>(undefined);
   section$: Observable<any> = this.sectionSub.asObservable();
@@ -55,7 +55,7 @@ export class NavigationService {
 
   async initializeAppData(): Promise<void> {
     await this.getSections();
-    // await this.getCategories();
+    // await this.getCategories('angular');
 
     this.sectionRoute$
     .pipe(filterNullish())
@@ -63,7 +63,10 @@ export class NavigationService {
     
     this.categoryRoute$
     .pipe(filterNullish())
-    .subscribe((category) => this.setCategoryProperties(category));
+    .subscribe((category) => {
+      this.categoryRoute = category;
+      this.setCategoryProperties(category)
+    });
   }
 
   private async getSections(): Promise<void> {
@@ -77,25 +80,30 @@ export class NavigationService {
   private async getCategories(currentSection: string): Promise<void> {
     const params = new HttpParams().set('section', currentSection);
     return await lastValueFrom(this.httpClient
-    .get<{ [key: string]: Category[] }>('/api/navigation/categories', { params }))
+    .get<Category[]>('/api/navigation/categories', { params }))
     .then((res) => {
       this.categories = res;
       this.categoriesSub.next(res);
+      this.setCategoryProperties(this.categoryRoute);
     });
   }
 
-  private setSectionProperties(section: string): void {
+  private async setSectionProperties(section: string): Promise<void> {
+    await this.getCategories(section);
+    
     this.sectionRoute = section;
-    this.sectionSub.next(this.sections[section]);    
-    this.sectionNavListSub.next(this.categories[section]);
+    this.sectionSub.next(this.sections[section]);  
     this.sectionTitleSub.next(this.sections[section].sectionTitle);
     this.headerSvgPathSub.next(this.sections[section].headerSvgPath);
+    this.sectionNavListSub.next(this.categories);
   }
 
   private setCategoryProperties(category: string): void {
-    const categoryObject = this.categories[this.sectionRoute].find(({ id }) => id === category);
-    this.categoryRoute = category;
-    this.categorySub.next(categoryObject);
-    this.categoryTitleSub.next(categoryObject?.name ?? 'Categories');
+    // When the pages frist loads we need to wait for the categories to be set
+    // Once they are this method will be call again.
+    if(this.categories === undefined) return;
+    const currentCategoryObject = this.categories.find(({ id }) => id === category);    
+    this.categorySub.next(currentCategoryObject);
+    this.categoryTitleSub.next(currentCategoryObject?.name ?? 'Categories');
   }
 }
