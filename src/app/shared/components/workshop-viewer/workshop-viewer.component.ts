@@ -131,6 +131,14 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
       nextPageComponent.title = element.getAttribute('title') ?? 'Missing Title';
       nextPageComponent.icon =  element.getAttribute('icon') ?? '';
       nextPageComponent.clickEvent = element.getAttribute('click-event') ?? '';
+      nextPageComponent.nextClick
+      .pipe(takeUntil(this.destory))
+      .subscribe((event => {
+        // TODO setup real pagnation
+        console.log(event);
+        console.log('62aa78b1e0c43119ba4c2acc');
+        this.workshopDocuments = ['62aa78b1e0c43119ba4c2acc'];
+      }))
     });
   }
 
