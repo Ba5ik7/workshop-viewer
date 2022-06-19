@@ -12,3 +12,9 @@ $_theme: mat.define-light-theme($_primary, $_accent);
 
 @include mat.all-component-themes($_theme);
 @include app-theme.theme($_theme);
+
+// It's only been a week since IE has die and now this on Edge
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
