@@ -1,5 +1,5 @@
 <div class="form-container">
-  <form [formGroup]="signInForm">
+  <form [formGroup]="signInForm" *ngIf="!showCreateAccount">
     <h3>Sign In</h3>
     <mat-form-field>
       <mat-label>Email</mat-label>
@@ -9,6 +9,25 @@
       <mat-label>Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
-    <button mat-button (click)="signInClick()" [disabled]="signInForm.invalid">Sign In</button>
+    <button mat-raised-button color="primary" (click)="signInClick()" [disabled]="signInForm.invalid">Sign In</button>
+    <a mat-flat-button (click)="showCreateAccount = true">Create Account</a>
+  </form>
+
+  <form [formGroup]="createAccountForm" *ngIf="showCreateAccount">
+    <h3>Create Account</h3>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="Password" formControlName="password">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password" placeholder="Password" formControlName="confirmPassword">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="createAccountClick()" [disabled]="signInForm.invalid">Create Acccount</button>
+    <a mat-flat-button (click)="showCreateAccount = false">Sign In</a>
   </form>
 </div>
