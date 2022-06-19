@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'sign-in-modal',
@@ -8,9 +9,18 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@
 })
 export class SignInModalComponent implements OnInit {
 
-  constructor() { }
+  signInForm: FormGroup = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email ]],
+    password: ['', [Validators.required, Validators.minLength(5) ]]
+  });
 
-  ngOnInit(): void {
+  constructor(private formBuilder: FormBuilder) { }
+
+  ngOnInit(): void { }
+
+  signInClick(): void {
+    console.log(this.signInForm.value);
+    
   }
 
 }

@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { SignInModalComponent } from './sign-in-modal/sign-in-modal.component';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/mat
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
     MatInputModule,

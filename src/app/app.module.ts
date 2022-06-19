@@ -8,6 +8,7 @@ import { NavbarModule } from './shared/components/navbar/navbar.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     NavbarModule
   ],
   providers: [

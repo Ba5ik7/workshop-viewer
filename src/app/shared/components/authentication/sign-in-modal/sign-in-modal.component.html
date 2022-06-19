@@ -1,14 +1,14 @@
 <div class="form-container">
-  <form>
+  <form [formGroup]="signInForm">
     <h3>Sign In</h3>
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput placeholder="Email">
+      <input matInput type="email" placeholder="Email" formControlName="email">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput placeholder="Password">
+      <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
-    <button mat-button>Sign In</button>
+    <button mat-button (click)="signInClick()" [disabled]="signInForm.invalid">Sign In</button>
   </form>
 </div>
