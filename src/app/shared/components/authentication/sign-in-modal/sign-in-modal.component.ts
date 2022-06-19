@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'sign-in-modal',
@@ -22,16 +23,16 @@ export class SignInModalComponent implements OnInit {
     confirmPassword: ['', [Validators.required, Validators.minLength(5) ]],
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void { }
 
   signInClick(): void {
-    console.log(this.signInForm.value);    
+    this.authenticationService.signIn(this.signInForm.value);    
   }
 
   createAccountClick(): void {
-    console.log(this.createAccountForm.value);    
+    this.authenticationService.createAccount(this.createAccountForm.value);
   }
 
 }
