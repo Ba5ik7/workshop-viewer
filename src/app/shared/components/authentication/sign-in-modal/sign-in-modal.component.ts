@@ -32,6 +32,8 @@ export class SignInModalComponent implements OnInit {
   }
 
   createAccountClick(): void {
+    console.log('hello');
+    
     this.authenticationService.createAccount(this.createAccountForm.value);
   }
 
