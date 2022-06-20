@@ -14,7 +14,7 @@ export class SignInModalComponent implements OnInit {
 
   destory: Subject<boolean> = new Subject();
 
-  errorMessages: {[key: string]: string } = {
+  errorMessages: { [key: string]: string } = {
     required: 'Required',
     email: 'Invalid email address',
     invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
@@ -22,11 +22,11 @@ export class SignInModalComponent implements OnInit {
     matchPassword: 'Password Mismatch'
   };
 
-  signInFormErrorMessages: {[key: string]: string } = {
+  signInFormErrorMessages: { [key: string]: string } = {
     email: '', password: ''
   }
 
-  createAccountFormMessages: {[key: string]: string } = {
+  createAccountFormMessages: { [key: string]: string } = {
     email: '', password: '', confirmPassword: ''
   }
 
@@ -67,7 +67,7 @@ export class SignInModalComponent implements OnInit {
     this.authenticationService.createAccount(this.createAccountForm.value);
   }
 
-  setErrorsMessages(formGroup: FormGroup, formControlMessages: {[key: string]: string }): void {
+  setErrorsMessages(formGroup: FormGroup, formControlMessages: { [key: string]: string }): void {
     Object.keys(formGroup.controls).forEach(element => {
       const errors = formGroup.get(element)?.errors;
       if(errors) {         
