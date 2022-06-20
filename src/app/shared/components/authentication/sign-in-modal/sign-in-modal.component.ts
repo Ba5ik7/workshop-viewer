@@ -19,13 +19,10 @@ export class SignInModalComponent implements OnInit {
   });
 
   createAccountForm: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.email]],
-    password: ['', [Validators.minLength(5)]],
-    confirmPassword: [''],
-  }, { validators: [
-      Validators.required,
-      MatchPasswordValidator('password', 'confirmPassword')
-    ]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(5)]],
+    confirmPassword: ['', Validators.required],
+  }, { validators: MatchPasswordValidator('confirmPassword', 'password')
   });
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) { }
