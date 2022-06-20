@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MatchPasswordValidator } from 'src/app/shared/validators/match-passwords.validator';
+import { PasswordValidator } from 'src/app/shared/validators/password.validator';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
@@ -17,8 +18,7 @@ export class SignInModalComponent implements OnInit {
   errorMessages: { [key: string]: string } = {
     required: 'Required',
     email: 'Invalid email address',
-    invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
-    minlength: 'Minimum length not met.',
+    invalidPassword: 'At least 6 characters long, Contain a number',
     matchPassword: 'Password Mismatch'
   };
 
@@ -34,12 +34,12 @@ export class SignInModalComponent implements OnInit {
 
   signInForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(5)]]
+    password: ['', [Validators.required, PasswordValidator()]]
   });
 
   createAccountForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(5)]],
+    password: ['', [Validators.required, PasswordValidator()]],
     confirmPassword: ['', Validators.required],
   }, { validators: MatchPasswordValidator('confirmPassword', 'password')});
 

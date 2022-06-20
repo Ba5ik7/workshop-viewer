@@ -15,6 +15,6 @@ export class AuthenticationComponent implements OnInit {
   ngOnInit(): void { }
 
   openDialog(): void {
-    this.matDialog.open(SignInModalComponent);
+    this.matDialog.open(SignInModalComponent, { width: '300px' });
   }
 }
