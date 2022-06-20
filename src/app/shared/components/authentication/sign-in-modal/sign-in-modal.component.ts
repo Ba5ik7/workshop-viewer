@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { MatchPasswordValidator } from 'src/app/shared/validators/match-passwords.validator';
 import { AuthenticationService } from '../authentication.service';
 
@@ -10,6 +11,24 @@ import { AuthenticationService } from '../authentication.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignInModalComponent implements OnInit {
+
+  destory: Subject<boolean> = new Subject();
+
+  errorMessages: {[key: string]: string } = {
+    required: 'Required',
+    email: 'Invalid email address',
+    invalidPassword: 'Invalid password. Password must be at least 6 characters long, and contain a number.',
+    minlength: 'Minimum length not met.',
+    matchPassword: 'Password Mismatch'
+  };
+
+  signInFormErrorMessages: {[key: string]: string } = {
+    email: '', password: ''
+  }
+
+  createAccountFormMessages: {[key: string]: string } = {
+    email: '', password: '', confirmPassword: ''
+  }
 
   showCreateAccount: boolean = false;
 
@@ -22,12 +41,23 @@ export class SignInModalComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(5)]],
     confirmPassword: ['', Validators.required],
-  }, { validators: MatchPasswordValidator('confirmPassword', 'password')
-  });
+  }, { validators: MatchPasswordValidator('confirmPassword', 'password')});
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.signInForm.statusChanges
+    .pipe(takeUntil(this.destory))
+    .subscribe(() => this.setErrorsMessages(this.signInForm, this.signInFormErrorMessages));
+    
+    this.createAccountForm.statusChanges
+    .pipe(takeUntil(this.destory))
+    .subscribe(() => this.setErrorsMessages(this.createAccountForm, this.createAccountFormMessages));
+  }
+
+  ngOnDestroy(): void {
+    this.destory.next(true);
+  }
 
   signInClick(): void {
     this.authenticationService.signIn(this.signInForm.value);    
@@ -37,4 +67,13 @@ export class SignInModalComponent implements OnInit {
     this.authenticationService.createAccount(this.createAccountForm.value);
   }
 
+  setErrorsMessages(formGroup: FormGroup, formControlMessages: {[key: string]: string }): void {
+    Object.keys(formGroup.controls).forEach(element => {
+      const errors = formGroup.get(element)?.errors;
+      if(errors) {         
+        const error = Object.keys(errors)[0];
+        formControlMessages[element] = this.errorMessages[error];
+      }
+    });
+  }
 }

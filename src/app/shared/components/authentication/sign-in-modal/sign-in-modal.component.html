@@ -4,31 +4,33 @@
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput type="email" placeholder="Email" formControlName="email">
+      <mat-error *ngIf="signInForm.get('email')?.errors">{{signInFormErrorMessages['email']}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="password">
+      <mat-error *ngIf="signInForm.get('password')?.errors">{{signInFormErrorMessages['password']}}</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="signInClick()" [disabled]="signInForm.invalid">Sign In</button>
     <a mat-flat-button (click)="showCreateAccount = true">Create Account</a>
   </form>
-
+  
   <form [formGroup]="createAccountForm" *ngIf="showCreateAccount">
     <h3>Create Account</h3>
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput type="email" placeholder="Email" formControlName="email">
-      <!-- <mat-error *ngIf="createAccountForm.invalid">{{getErrorMessage()}}</mat-error> -->
+      <mat-error *ngIf="createAccountForm.get('email')?.errors">{{createAccountFormMessages['email']}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="password">
-      <!-- <mat-error *ngIf="createAccountForm.invalid">{{getErrorMessage()}}</mat-error> -->
+      <mat-error *ngIf="createAccountForm.get('password')?.errors">{{createAccountFormMessages['password']}}</mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Confirm Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="confirmPassword">
-      <mat-error *ngIf="createAccountForm.get('confirmPassword')?.hasError('matchPassword')">Password Mismatch</mat-error>
+      <mat-error *ngIf="createAccountForm.get('confirmPassword')?.errors">{{createAccountFormMessages['confirmPassword']}}</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="createAccountClick()" [disabled]="createAccountForm.invalid">Create Acccount</button>
     <a mat-flat-button (click)="showCreateAccount = false">Sign In</a>

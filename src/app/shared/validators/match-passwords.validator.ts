@@ -5,15 +5,22 @@ export function MatchPasswordValidator(controlName: string, toMatchControlName: 
     const controlOne: AbstractControl|null = control.get(controlName);
     const controlTwo: AbstractControl|null = control.get(toMatchControlName);
     const error: boolean = (controlOne && controlTwo && controlOne?.value !== controlTwo?.value) ?? false;
-    const validatorFn = {
-      matchPassword: {
-        value: {
-          controlOne: controlOne?.value,
-          controlTwo: controlTwo?.value
+    let validatorFn = null
+    // Keep errors if the control has other validators
+    if(error) {
+      validatorFn = {
+        matchPassword: {
+          value: {
+            controlOne: controlOne?.value,
+            controlTwo: controlTwo?.value
+          }
         }
-      }
-    };
-    controlOne?.setErrors(error ? validatorFn : null);
+      };
+    } else if(controlOne?.errors) {
+      validatorFn = controlOne?.errors;
+    }
+
+    controlOne?.setErrors(validatorFn);
     return  error ? validatorFn : null;
   };
 }
