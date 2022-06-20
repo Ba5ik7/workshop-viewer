@@ -18,14 +18,17 @@
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput type="email" placeholder="Email" formControlName="email">
+      <!-- <mat-error *ngIf="createAccountForm.invalid">{{getErrorMessage()}}</mat-error> -->
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="password">
+      <!-- <mat-error *ngIf="createAccountForm.invalid">{{getErrorMessage()}}</mat-error> -->
     </mat-form-field>
     <mat-form-field>
       <mat-label>Confirm Password</mat-label>
       <input matInput type="password" placeholder="Password" formControlName="confirmPassword">
+      <mat-error *ngIf="createAccountForm.get('confirmPassword')?.hasError('matchPassword')">Password Mismatch</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="createAccountClick()" [disabled]="createAccountForm.invalid">Create Acccount</button>
     <a mat-flat-button (click)="showCreateAccount = false">Sign In</a>
