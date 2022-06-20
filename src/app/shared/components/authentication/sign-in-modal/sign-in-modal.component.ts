@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatchPasswordValidator } from 'src/app/shared/validators/match-passwords.validator';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
@@ -13,14 +14,18 @@ export class SignInModalComponent implements OnInit {
   showCreateAccount: boolean = false;
 
   signInForm: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email ]],
-    password: ['', [Validators.required, Validators.minLength(5) ]]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(5)]]
   });
 
   createAccountForm: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email ]],
-    password: ['', [Validators.required, Validators.minLength(5) ]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(5) ]],
+    email: ['', [Validators.email]],
+    password: ['', [Validators.minLength(5)]],
+    confirmPassword: [''],
+  }, { validators: [
+      Validators.required,
+      MatchPasswordValidator('password', 'confirmPassword')
+    ]
   });
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) { }
@@ -32,8 +37,6 @@ export class SignInModalComponent implements OnInit {
   }
 
   createAccountClick(): void {
-    console.log('hello');
-    
     this.authenticationService.createAccount(this.createAccountForm.value);
   }
 
