@@ -18,7 +18,7 @@ export class SignInModalComponent implements OnInit {
   errorMessages: { [key: string]: string } = {
     required: 'Required',
     email: 'Invalid email address',
-    invalidPassword: 'At least 6 characters long, Contain a number',
+    invalidPassword: 'At least 6 characters long and contain a number',
     matchPassword: 'Password Mismatch'
   };
 
