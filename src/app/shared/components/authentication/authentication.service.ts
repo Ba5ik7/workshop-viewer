@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
+import { IUser } from '../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +14,24 @@ export class AuthenticationService {
     console.log(value);
   }
   
-  createAccount(value: any) {
-    console.log(value);
-    this.httpClient.post('/api/auth/local/create-account', value)
-    .pipe(catchError((error: HttpErrorResponse) => this.handleCreateAccountError(error)))
-    .subscribe((res) => {
-      console.log(res);      
+  createAccount(value: IUser) {
+    this.httpClient.post<IUser>('/api/auth/local/create-account', value)
+    .subscribe({
+      next: (user) => this.handleCreateAccountSuccess(user),
+      error: (error: HttpErrorResponse) => this.handleCreateAccountError(error)
     });
   }
 
-  handleCreateAccountError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
-    console.log(error);
-    return of(error)
+  handleCreateAccountSuccess(user: IUser): void {
+    console.log({
+      user
+    });
+  }
+
+  handleCreateAccountError(error: HttpErrorResponse): void {
+    console.log({
+      error
+    });
   }
 
 }
