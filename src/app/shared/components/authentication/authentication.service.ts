@@ -10,8 +10,8 @@ export class AuthenticationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  signIn(value: IUser) {
-    this.httpClient.post<IUser>('/api/auth/local/create-account', value)
+  signIn(user: IUser) {
+    this.httpClient.post<IUser>('/api/auth/local/login', user)
     .subscribe({
       next: (user) => {
         console.log({
@@ -32,8 +32,8 @@ export class AuthenticationService {
   createAccountFormSuccessSubject = new Subject<IUser>();
   createAccountFormSuccess$ = this.createAccountFormSuccessSubject.asObservable();
 
-  createAccount(value: IUser) {
-    this.httpClient.post<IUser>('/api/auth/local/create-account', value)
+  createAccount(user: IUser) {
+    this.httpClient.post<IUser>('/api/auth/local/create-account', user)
     .subscribe({
       next: (user) => this.createAccountFormSuccessSubject.next(user),
       error: (httpError: HttpErrorResponse) => this.createAccountFormErrorSubject.next(httpError.status)
