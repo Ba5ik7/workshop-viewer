@@ -17,6 +17,7 @@
   
   <form [formGroup]="createAccountForm" *ngIf="showCreateAccount">
     <h3>Create Account</h3>
+    <span class="form-level-error-message">{{createAccountFormLevelMessage}}</span>
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput #createAccountEmail type="email" placeholder="Email" formControlName="email">

@@ -3,6 +3,10 @@
   flex-direction: column;
   gap: 5px;
 
+  .form-level-error-message {
+    color:  #f44336;
+  }
+
   button {
     margin-bottom: 14px;
     &:nth-last-child(1) {

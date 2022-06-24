@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -20,7 +20,8 @@ export class SignInModalComponent implements OnInit {
 
   destory: Subject<boolean> = new Subject();
 
-  createAccountFormLevelError = this.authenticationService.createAccountFormError$
+  createAccountFormLevelError = this.authenticationService.createAccountFormError$;
+  createAccountFormLevelMessage: string = '';
 
   errorMessages: { [key: string]: string } = {
     required: 'Required',
@@ -28,7 +29,7 @@ export class SignInModalComponent implements OnInit {
     invalidPassword: 'At least 6 characters long and contain a number',
     matchPassword: 'Password Mismatch',
     duplicateKey: 'Email has been taken. Choose another or login.',
-    httpFailure: '😿 Sorry something bad happen. Try again or refreshing the page.'
+    httpFailure: '😿 Sorry something bad happen. Try again or try refreshing the page.'
   };
 
   signInFormErrorMessages: { [key: string]: string } = {
@@ -54,6 +55,7 @@ export class SignInModalComponent implements OnInit {
   }, { validators: MatchPasswordValidator('confirmPassword', 'password')});
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private dialogRef: MatDialogRef<SignInModalComponent>,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
@@ -88,7 +90,8 @@ export class SignInModalComponent implements OnInit {
         this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
         this.createAccountEmail.nativeElement.focus();
       } else {
-
+        this.createAccountFormLevelMessage = this.errorMessages['httpFailure'];
+        this.changeDetectorRef.markForCheck();
       }
     });
 
