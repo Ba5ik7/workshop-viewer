@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MatchPasswordValidator } from 'src/app/shared/validators/match-passwords.validator';
@@ -13,6 +13,8 @@ import { AuthenticationService } from '../authentication.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignInModalComponent implements OnInit {
+
+  @ViewChild('createAccountEmail') createAccountEmail!: ElementRef;
 
   destory: Subject<boolean> = new Subject();
 
@@ -72,6 +74,7 @@ export class SignInModalComponent implements OnInit {
       this.createAccountFormLoading = false;
       if(error === HttpStatusCode.Conflict) {
         this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
+        this.createAccountEmail.nativeElement.focus();
       }
     });
 
