@@ -1,7 +1,9 @@
 import { HttpStatusCode } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
+import { UserStateService } from 'src/app/shared/services/user-state/user-state.service';
 import { MatchPasswordValidator } from 'src/app/shared/validators/match-passwords.validator';
 import { PasswordValidator } from 'src/app/shared/validators/password.validator';
 import { AuthenticationService } from '../authentication.service';
@@ -50,7 +52,12 @@ export class SignInModalComponent implements OnInit {
     confirmPassword: ['', Validators.required],
   }, { validators: MatchPasswordValidator('confirmPassword', 'password')});
 
-  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) { }
+  constructor(
+    private dialogRef: MatDialogRef<SignInModalComponent>,
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private userStateService: UserStateService
+  ) { }
 
   ngOnInit(): void {
     this.initSignForm();
@@ -86,7 +93,8 @@ export class SignInModalComponent implements OnInit {
     .pipe(takeUntil(this.destory))
     .subscribe((user) => {
       this.createAccountFormLoading = false;
-      console.log({ user });
+      this.userStateService.setUser(user);
+      this.dialogRef.close();
     });
   }
 
