@@ -24,13 +24,7 @@ export class AuthenticationService {
     this.httpClient.post<IUser>('/api/auth/local/create-account', value)
     .subscribe({
       next: (user) => this.createAccountFormSuccessSubject.next(user),
-      error: (httpError: HttpErrorResponse) => this.handleCreateAccountError(httpError)
+      error: (httpError: HttpErrorResponse) => this.createAccountFormErrorSubject.next(httpError.status)
     });
-  }
-
-  handleCreateAccountError(httpError: HttpErrorResponse): void {
-    if(httpError.status === 409) {
-      this.createAccountFormErrorSubject.next(httpError.status);
-    }
   }
 }
