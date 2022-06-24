@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { IUser } from '../../interfaces/user.interface';
@@ -14,7 +14,7 @@ export class AuthenticationService {
     console.log(value);
   }
   
-  createAccountFormErrorSubject = new BehaviorSubject<string>('');
+  createAccountFormErrorSubject = new BehaviorSubject<number>(HttpStatusCode.ImATeapot);
   createAccountFormError$ = this.createAccountFormErrorSubject.asObservable()
 
   createAccount(value: IUser) {
@@ -33,7 +33,7 @@ export class AuthenticationService {
 
   handleCreateAccountError(httpError: HttpErrorResponse): void {
     if(httpError.status === 409) {
-      this.createAccountFormErrorSubject.next('Email has been taken. Choose another or login.');
+      this.createAccountFormErrorSubject.next(httpError.status);
     }
   }
 }

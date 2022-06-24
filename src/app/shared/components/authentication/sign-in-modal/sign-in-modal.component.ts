@@ -1,3 +1,4 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,11 +16,14 @@ export class SignInModalComponent implements OnInit {
 
   destory: Subject<boolean> = new Subject();
 
+  createAccountFormLevelError = this.authenticationService.createAccountFormError$
+
   errorMessages: { [key: string]: string } = {
     required: 'Required',
     email: 'Invalid email address',
     invalidPassword: 'At least 6 characters long and contain a number',
-    matchPassword: 'Password Mismatch'
+    matchPassword: 'Password Mismatch',
+    duplicateKey: 'Email has been taken. Choose another or login.'
   };
 
   signInFormErrorMessages: { [key: string]: string } = {
@@ -53,6 +57,15 @@ export class SignInModalComponent implements OnInit {
     this.createAccountForm.statusChanges
     .pipe(takeUntil(this.destory))
     .subscribe(() => this.setErrorsMessages(this.createAccountForm, this.createAccountFormMessages));
+
+    this.authenticationService.createAccountFormError$
+    .pipe(takeUntil(this.destory))
+    .subscribe((error) => {
+      if(error === HttpStatusCode.Conflict) {
+        this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
+      }
+    });
+    
   }
 
   ngOnDestroy(): void {
