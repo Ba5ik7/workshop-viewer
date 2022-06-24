@@ -27,7 +27,8 @@ export class SignInModalComponent implements OnInit {
     email: 'Invalid email address',
     invalidPassword: 'At least 6 characters long and contain a number',
     matchPassword: 'Password Mismatch',
-    duplicateKey: 'Email has been taken. Choose another or login.'
+    duplicateKey: 'Email has been taken. Choose another or login.',
+    httpFailure: '😿 Sorry something bad happen. Try again or refreshing the page.'
   };
 
   signInFormErrorMessages: { [key: string]: string } = {
@@ -86,6 +87,8 @@ export class SignInModalComponent implements OnInit {
       if(error === HttpStatusCode.Conflict) {
         this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
         this.createAccountEmail.nativeElement.focus();
+      } else {
+
       }
     });
 
