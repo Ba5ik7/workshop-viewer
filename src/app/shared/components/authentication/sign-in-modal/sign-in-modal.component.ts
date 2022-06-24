@@ -110,6 +110,7 @@ export class SignInModalComponent implements OnInit {
 
   requestInProgress(predicate: boolean = false) {
     this.createAccountFormLoading = predicate;
+    this.dialogRef.disableClose = predicate;
   }
 
   setErrorsMessages(formGroup: FormGroup, formControlMessages: { [key: string]: string }): void {
