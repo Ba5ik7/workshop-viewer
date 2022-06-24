@@ -50,10 +50,17 @@ export class SignInModalComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.initSignForm();
+    this.initCreateAccountForm();
+  }
+
+  initSignForm(): void {
     this.signInForm.statusChanges
     .pipe(takeUntil(this.destory))
     .subscribe(() => this.setErrorsMessages(this.signInForm, this.signInFormErrorMessages));
-    
+  }
+
+  initCreateAccountForm() {
     this.createAccountForm.statusChanges
     .pipe(takeUntil(this.destory))
     .subscribe(() => this.setErrorsMessages(this.createAccountForm, this.createAccountFormMessages));
@@ -65,7 +72,7 @@ export class SignInModalComponent implements OnInit {
         this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
       }
     });
-    
+
     this.authenticationService.createAccountFormSuccess$
     .pipe(takeUntil(this.destory))
     .subscribe((user) => {
