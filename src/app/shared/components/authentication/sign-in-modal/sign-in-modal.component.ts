@@ -57,6 +57,10 @@ export class SignInModalComponent implements OnInit {
     this.initCreateAccountForm();
   }
 
+  ngOnDestroy(): void {
+    this.destory.next(true);
+  }
+
   initSignForm(): void {
     this.signInForm.statusChanges
     .pipe(takeUntil(this.destory))
@@ -84,10 +88,6 @@ export class SignInModalComponent implements OnInit {
       this.createAccountFormLoading = false;
       console.log({ user });
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destory.next(true);
   }
 
   signInClick(): void {
