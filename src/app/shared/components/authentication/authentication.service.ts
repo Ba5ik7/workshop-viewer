@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, Subject } from 'rxjs';
 import { IUser } from '../../interfaces/user.interface';
 
 @Injectable({
@@ -15,19 +15,16 @@ export class AuthenticationService {
   }
   
   createAccountFormErrorSubject = new BehaviorSubject<number>(HttpStatusCode.ImATeapot);
-  createAccountFormError$ = this.createAccountFormErrorSubject.asObservable()
+  createAccountFormError$ = this.createAccountFormErrorSubject.asObservable();
+
+  createAccountFormSuccessSubject = new Subject<IUser>();
+  createAccountFormSuccess$ = this.createAccountFormSuccessSubject.asObservable();
 
   createAccount(value: IUser) {
     this.httpClient.post<IUser>('/api/auth/local/create-account', value)
     .subscribe({
-      next: (user) => this.handleCreateAccountSuccess(user),
+      next: (user) => this.createAccountFormSuccessSubject.next(user),
       error: (httpError: HttpErrorResponse) => this.handleCreateAccountError(httpError)
-    });
-  }
-
-  handleCreateAccountSuccess(user: IUser): void {
-    console.log({
-      user
     });
   }
 

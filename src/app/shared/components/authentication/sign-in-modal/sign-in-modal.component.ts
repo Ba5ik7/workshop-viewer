@@ -66,6 +66,11 @@ export class SignInModalComponent implements OnInit {
       }
     });
     
+    this.authenticationService.createAccountFormSuccess$
+    .pipe(takeUntil(this.destory))
+    .subscribe((user) => {
+      console.log({ user });
+    });
   }
 
   ngOnDestroy(): void {
