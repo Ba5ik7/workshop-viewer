@@ -12,7 +12,7 @@
       <mat-error *ngIf="signInForm.get('password')?.errors">{{signInFormErrorMessages['password']}}</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="signInClick()" [disabled]="signInForm.invalid">Sign In</button>
-    <a mat-flat-button (click)="showCreateAccount = true">Create Account</a>
+    <button mat-flat-button (click)="showCreateAccount = true" [disabled]="createAccountFormLoading">Create Account</button>
   </form>
   
   <form [formGroup]="createAccountForm" *ngIf="showCreateAccount">
@@ -33,6 +33,6 @@
       <mat-error *ngIf="createAccountForm.get('confirmPassword')?.errors">{{createAccountFormMessages['confirmPassword']}}</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="createAccountClick()" [disabled]="createAccountForm.invalid || createAccountFormLoading">Create Acccount</button>
-    <a mat-flat-button (click)="showCreateAccount = false">Sign In</a>
+    <button mat-flat-button (click)="showCreateAccount = false" [disabled]="createAccountFormLoading">Sign In</button>
   </form>
 </div>
