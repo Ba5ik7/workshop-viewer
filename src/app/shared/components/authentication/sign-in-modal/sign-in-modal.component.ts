@@ -35,6 +35,7 @@ export class SignInModalComponent implements OnInit {
   }
 
   showCreateAccount: boolean = false;
+  createAccountFormLoading: boolean = false;
 
   signInForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -67,7 +68,8 @@ export class SignInModalComponent implements OnInit {
 
     this.authenticationService.createAccountFormError$
     .pipe(takeUntil(this.destory))
-    .subscribe((error) => {
+    .subscribe((error) => {      
+      this.createAccountFormLoading = false;
       if(error === HttpStatusCode.Conflict) {
         this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
       }
@@ -76,6 +78,7 @@ export class SignInModalComponent implements OnInit {
     this.authenticationService.createAccountFormSuccess$
     .pipe(takeUntil(this.destory))
     .subscribe((user) => {
+      this.createAccountFormLoading = false;
       console.log({ user });
     });
   }
@@ -89,6 +92,7 @@ export class SignInModalComponent implements OnInit {
   }
 
   createAccountClick(): void {
+    this.createAccountFormLoading = true;
     this.authenticationService.createAccount(this.createAccountForm.value);
   }
 

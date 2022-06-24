@@ -32,7 +32,7 @@
       <input matInput type="password" placeholder="Password" formControlName="confirmPassword">
       <mat-error *ngIf="createAccountForm.get('confirmPassword')?.errors">{{createAccountFormMessages['confirmPassword']}}</mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="createAccountClick()" [disabled]="createAccountForm.invalid">Create Acccount</button>
+    <button mat-raised-button color="primary" (click)="createAccountClick()" [disabled]="createAccountForm.invalid || createAccountFormLoading">Create Acccount</button>
     <a mat-flat-button (click)="showCreateAccount = false">Sign In</a>
   </form>
 </div>

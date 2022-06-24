@@ -14,7 +14,7 @@ export class AuthenticationService {
     console.log(value);
   }
   
-  createAccountFormErrorSubject = new BehaviorSubject<number>(HttpStatusCode.ImATeapot);
+  createAccountFormErrorSubject = new Subject<number>();
   createAccountFormError$ = this.createAccountFormErrorSubject.asObservable();
 
   createAccountFormSuccessSubject = new Subject<IUser>();
