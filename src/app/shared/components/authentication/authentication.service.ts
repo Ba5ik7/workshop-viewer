@@ -10,8 +10,20 @@ export class AuthenticationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  signIn(value: any) {
-    console.log(value);
+  signIn(value: IUser) {
+    this.httpClient.post<IUser>('/api/auth/local/create-account', value)
+    .subscribe({
+      next: (user) => {
+        console.log({
+          user
+        });
+      },
+      error: (httpError: HttpErrorResponse) => {
+        console.log({
+          httpError
+        });
+      }
+    });
   }
   
   createAccountFormErrorSubject = new Subject<number>();
