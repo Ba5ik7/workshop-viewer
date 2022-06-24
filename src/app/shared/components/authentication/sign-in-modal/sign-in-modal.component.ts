@@ -82,7 +82,7 @@ export class SignInModalComponent implements OnInit {
     this.authenticationService.createAccountFormError$
     .pipe(takeUntil(this.destory))
     .subscribe((error) => {      
-      this.createAccountFormLoading = false;
+      this.requestInProgress();
       if(error === HttpStatusCode.Conflict) {
         this.createAccountForm.get('email')?.setErrors({ duplicateKey: true });
         this.createAccountEmail.nativeElement.focus();
@@ -92,19 +92,24 @@ export class SignInModalComponent implements OnInit {
     this.authenticationService.createAccountFormSuccess$
     .pipe(takeUntil(this.destory))
     .subscribe((user) => {
-      this.createAccountFormLoading = false;
+      this.requestInProgress();
       this.userStateService.setUser(user);
       this.dialogRef.close();
     });
   }
 
   signInClick(): void {
+    this.requestInProgress(true);
     this.authenticationService.signIn(this.signInForm.value);    
   }
 
   createAccountClick(): void {
-    this.createAccountFormLoading = true;
+    this.requestInProgress(true);
     this.authenticationService.createAccount(this.createAccountForm.value);
+  }
+
+  requestInProgress(predicate: boolean = false) {
+    this.createAccountFormLoading = predicate;
   }
 
   setErrorsMessages(formGroup: FormGroup, formControlMessages: { [key: string]: string }): void {
