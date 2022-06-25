@@ -1,5 +1,13 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,16 +22,15 @@ import { AuthenticationService } from '../authentication.service';
   styleUrls: ['./sign-in-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SignInModalComponent implements OnInit {
+export class SignInModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('createAccountEmail') createAccountEmail!: ElementRef;
   @ViewChild('signInEmail') signInEmail!: ElementRef;
 
   destory: Subject<boolean> = new Subject();
-
-  createAccountFormLevelError = this.authenticationService.createAccountFormError$;
-  createAccountFormLevelMessage: string = '';
-  signInFormLevelMessage: string = '';
+  
+  createAccountFormLevelMessage!: string;
+  signInFormLevelMessage!: string;
 
   errorMessages: { [key: string]: string } = {
     required: 'Required',
@@ -44,7 +51,7 @@ export class SignInModalComponent implements OnInit {
   }
 
   showCreateAccount: boolean = false;
-  createAccountFormLoading: boolean = false;
+  formLoading: boolean = false;
 
   signInForm: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -137,7 +144,7 @@ export class SignInModalComponent implements OnInit {
   }
 
   requestInProgress(predicate: boolean = false) {
-    this.createAccountFormLoading = predicate;
+    this.formLoading = predicate;
     this.dialogRef.disableClose = predicate;
   }
 

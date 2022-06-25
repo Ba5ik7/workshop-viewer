@@ -19,8 +19,8 @@ export class AuthenticationService {
   signIn(user: IUser) {
     this.httpClient.post<Object>('/api/auth/local/login', user)
     .subscribe({
-      next: (token) => { this.signInFormSuccessSubject.next(token)},
-      error: (httpError: HttpErrorResponse) => { this.signInFormErrorSubject.next(httpError.status) }
+      next: (token) => this.signInFormSuccessSubject.next(token),
+      error: (httpError: HttpErrorResponse) => this.signInFormErrorSubject.next(httpError.status)
     });
   }
   
