@@ -75,6 +75,11 @@ export class SignInModalComponent implements OnInit {
     this.signInForm.statusChanges
     .pipe(takeUntil(this.destory))
     .subscribe(() => this.setErrorsMessages(this.signInForm, this.signInFormErrorMessages));
+  
+    
+    this.authenticationService.signInFormSuccess$
+    .pipe(takeUntil(this.destory))
+    .subscribe((user) => this.signSuccuessful(user));
   }
 
   initCreateAccountForm() {
@@ -97,11 +102,7 @@ export class SignInModalComponent implements OnInit {
 
     this.authenticationService.createAccountFormSuccess$
     .pipe(takeUntil(this.destory))
-    .subscribe((user) => {
-      this.requestInProgress();
-      this.userStateService.setUser(user);
-      this.dialogRef.close();
-    });
+    .subscribe((user) => this.signSuccuessful(user));
   }
 
   signInClick(): void {
@@ -112,6 +113,12 @@ export class SignInModalComponent implements OnInit {
   createAccountClick(): void {
     this.requestInProgress(true);
     this.authenticationService.createAccount(this.createAccountForm.value);
+  }
+
+  signSuccuessful(whatever: any): void {
+    this.requestInProgress();
+    this.userStateService.setUser(whatever);
+    this.dialogRef.close();
   }
 
   requestInProgress(predicate: boolean = false) {
