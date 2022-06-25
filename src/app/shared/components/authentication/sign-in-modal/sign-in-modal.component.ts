@@ -17,11 +17,13 @@ import { AuthenticationService } from '../authentication.service';
 export class SignInModalComponent implements OnInit {
 
   @ViewChild('createAccountEmail') createAccountEmail!: ElementRef;
+  @ViewChild('signInEmail') signInEmail!: ElementRef;
 
   destory: Subject<boolean> = new Subject();
 
   createAccountFormLevelError = this.authenticationService.createAccountFormError$;
   createAccountFormLevelMessage: string = '';
+  signInFormLevelMessage: string = '';
 
   errorMessages: { [key: string]: string } = {
     required: 'Required',
@@ -29,6 +31,7 @@ export class SignInModalComponent implements OnInit {
     invalidPassword: 'At least 6 characters long and contain a number',
     matchPassword: 'Password Mismatch',
     duplicateKey: 'Email has been taken. Choose another or login.',
+    signInUnauthorized: `Email or password doesn't match`,
     httpFailure: '😿 Sorry something bad happen. Try again or try refreshing the page.'
   };
 
@@ -76,6 +79,18 @@ export class SignInModalComponent implements OnInit {
     .pipe(takeUntil(this.destory))
     .subscribe(() => this.setErrorsMessages(this.signInForm, this.signInFormErrorMessages));
   
+    this.authenticationService.signInFormError$
+    .pipe(takeUntil(this.destory))
+    .subscribe((error) => {      
+      this.requestInProgress();
+      if(error === HttpStatusCode.Unauthorized) {
+        this.signInForm.get('email')?.setErrors({ signInUnauthorized: true });
+        this.signInEmail.nativeElement.focus();
+      } else {
+        this.signInFormLevelMessage = this.errorMessages['httpFailure'];
+        this.changeDetectorRef.markForCheck();
+      }
+    });
     
     this.authenticationService.signInFormSuccess$
     .pipe(takeUntil(this.destory))

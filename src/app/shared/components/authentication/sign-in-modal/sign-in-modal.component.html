@@ -1,9 +1,10 @@
 <div class="form-container">
   <form [formGroup]="signInForm" *ngIf="!showCreateAccount">
     <h3>Sign In</h3>
+    <span class="form-level-error-message">{{signInFormLevelMessage}}</span>
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput type="email" placeholder="Email" formControlName="email">
+      <input matInput #signInEmail type="email" placeholder="Email" formControlName="email">
       <mat-error *ngIf="signInForm.get('email')?.errors">{{signInFormErrorMessages['email']}}</mat-error>
     </mat-form-field>
     <mat-form-field>
