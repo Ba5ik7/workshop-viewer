@@ -10,19 +10,17 @@ export class AuthenticationService {
 
   constructor(private httpClient: HttpClient) { }
 
+  signInFormErrorSubject = new Subject<number>();
+  signInFormError$ = this.signInFormErrorSubject.asObservable();
+
+  signInFormSuccessSubject = new Subject<Object>();
+  signInFormSuccess$ = this.signInFormSuccessSubject.asObservable();
+
   signIn(user: IUser) {
-    this.httpClient.post<IUser>('/api/auth/local/login', user)
+    this.httpClient.post<Object>('/api/auth/local/login', user)
     .subscribe({
-      next: (user) => {
-        console.log({
-          user
-        });
-      },
-      error: (httpError: HttpErrorResponse) => {
-        console.log({
-          httpError
-        });
-      }
+      next: (token) => { this.signInFormSuccessSubject.next(token)},
+      error: (httpError: HttpErrorResponse) => { this.signInFormErrorSubject.next(httpError.status) }
     });
   }
   
