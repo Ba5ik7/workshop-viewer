@@ -37,4 +37,8 @@ export class AuthenticationService {
       error: (httpError: HttpErrorResponse) => this.createAccountFormErrorSubject.next(httpError.status)
     });
   }
+
+  test() {
+    this.httpClient.get('/api/auth/local/hello').subscribe();
+  }
 }

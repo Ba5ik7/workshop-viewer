@@ -157,4 +157,8 @@ export class SignInModalComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  test() {
+    this.authenticationService.test();
+  }
 }
