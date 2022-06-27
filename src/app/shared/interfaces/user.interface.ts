@@ -4,5 +4,6 @@ export interface IUser {
   password: string,
   createdAt: Date,
   updatedAt: Date,
-  accessToken?: string
+  accessToken?: string,
+  refreshToken?: string
 }
