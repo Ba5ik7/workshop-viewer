@@ -9,16 +9,18 @@ export interface ExampleSpecs {
 }
 
 export interface Category {
+  _id?: string;
   /** Id of the doc item. Used in the URL for linking to the doc. */
-  id: string;
+  id?: string;
+  sortId: number;
   /** Display name of the doc item. */
-  name: string;
+  name?: string;
   /** Short summary of the doc item. */
   summary?: string;
   /** Package which contains the doc item. */
   packageName?: string;
   /** Specifications for which examples to be load. */
-  exampleSpecs: ExampleSpecs;
+  exampleSpecs?: ExampleSpecs;
   /** List of examples. */
   examples?: string[];
   /** Optional id of the API document file. */
