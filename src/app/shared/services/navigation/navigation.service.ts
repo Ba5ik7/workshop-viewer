@@ -51,7 +51,7 @@ export class NavigationService {
   categoryTitle$: Observable<any> = this.categoryTitleSub.asObservable();
 
   workshopDocumentsSub = new BehaviorSubject<any>(undefined);
-  workshopDocuments$: Observable<string[]> = this.workshopDocumentsSub.asObservable();
+  workshopDocuments$: Observable<Category[]> = this.workshopDocumentsSub.asObservable();
 
 
   constructor(private httpClient: HttpClient) { }

@@ -12,6 +12,7 @@ import {
   ViewContainerRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
+import { Category } from '../../interfaces/category.interface';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
 import { CodeHighlighterComponent } from '../code-highlighter/code-highlighter.component';
 import { LiveExampleComponent } from './live-example/live-example.component';
@@ -25,10 +26,10 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 })
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
-  currentDocuments!: string[]
+  currentDocuments!: Category[]
 
   @Input('workshopDocuments')
-  set workshopDocuments(currentDocuments: string[] | null) {
+  set workshopDocuments(currentDocuments: Category[] | null) {
     // Null start :(
     if(currentDocuments === null || currentDocuments === undefined) return;
     this.currentDocuments = currentDocuments
@@ -73,7 +74,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   private fetchWorkshopDocuments():void {
-    this.workshopViewerService.fetchWorkshop(`/api/workshop/workshops/${this.currentDocuments[0]}`)
+    this.workshopViewerService.fetchWorkshop(`/api/workshop/workshops/${this.currentDocuments[0]._id}`)
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);
@@ -137,7 +138,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
         // TODO setup real pagnation
         console.log(event);
         console.log('62aa78b1e0c43119ba4c2acc');
-        this.workshopDocuments = ['62aa78b1e0c43119ba4c2acc'];
+        // this.workshopDocuments = ['62aa78b1e0c43119ba4c2acc'];
       }))
     });
   }
