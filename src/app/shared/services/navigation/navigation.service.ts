@@ -106,10 +106,6 @@ export class NavigationService {
 
   public setCategories(categories: Category[]): void {
     this.categories = categories;
-    console.log({
-      categories
-    });
-    
     this.categoriesSub.next(categories);
     this.setCategoryProperties(this.categoryRoute);
   }
