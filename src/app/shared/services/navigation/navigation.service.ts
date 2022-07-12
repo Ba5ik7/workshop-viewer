@@ -5,7 +5,7 @@ import { Category } from '../../interfaces/category.interface';
 import { Section } from '../../interfaces/section.interface';
 
 // RXJS Doesn't have something to filter out null and undefined values
-function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
+export function filterNullish<T>(): UnaryFunction<Observable<T | null | undefined>, Observable<T>> {
   return pipe(
     filter(x => x != null) as OperatorFunction<T | null |  undefined, T>
   );
@@ -106,6 +106,10 @@ export class NavigationService {
 
   public setCategories(categories: Category[]): void {
     this.categories = categories;
+    console.log({
+      categories
+    });
+    
     this.categoriesSub.next(categories);
     this.setCategoryProperties(this.categoryRoute);
   }

@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class WorkshopMenuComponent implements OnInit {
 
-  @Input() navList!: any[] | null;
+  @Input() categories!: any[] | null;
   @Input() section!: string | null;
 
   constructor() { }

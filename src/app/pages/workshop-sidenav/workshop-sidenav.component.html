@@ -6,7 +6,7 @@
               [mode]="(isScreenSmall | async) ? 'over' : 'side'"
               [fixedInViewport]="(isScreenSmall | async)"
               fixedTopGap="56">
-    <workshop-menu [navList]="navList | async" [section]="section | async"></workshop-menu>
+    <workshop-menu [categories]="categories | async" [section]="section | async"></workshop-menu>
   </mat-sidenav>
   <div class="workshop-sidenav-content">
     <header class="primary-header workshop-page-header">
@@ -21,7 +21,7 @@
         <!-- If on large screen, menu resides to left of content -->
         <workshop-menu
           *ngIf="(isScreenSmall | async) === false"
-          [navList]="navList | async"
+          [categories]="categories | async"
           [section]="section | async"></workshop-menu>
         <router-outlet></router-outlet>
       </main>

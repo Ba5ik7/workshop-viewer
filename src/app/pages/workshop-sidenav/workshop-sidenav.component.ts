@@ -3,7 +3,8 @@ import { Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/cor
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute } from '@angular/router';
 import { distinct, map, Observable, Subject, takeUntil } from 'rxjs';
-import { NavigationService } from '../../shared/services/navigation/navigation.service';
+import { Category } from 'src/app/shared/interfaces/category.interface';
+import { filterNullish, NavigationService } from '../../shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'workshop-sidenav',
@@ -22,7 +23,7 @@ export class WorkshopSidenavComponent implements OnDestroy {
   sectionTitle!: Observable<string>;
   categoryTitle!: Observable<string>;
   headerSvgPath!: Observable<string>;
-  navList!: Observable<any[]>;
+  categories!: Observable<Category[]>;
 
   constructor(breakpoints: BreakpointObserver,
               activatedRoute: ActivatedRoute,
@@ -36,7 +37,11 @@ export class WorkshopSidenavComponent implements OnDestroy {
     .subscribe(params => navigationService.sectionRouteSub.next(params['section']));
 
     this.section = navigationService.sectionRoute$;
-    this.navList = navigationService.sectionNavList$;
+    this.categories = navigationService.categories$
+    .pipe(
+      filterNullish(),
+      map((categories: Category[]) => categories.sort((a, b) => a.sortId - b.sortId))
+    );
     this.sectionTitle = navigationService.sectionTitle$;
     this.headerSvgPath = navigationService.headerSvgPath$;
     this.categoryTitle = navigationService.categoryTitle$;

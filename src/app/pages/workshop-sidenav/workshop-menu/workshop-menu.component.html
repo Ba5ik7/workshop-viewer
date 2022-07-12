@@ -1,10 +1,10 @@
 <div class="workshop-menu-nav">
   <div class="workshop-menu-nav-content">
     <mat-nav-list>
-      <a mat-list-item *ngFor="let navItem of navList"
-          [routerLink]="'/' + section + '/' + navItem.id"
+      <a mat-list-item *ngFor="let category of categories"
+          [routerLink]="'/' + section + '/' + category.id"
           routerLinkActive="workshop-menu-nav-item-selected">
-        {{navItem.name}}
+        {{category.name}}
       </a>
     </mat-nav-list>
   </div>
