@@ -81,7 +81,7 @@ export class NavigationService {
     const params = new HttpParams().set('section', currentSection);
     return await lastValueFrom(this.httpClient
     .get<Category[]>('/api/navigation/categories', { params }))
-    .then((categories) => {this.setCategories(categories));
+    .then((categories) => this.setCategories(categories));
   }
 
   private async setSectionProperties(section: string): Promise<void> {
