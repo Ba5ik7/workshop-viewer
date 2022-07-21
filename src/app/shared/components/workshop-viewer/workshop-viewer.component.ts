@@ -9,7 +9,8 @@ import {
   OnDestroy,
   OnInit,
   SecurityContext,
-  ViewContainerRef } from '@angular/core';
+  ViewContainerRef, 
+  ViewEncapsulation} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
@@ -22,7 +23,8 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 @Component({
   selector: 'workshop-viewer-terrence-dusell',
   templateUrl: './workshop-viewer.component.html',
-  styleUrls: ['./workshop-viewer.component.scss']
+  styleUrls: ['./workshop-viewer.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
@@ -74,11 +76,11 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   private fetchWorkshopDocuments():void {
-    this.workshopViewerService.fetchWorkshop(`/api/workshop/workshops/${this.currentDocuments[0]._id}`)
+    this.workshopViewerService.fetchWorkshop(`/api/workshop/html/${this.currentDocuments[0]._id}`)
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);
-      this.elementRef.nativeElement.innerHTML = data.html;
+      this.elementRef.nativeElement.innerHTML = `<div class="page"><section class="workshop-viewer-container"><div class="mat-card">${data.html}</div></section></div>`;
       this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
       this.loadCodeHighlighter('code-highlighter', CodeHighlighterComponent);
       this.loadNextPage();
