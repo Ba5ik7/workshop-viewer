@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Category } from 'src/app/shared/interfaces/category.interface';
 import { NavigationService } from '../../../shared/services/navigation/navigation.service';
 
@@ -8,9 +8,7 @@ import { NavigationService } from '../../../shared/services/navigation/navigatio
   templateUrl: './workshop-category-list.component.html',
   styleUrls: ['./workshop-category-list.component.scss']
 })
-export class WorkshopCategoryListComponent implements OnInit {
-
-  destory: Subject<boolean> = new Subject();
+export class WorkshopCategoryListComponent {
 
   categories!: Observable<Category[]>;
 
@@ -18,11 +16,4 @@ export class WorkshopCategoryListComponent implements OnInit {
     navigationService.categoryRouteSub.next('categories');
     this.categories = navigationService.categories$;
   }
-
-  ngOnInit(): void { }
-
-  ngOnDestroy(): void {
-    this.destory.next(true);
-  }
-
 }

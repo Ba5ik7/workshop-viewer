@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card'
 
 import { WorkshopCategoryListComponent } from './workshop-category-list.component';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { WorkshopCategoryListRoutingModule } from './workshop-category-list-routing.module.ts ';
+import { WorkshopCategoryListRoutingModule } from './workshop-category-list-routing.module';
 
 
 
