@@ -11,7 +11,10 @@ const routes: Routes = [
       {
         path: 'categories',
         children: [
-          { path: '', component: WorkshopCategoryListComponent },
+          {
+            path: '', component: WorkshopCategoryListComponent,
+            loadChildren: () => import('./workshop-category-list/workshop-category-list.module').then(m => m.WorkshopCategoryListModule)
+          },
         ],
       },
       {
