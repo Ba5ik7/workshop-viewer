@@ -1,11 +1,11 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {TableOfContents} from './table-of-contents';
+import {TableOfContentsComponent} from './table-of-contents';
 import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
-  declarations: [TableOfContents],
-  exports: [TableOfContents]
+  declarations: [TableOfContentsComponent],
+  exports: [TableOfContentsComponent]
 })
 export class TableOfContentsModule { }

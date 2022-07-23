@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, lastValueFrom, Observable, OperatorFunction, pipe, UnaryFunction } from 'rxjs';
+import { BehaviorSubject, filter, lastValueFrom, Observable, OperatorFunction, pipe, Subject, UnaryFunction } from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
 import { Section } from '../../interfaces/section.interface';
 
@@ -52,6 +52,9 @@ export class NavigationService {
 
   workshopDocumentsSub = new BehaviorSubject<any>(undefined);
   workshopDocuments$: Observable<Category[]> = this.workshopDocumentsSub.asObservable();
+
+  workshopDocumentsViewReadySub = new Subject<HTMLElement>();
+  workshopDocumentsViewReady$: Observable<HTMLElement> = this.workshopDocumentsViewReadySub.asObservable();
 
 
   constructor(private httpClient: HttpClient) { }

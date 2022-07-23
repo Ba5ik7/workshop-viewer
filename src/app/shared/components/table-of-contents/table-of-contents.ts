@@ -42,7 +42,7 @@ interface Link {
   styleUrls: ['./table-of-contents.scss'],
   templateUrl: './table-of-contents.html'
 })
-export class TableOfContents implements OnInit, AfterViewInit, OnDestroy {
+export class TableOfContentsComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() container: string | undefined;
 
   _linkSections: LinkSection[] = [];

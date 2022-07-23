@@ -15,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
+import { NavigationService } from '../../services/navigation/navigation.service';
 import { CodeHighlighterComponent } from '../code-highlighter/code-highlighter.component';
 import { LiveExampleComponent } from './live-example/live-example.component';
 import { NextPageComponent } from './next-page/next-page.component';
@@ -69,6 +70,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     private workshopViewerService: WorkshopViewerService,
+    private navigationService: NavigationService,
     private elementRef: ElementRef,
     private domSanitizer: DomSanitizer
     ) { }
@@ -81,6 +83,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     .subscribe((data) => {
       this.correctUrlPaths(data);
       this.elementRef.nativeElement.innerHTML = `<div class="page"><section class="workshop-viewer-container"><div class="mat-card">${data.html}</div></section></div>`;
+      this.navigationService.workshopDocumentsViewReadySub.next(this.elementRef.nativeElement);
       this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
       this.loadCodeHighlighter('code-highlighter', CodeHighlighterComponent);
       this.loadNextPage();
