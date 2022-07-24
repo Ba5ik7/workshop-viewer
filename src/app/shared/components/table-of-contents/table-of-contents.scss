@@ -23,7 +23,7 @@
 }
 
 .docs-toc-container {
-  width: 100%;
+  max-width: 275px;
   padding: 5px 0 10px 10px;
 
   & + .docs-toc-container {
