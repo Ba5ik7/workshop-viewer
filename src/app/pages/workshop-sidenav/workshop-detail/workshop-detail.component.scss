@@ -4,5 +4,6 @@ workshop-detail {
 }
 
 .workshop-detail-content {
-  display: flex;
+  grid-template-columns: minmax(auto, 875px) auto;
+  display: grid;
 }

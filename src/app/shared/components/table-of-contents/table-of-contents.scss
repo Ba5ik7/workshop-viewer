@@ -1,13 +1,25 @@
+// :host {
+//   font-size: 13px;
+//   // Width is container width minus content width
+//   width: 19%;
+//   position: sticky;
+//   top: 0;
+//   padding-left: 25px;
+//   box-sizing: border-box;
+//   display: inline-flex;
+//   flex-direction: column;
+// }
+
 :host {
   font-size: 13px;
-  // Width is container width minus content width
-  width: 19%;
+  /* width: 19%; */
   position: sticky;
-  top: 0;
-  padding-left: 25px;
+  top: 0px;
+  padding-top: 30px;
   box-sizing: border-box;
   display: inline-flex;
   flex-direction: column;
+  height: calc(100vh - 56px);
 }
 
 .docs-toc-container {
