@@ -5,6 +5,8 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 import { LiveExampleComponent } from './live-example/live-example.component';
 import { CodeHighlighterModule } from '../code-highlighter/code-highlighter.module';
 import { NextPageComponent } from './next-page/next-page.component';
+import { NgxEditorjsModule } from '@tmdjr/ngx-editorjs';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -17,7 +19,9 @@ import { NextPageComponent } from './next-page/next-page.component';
   exports: [WorkshopViewerComponent],
   imports: [
     CommonModule,
-    CodeHighlighterModule
+    CodeHighlighterModule,
+    MatIconModule,
+    NgxEditorjsModule
   ],
   providers: [WorkshopViewerService]
 })

@@ -12,6 +12,7 @@ import {
   ViewContainerRef, 
   ViewEncapsulation} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxEditorjsOutputBlock } from '@tmdjr/ngx-editorjs';
 import { Subject, takeUntil } from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
@@ -30,6 +31,7 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
   currentDocuments!: Category[]
+  blocks!: NgxEditorjsOutputBlock[];
 
   @Input('workshopDocuments')
   set workshopDocuments(currentDocuments: Category[] | null) {
@@ -78,15 +80,16 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   private fetchWorkshopDocuments():void {
-    this.workshopViewerService.fetchWorkshop(`/api/workshop/html/${this.currentDocuments[0]._id}`)
+    this.workshopViewerService.fetchWorkshop(`/api/workshop/${this.currentDocuments[0]._id}`)
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);
-      this.elementRef.nativeElement.innerHTML = `<div class="page"><section class="workshop-viewer-container"><div class="mat-card">${data.html}</div></section></div>`;
-      this.navigationService.workshopDocumentsViewReadySub.next(this.elementRef.nativeElement);
-      this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
-      this.loadCodeHighlighter('code-highlighter', CodeHighlighterComponent);
-      this.loadNextPage();
+      this.blocks = JSON.parse(data.html);   
+      // this.elementRef.nativeElement.innerHTML = `<div class="page"><section class="workshop-viewer-container"><div class="mat-card">${data.html}</div></section></div>`;
+      // this.navigationService.workshopDocumentsViewReadySub.next(this.elementRef.nativeElement);
+      // this.loadLiveExamples('workshop-live-example', LiveExampleComponent);
+      // this.loadCodeHighlighter('code-highlighter', CodeHighlighterComponent);
+      // this.loadNextPage();
     });
   }
 
@@ -150,5 +153,10 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destory.next(true);
+  }
+
+  requestValue = new Subject<boolean>();
+  valueRequested(value: any): void {
+    console.log({ value });
   }
 }

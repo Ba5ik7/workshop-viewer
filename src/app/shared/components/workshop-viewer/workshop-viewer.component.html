@@ -1,4 +1,14 @@
 <!-- <div class="workshop-viewer-progress-loader-container">
     <mat-spinner class="progress-loader" color="accent"></mat-spinner>
 </div> -->
-Loading...
+<div class="page">
+    <section class="workshop-viewer-container">
+      <div class="mat-card">
+        <ngx-editorjs
+          [inputData]="blocks"
+          [requestValue]="requestValue"
+          (valueRequested)="valueRequested($event)"
+        ></ngx-editorjs>
+      </div>
+    </section>
+  </div>

@@ -10,6 +10,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { NGX_EDITORJS_OPTIONS } from '@tmdjr/ngx-editorjs';
+import { NgxEditorjsParagraphBlockMediator } from '@tmdjr/ngx-editorjs-paragraph-block';
+import { NgxEditorjsBlockquotesBlockMediator } from '@tmdjr/ngx-editorjs-blockquotes-block';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,23 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
           html: () => import('highlight.js/lib/languages/xml')
         },
         themePath: 'assets/css/highlightjs-themes/gradient-dark.css'
+      }
+    },
+    {
+      provide: NGX_EDITORJS_OPTIONS,
+      useValue: {
+        blocks: [
+          {
+            name: 'Paragraph',
+            component: NgxEditorjsParagraphBlockMediator,
+            componentInstanceName: 'NgxEditorjsParagraphBlockMediator'
+          },
+          {
+            name: 'Blockquotes',
+            component: NgxEditorjsBlockquotesBlockMediator,
+            componentInstanceName: 'NgxEditorjsBlockquotesBlockMediator'
+          }
+        ]
       }
     }
   ],
