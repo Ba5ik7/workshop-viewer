@@ -4,11 +4,7 @@
 <div class="page">
     <section class="workshop-viewer-container">
       <div class="mat-card">
-        <ngx-editorjs
-          [inputData]="blocks"
-          [requestValue]="requestValue"
-          (valueRequested)="valueRequested($event)"
-        ></ngx-editorjs>
+        <ngx-editorjs-client [inputData]="blocks"></ngx-editorjs-client>
       </div>
     </section>
   </div>

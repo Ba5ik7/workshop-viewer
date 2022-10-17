@@ -10,9 +10,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { NGX_EDITORJS_OPTIONS } from '@tmdjr/ngx-editorjs';
-import { NgxEditorjsParagraphBlockMediator } from '@tmdjr/ngx-editorjs-paragraph-block';
-import { NgxEditorjsBlockquotesBlockMediator } from '@tmdjr/ngx-editorjs-blockquotes-block';
+
+import { NGX_EDITORJS_CLIENT_OPTIONS } from '@tmdjr/ngx-editorjs-client';
+import { NgxEditorjsParagraphClientBlockComponent } from '@tmdjr/ngx-editorjs-paragraph-block';
+import { NgxEditorjsBlockquotesClientBlockComponent } from '@tmdjr/ngx-editorjs-blockquotes-block';
 
 @NgModule({
   declarations: [
@@ -41,22 +42,22 @@ import { NgxEditorjsBlockquotesBlockMediator } from '@tmdjr/ngx-editorjs-blockqu
       }
     },
     {
-      provide: NGX_EDITORJS_OPTIONS,
+      provide: NGX_EDITORJS_CLIENT_OPTIONS,
       useValue: {
         blocks: [
           {
             name: 'Paragraph',
-            component: NgxEditorjsParagraphBlockMediator,
+            component: NgxEditorjsParagraphClientBlockComponent,
             componentInstanceName: 'NgxEditorjsParagraphBlockMediator'
           },
           {
             name: 'Blockquotes',
-            component: NgxEditorjsBlockquotesBlockMediator,
+            component: NgxEditorjsBlockquotesClientBlockComponent,
             componentInstanceName: 'NgxEditorjsBlockquotesBlockMediator'
           }
         ]
       }
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })
