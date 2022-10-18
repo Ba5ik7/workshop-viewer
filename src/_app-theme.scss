@@ -1,7 +1,6 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@use '@tmdjr/ngx-editorjs' as ngx-editorjs;
 @use '@tmdjr/ngx-editorjs-blockquotes-block' as ngx-editorjs-blockquotes-block;
 
 @use './app/pages/not-found/not-found-theme';
@@ -38,7 +37,6 @@
     }
   }
 
-  @include ngx-editorjs.theme($theme);
   @include ngx-editorjs-blockquotes-block.theme($theme);
 
   @include home-theme.theme($theme);
