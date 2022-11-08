@@ -2,6 +2,7 @@
 @use 'sass:map';
 
 @use '@tmdjr/ngx-editorjs-blockquotes-block' as ngx-editorjs-blockquotes-block;
+@use '@tmdjr/ngx-editorjs-code-block' as ngx-editorjs-code-block;
 
 @use './app/pages/not-found/not-found-theme';
 @use './app/pages/home/home-theme';
@@ -38,6 +39,7 @@
   }
 
   @include ngx-editorjs-blockquotes-block.theme($theme);
+  @include ngx-editorjs-code-block.theme($theme);
 
   @include home-theme.theme($theme);
   @include not-found-theme.theme($theme);

@@ -14,6 +14,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { NGX_EDITORJS_CLIENT_OPTIONS } from '@tmdjr/ngx-editorjs-client';
 import { NgxEditorjsParagraphClientBlockComponent } from '@tmdjr/ngx-editorjs-paragraph-block';
 import { NgxEditorjsBlockquotesClientBlockComponent } from '@tmdjr/ngx-editorjs-blockquotes-block';
+import { NgxEditorjsImageClientBlockComponent } from '@tmdjr/ngx-editorjs-image-block';
+import { NgxEditorjsCodeClientBlockComponent } from '@tmdjr/ngx-editorjs-code-block';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,16 @@ import { NgxEditorjsBlockquotesClientBlockComponent } from '@tmdjr/ngx-editorjs-
             name: 'Blockquotes',
             component: NgxEditorjsBlockquotesClientBlockComponent,
             componentInstanceName: 'NgxEditorjsBlockquotesBlockMediator'
+          },
+          {
+            name: 'Image',
+            component: NgxEditorjsImageClientBlockComponent,
+            componentInstanceName: 'NgxEditorjsImageBlockMediator'
+          },
+          {
+            name: 'Code',
+            component: NgxEditorjsCodeClientBlockComponent,
+            componentInstanceName: 'NgxEditorjsCodeBlockMediator'
           }
         ]
       }
