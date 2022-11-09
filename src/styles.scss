@@ -22,3 +22,33 @@ input:-webkit-autofill:focus {
 html {
   font-size: 62.5%;
 }
+
+// .md-sidenav-backdrop {
+//   opacity: 0 !important;
+// }
+
+// md-sidenav.md-closed-add,
+// md-sidenav.md-closed-remove {
+//   -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+//   transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+// }
+
+/**
+* fix md-sidenav lag by removing animation
+**/
+
+// .md-sidenav-backdrop {
+//   opacity: 0 !important;
+// }
+
+// md-sidenav.md-closed-add,
+// md-sidenav.md-closed-remove,
+// md-sidenav.md-closed-add.md-closed-add-active, 
+// md-sidenav.md-closed-remove.md-closed-remove-active,
+// md-sidenav.md-locked-open-remove-active,
+// md-sidenav.md-closed.md-locked-open-add-active
+
+// {
+//   -webkit-transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+//   transition: all .4s cubic-bezier(0.25, .8, .25, 1) !important;
+// }
