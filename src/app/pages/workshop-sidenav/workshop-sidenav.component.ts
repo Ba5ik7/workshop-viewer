@@ -6,6 +6,9 @@ import { distinct, map, Observable, Subject, takeUntil } from 'rxjs';
 import { Category } from 'src/app/shared/interfaces/category.interface';
 import { filterNullish, NavigationService } from '../../shared/services/navigation/navigation.service';
 
+const EXTRA_SMALL_WIDTH_BREAKPOINT = 720;
+const SMALL_WIDTH_BREAKPOINT = 959;
+
 @Component({
   selector: 'workshop-sidenav',
   templateUrl: './workshop-sidenav.component.html',
@@ -17,6 +20,7 @@ export class WorkshopSidenavComponent implements OnDestroy {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
   isScreenSmall: Observable<boolean>;
+  isExtraScreenSmall: Observable<boolean>;
   destory: Subject<boolean> = new Subject();
 
   section!: Observable<string>;
@@ -29,8 +33,14 @@ export class WorkshopSidenavComponent implements OnDestroy {
               activatedRoute: ActivatedRoute,
               navigationService: NavigationService) {
 
-    this.isScreenSmall = breakpoints.observe(`(max-width: 959px)`)
-    .pipe(takeUntil(this.destory), map(breakpoint => breakpoint.matches));
+    this.isExtraScreenSmall =
+    breakpoints
+    .observe(`(max-width: ${EXTRA_SMALL_WIDTH_BREAKPOINT}px)`)
+    .pipe(map(breakpoint => breakpoint.matches));
+
+    this.isScreenSmall = breakpoints
+    .observe(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`)
+    .pipe(map(breakpoint => breakpoint.matches));
 
     activatedRoute.params
     .pipe(takeUntil(this.destory), distinct())

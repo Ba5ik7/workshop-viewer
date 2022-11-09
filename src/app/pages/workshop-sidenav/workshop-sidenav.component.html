@@ -5,7 +5,7 @@
               [opened]="(isScreenSmall | async) === false"
               [mode]="(isScreenSmall | async) ? 'over' : 'side'"
               [fixedInViewport]="(isScreenSmall | async)"
-              fixedTopGap="56">
+              [fixedTopGap]="(isExtraScreenSmall | async) ? 92 : 56">
     <workshop-menu [categories]="categories | async" [section]="section | async"></workshop-menu>
   </mat-sidenav>
   <div class="workshop-sidenav-content">

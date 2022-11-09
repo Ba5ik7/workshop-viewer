@@ -25,6 +25,6 @@ workshop-app > router-outlet + workshop-sidenav {
 @media (max-width: 720px) {
   workshop-app > router-outlet + .main-content,
   workshop-app > router-outlet + workshop-sidenav {
-    margin-top: 93px;
+    margin-top: 92px;
   }
 }
