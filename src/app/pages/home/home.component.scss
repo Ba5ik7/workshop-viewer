@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .header-background {
   overflow: hidden;
   position: relative;
@@ -94,6 +96,7 @@
   flex-direction: row;
   margin: 25px 0;
   gap: 50px;
+  align-items: flex-start;
 }
 
 .home-row-column {
@@ -101,8 +104,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  width: 275px;
+  border-radius: 12px;
+  transition: box-shadow .4s;
+
+  &:hover {
+    cursor: pointer;
+    @include mat.elevation(6);
+  }
 
   img {
     width: 250px;
+  }
+
+  p {
+    text-align: justify;
+    padding: 0 19px;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-row {
+    flex-direction: column;
+  }
+
+  .home-row-column--angular-section {
+    order: -1;
   }
 }

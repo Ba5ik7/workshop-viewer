@@ -21,3 +21,10 @@ workshop-app > router-outlet + workshop-sidenav {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+@media (max-width: 720px) {
+  workshop-app > router-outlet + .main-content,
+  workshop-app > router-outlet + workshop-sidenav {
+    margin-top: 93px;
+  }
+}
