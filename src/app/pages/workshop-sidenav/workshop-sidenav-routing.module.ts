@@ -22,7 +22,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            data: { alwaysRefresh: true },
+            data: { alwaysRefresh: false },
             loadChildren: () => import('./workshop-detail/workshop-detail.module').then(m => m.WorkshopDetailModule)
           },
         ],

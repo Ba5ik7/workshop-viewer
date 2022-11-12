@@ -37,4 +37,9 @@
       color: rgba(mat.get-color-from-palette($foreground, secondary-text), 0.65);
     }
   }
+
+
+  .paginator {
+    border-bottom: 1px solid mat.get-color-from-palette($foreground, divider);
+  }
 }

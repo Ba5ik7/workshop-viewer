@@ -30,14 +30,16 @@ import { WorkshopViewerService } from './workshop-viewer.service';
 })
 export class WorkshopViewerComponent implements OnInit, OnDestroy {
 
-  currentDocuments!: Category[]
+  currentDocument!: string;
   blocks!: NgxEditorjsOutputBlock[];
 
-  @Input('workshopDocuments')
-  set workshopDocuments(currentDocuments: Category[] | null) {
+  @Input('workshopDocument')
+  set workshopDocument(currentDocument: string | null) {
     // Null start :(
-    if(currentDocuments === null || currentDocuments === undefined) return;
-    this.currentDocuments = currentDocuments
+      console.log('currentDocument', currentDocument);
+      
+    if(currentDocument === null || currentDocument === undefined) return;
+    this.currentDocument = currentDocument;
     this.fetchWorkshopDocuments();
   }
   
@@ -80,7 +82,7 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   private fetchWorkshopDocuments():void {
-    this.workshopViewerService.fetchWorkshop(`/api/workshop/${this.currentDocuments[0]._id}`)
+    this.workshopViewerService.fetchWorkshop(`/api/workshop/${this.currentDocument}`)
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);

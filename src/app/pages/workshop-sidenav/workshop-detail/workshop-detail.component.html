@@ -1,4 +1,14 @@
+<mat-paginator
+  #paginator
+  class="paginator"
+  [length]="workshopDocumentsLength"
+  [showFirstLastButtons]="true"
+  [hidePageSize]="true"
+  [pageSize]="1"
+  (page)="pageEventChange($event)"
+  aria-label="Select page">
+</mat-paginator>
 <div class="workshop-detail-content">
-  <workshop-viewer-terrence-dusell [workshopDocuments]="workshopDocuments | async"></workshop-viewer-terrence-dusell>
+  <workshop-viewer-terrence-dusell [workshopDocument]="workshopDocument"></workshop-viewer-terrence-dusell>
   <table-of-contents class="table-of-contents" #toc container=".container"></table-of-contents>
 </div>
