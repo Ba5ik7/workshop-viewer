@@ -6,7 +6,6 @@ import { WorkshopDetailRoutingModule } from './workshop-detail-routing.module';
 import { TableOfContentsModule } from 'src/app/shared/components/table-of-contents/table-of-contents.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
-
 @NgModule({
   declarations: [WorkshopDetailComponent],
   exports: [WorkshopDetailComponent],

@@ -1,4 +1,5 @@
 <mat-paginator
+  *ngIf="hasMoreThanOneDocument"
   #paginator
   class="paginator"
   [length]="workshopDocumentsLength"
@@ -8,6 +9,7 @@
   (page)="pageEventChange($event)"
   aria-label="Select page">
 </mat-paginator>
+<!-- <paginator class="paginator"></paginator> -->
 <div class="workshop-detail-content">
   <workshop-viewer-terrence-dusell [workshopDocument]="workshopDocument"></workshop-viewer-terrence-dusell>
   <table-of-contents class="table-of-contents" #toc container=".container"></table-of-contents>

@@ -1,10 +1,10 @@
-import { Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { AfterViewInit, Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, concatMap, of, Subject, takeUntil, tap } from 'rxjs';
+import { combineLatest, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { TableOfContentsComponent } from 'src/app/shared/components/table-of-contents/table-of-contents';
 import { Category } from 'src/app/shared/interfaces/category.interface';
-import { NavigationService } from '../../../shared/services/navigation/navigation.service';
+import { NavigationService, filterNullish } from '../../../shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'workshop-detail',
@@ -12,9 +12,15 @@ import { NavigationService } from '../../../shared/services/navigation/navigatio
   styleUrls: ['./workshop-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class WorkshopDetailComponent implements OnDestroy {
+export class WorkshopDetailComponent implements OnDestroy, AfterViewInit {
 
-  @ViewChild('toc') tableOfContents!: TableOfContentsComponent;
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private navigationService: NavigationService,
+    private router: Router) { }
+
+  @ViewChild('toc', { static: true }) tableOfContents!: TableOfContentsComponent;
+  @ViewChild('paginator') paginator!: MatPaginator;
 
   destory: Subject<boolean> = new Subject();
   workshopDocument!: string;
@@ -23,59 +29,41 @@ export class WorkshopDetailComponent implements OnDestroy {
   workshopDocuments!: Category[];
   hasWorkshopId: boolean = false;
 
-  paginatorCurrentIndex = new BehaviorSubject<number>(0);
-  paginatorCurrentIndex$ = this.paginatorCurrentIndex.asObservable();
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private navigationService: NavigationService,
-    private router: Router) {
-
-      console.log('WorkshopDetailComponent constructor');
-      
-
-    combineLatest({ params: this.activatedRoute.params, index: this.paginatorCurrentIndex$ })
+  ngAfterViewInit(): void {
+    this.activatedRoute.params
     .pipe(
-      tap(({ params }) => this.navigationService.categoryRouteSub.next(params['categoryId'])),
-      concatMap(({ params, index }) => (
+      filterNullish(),
+      tap((params) => this.navigationService.categoryRouteSub.next(params['categoryId'])),
+      switchMap((params) => (
         combineLatest({
-          index: of(index),
           params: of(params),
           workshopDocuments: this.navigationService.workshopDocuments$
         })
       )),
       takeUntil(this.destory),
     )
-    .subscribe(({ params, workshopDocuments, index }) => {
-      // console.log({ params, workshopDocuments, index });
+    .subscribe(({ params, workshopDocuments }) => {
       if(!workshopDocuments) return;
 
       this.workshopDocuments = workshopDocuments;
       if(params['workshopId']) {
-        console.log('has workshopId', params['workshopId']);
-        
         this.hasWorkshopId = true;
         this.workshopDocument = params['workshopId'];
-      } else {
-        console.log('no workshopId', index);
-        
-        this.workshopDocument = workshopDocuments[index]._id!;
+        this.setPaginatorIndex();
+      } else { 
+        this.workshopDocument = workshopDocuments[0]._id!;
       }
 
-      // console.log('workshopDocuments',this.workshopDocument);
-      
       this.hasMoreThanOneDocument = workshopDocuments.length > 1;
       this.workshopDocumentsLength = workshopDocuments.length;
     });
 
     this.navigationService.workshopDocumentsViewReady$
     .pipe(takeUntil(this.destory))
-    .subscribe((html) => this.updateTableOfContents('HELLO WORLD', html))  
+    .subscribe((html) => this.updateTableOfContents('HELLO WORLD', html));    
   }
 
-  ngOnDestroy(): void {    
-    console.log('WorkshopDetailComponent ngOnDestroy');
-    
+  ngOnDestroy(): void {
     this.destory.next(true);
   }
 
@@ -87,8 +75,12 @@ export class WorkshopDetailComponent implements OnDestroy {
   }
 
   pageEventChange({ pageIndex }: PageEvent) {
-    this.paginatorCurrentIndex.next(pageIndex);
-    console.log(this.hasWorkshopId ? '../': './', this.workshopDocuments[pageIndex]._id, pageIndex);
     this.router.navigate([this.hasWorkshopId ? '../': './', this.workshopDocuments[pageIndex]._id], { relativeTo: this.activatedRoute });
+  }
+
+  setPaginatorIndex() {
+    requestAnimationFrame(() => {
+      this.paginator.pageIndex = this.workshopDocuments.findIndex((workshopDocument) => workshopDocument._id === this.workshopDocument);
+    });
   }
 }

@@ -36,9 +36,8 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
   @Input('workshopDocument')
   set workshopDocument(currentDocument: string | null) {
     // Null start :(
-      console.log('currentDocument', currentDocument);
-      
     if(currentDocument === null || currentDocument === undefined) return;
+    
     this.currentDocument = currentDocument;
     this.fetchWorkshopDocuments();
   }
