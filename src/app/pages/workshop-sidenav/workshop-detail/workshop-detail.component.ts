@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
@@ -12,12 +12,43 @@ import { NavigationService, filterNullish } from '../../../shared/services/navig
   styleUrls: ['./workshop-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class WorkshopDetailComponent implements OnDestroy, AfterViewInit {
+export class WorkshopDetailComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private navigationService: NavigationService,
-    private router: Router) { }
+    private router: Router) {
+      this.activatedRoute.params
+      .pipe(
+        filterNullish(),
+        tap((params) => this.navigationService.categoryRouteSub.next(params['categoryId'])),
+        switchMap((params) => (
+          combineLatest({
+            params: of(params),
+            workshopDocuments: this.navigationService.workshopDocuments$
+          })
+        )),
+        takeUntil(this.destory),
+      )
+      .subscribe(({ params, workshopDocuments }) => {
+        if(!workshopDocuments) return;
+  
+        this.workshopDocuments = workshopDocuments;
+        if(params['workshopId']) {
+          this.workshopDocument = params['workshopId'];
+          this.setPaginatorIndex();
+        } else { 
+          this.workshopDocument = workshopDocuments[0]._id!;
+        }
+  
+        this.hasMoreThanOneDocument = workshopDocuments.length > 1;
+        this.workshopDocumentsLength = workshopDocuments.length;
+      });
+  
+      this.navigationService.workshopDocumentsViewReady$
+      .pipe(takeUntil(this.destory))
+      .subscribe((html) => this.updateTableOfContents('HELLO WORLD', html));
+    }
 
   @ViewChild('toc', { static: true }) tableOfContents!: TableOfContentsComponent;
   @ViewChild('paginator') paginator!: MatPaginator;
@@ -28,40 +59,6 @@ export class WorkshopDetailComponent implements OnDestroy, AfterViewInit {
   hasMoreThanOneDocument: boolean = false;
   workshopDocuments!: Category[];
   hasWorkshopId: boolean = false;
-
-  ngAfterViewInit(): void {
-    this.activatedRoute.params
-    .pipe(
-      filterNullish(),
-      tap((params) => this.navigationService.categoryRouteSub.next(params['categoryId'])),
-      switchMap((params) => (
-        combineLatest({
-          params: of(params),
-          workshopDocuments: this.navigationService.workshopDocuments$
-        })
-      )),
-      takeUntil(this.destory),
-    )
-    .subscribe(({ params, workshopDocuments }) => {
-      if(!workshopDocuments) return;
-
-      this.workshopDocuments = workshopDocuments;
-      if(params['workshopId']) {
-        this.hasWorkshopId = true;
-        this.workshopDocument = params['workshopId'];
-        this.setPaginatorIndex();
-      } else { 
-        this.workshopDocument = workshopDocuments[0]._id!;
-      }
-
-      this.hasMoreThanOneDocument = workshopDocuments.length > 1;
-      this.workshopDocumentsLength = workshopDocuments.length;
-    });
-
-    this.navigationService.workshopDocumentsViewReady$
-    .pipe(takeUntil(this.destory))
-    .subscribe((html) => this.updateTableOfContents('HELLO WORLD', html));    
-  }
 
   ngOnDestroy(): void {
     this.destory.next(true);
@@ -80,6 +77,7 @@ export class WorkshopDetailComponent implements OnDestroy, AfterViewInit {
 
   setPaginatorIndex() {
     requestAnimationFrame(() => {
+      this.hasWorkshopId = true;
       this.paginator.pageIndex = this.workshopDocuments.findIndex((workshopDocument) => workshopDocument._id === this.workshopDocument);
     });
   }
