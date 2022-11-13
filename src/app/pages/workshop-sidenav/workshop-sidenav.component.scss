@@ -94,7 +94,7 @@ workshop-sidenav {
 
   .workshop-menu-nav-content {
     width: 240px;
-    height: calc(100vh - 56px);
+    height: 100vh;
     overflow: auto;
 
     &::-webkit-scrollbar {
