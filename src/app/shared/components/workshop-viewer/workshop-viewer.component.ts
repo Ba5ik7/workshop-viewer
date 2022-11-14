@@ -85,7 +85,9 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destory))
     .subscribe((data) => {
       this.correctUrlPaths(data);
-      this.blocks = JSON.parse(data.html);   
+      this.blocks = JSON.parse(data.html);
+      this.navigationService.workshopDocumentsViewReadySub.next(this.elementRef.nativeElement);
+      
       // this.elementRef.nativeElement.innerHTML = `<div class="page"><section class="workshop-viewer-container"><div class="mat-card">${data.html}</div></section></div>`;
       // this.navigationService.workshopDocumentsViewReadySub.next(this.elementRef.nativeElement);
       // this.loadLiveExamples('workshop-live-example', LiveExampleComponent);

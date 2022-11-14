@@ -66,8 +66,11 @@ export class WorkshopDetailComponent implements OnDestroy {
 
   updateTableOfContents(sectionName: string, docViewerContent: HTMLElement, sectionIndex = 0) {    
     if (this.tableOfContents) {
-      this.tableOfContents.addHeaders(sectionName, docViewerContent, sectionIndex);
-      this.tableOfContents.updateScrollPosition();
+      setTimeout(() => {
+
+        this.tableOfContents.addHeaders(sectionName, docViewerContent, sectionIndex);
+        this.tableOfContents.updateScrollPosition();
+      }, 500);
     }
   }
 
