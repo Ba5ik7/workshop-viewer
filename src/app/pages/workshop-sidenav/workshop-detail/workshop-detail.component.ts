@@ -84,4 +84,8 @@ export class WorkshopDetailComponent implements OnDestroy {
       this.paginator.pageIndex = this.workshopDocuments.findIndex((workshopDocument) => workshopDocument._id === this.workshopDocument);
     });
   }
+
+  readDocument(workshopDocument: any) {
+    // text to voice for
+  }
 }

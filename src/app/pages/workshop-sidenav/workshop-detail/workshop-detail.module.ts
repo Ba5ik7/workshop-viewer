@@ -5,6 +5,8 @@ import { WorkshopViewerModule } from 'src/app/shared/components/workshop-viewer/
 import { WorkshopDetailRoutingModule } from './workshop-detail-routing.module';
 import { TableOfContentsModule } from 'src/app/shared/components/table-of-contents/table-of-contents.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [WorkshopDetailComponent],
@@ -14,7 +16,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     WorkshopDetailRoutingModule,
     WorkshopViewerModule,
     TableOfContentsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class WorkshopDetailModule { }
