@@ -12,7 +12,7 @@ import {
   ViewContainerRef, 
   ViewEncapsulation} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NgxEditorjsOutputBlock } from '@tmdjr/ngx-editorjs';
+import { NgxEditorjsOutputBlock } from '@tmdjr/ngx-editorjs-client';
 import { Subject, takeUntil } from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
