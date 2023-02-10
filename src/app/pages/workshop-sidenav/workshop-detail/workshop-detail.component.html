@@ -1,37 +1,21 @@
 
-<mat-paginator
-  *ngIf="hasMoreThanOneDocument"
+<mat-paginator *ngIf="hasMoreThanOneDocument"
   #paginator
   class="paginator"
   [length]="workshopDocumentsLength"
   [showFirstLastButtons]="true"
   [hidePageSize]="true"
   [pageSize]="1"
-  (page)="pageEventChange($event)"
-  aria-label="Select page">
+  (page)="pageEventChange($event)">
 </mat-paginator>
-<!-- Create a text reader buttons play, pause, stop, rewind, forward -->
-<!-- <workshop-reader-actions>
-  <button mat-icon-button (click)="playText()">
-    <mat-icon>play_arrow</mat-icon>
-  </button>
-  <button mat-icon-button (click)="pauseText()">
-    <mat-icon>pause</mat-icon>
-  </button>
-  <button mat-icon-button (click)="stopText()">
-    <mat-icon>stop</mat-icon>
-  </button>
-  <button mat-icon-button (click)="rewindText()">
-    <mat-icon>fast_rewind</mat-icon>
-  </button>
-  <button mat-icon-button (click)="forwardText()">
-    <mat-icon>fast_forward</mat-icon>
-  </button>
-</workshop-reader-actions> -->
-<!-- <button class="" mat-button (click)="readDocument('hello')">
-  <mat-icon>play_arrow</mat-icon>
-</button> -->
+
 <div class="workshop-detail-content">
-  <workshop-viewer-terrence-dusell [workshopDocument]="workshopDocument"></workshop-viewer-terrence-dusell>
-  <table-of-contents class="table-of-contents" #toc container=".container"></table-of-contents>
+  <workshop-viewer-terrence-dusell
+    [workshopDocument]="workshopDocument">
+  </workshop-viewer-terrence-dusell>
+  <!-- <table-of-contents
+    #toc
+    class="table-of-contents"
+    container=".container">
+  </table-of-contents> -->
 </div>
