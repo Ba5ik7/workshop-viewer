@@ -1,21 +1,19 @@
+<ng-container *ngIf="docMetaObj | async as doc; else loading">
+  <mat-paginator *ngIf="doc.docsHasMoreThenOne"
+    #paginator
+    class="paginator"
+    [length]="doc.docsLength"
+    [showFirstLastButtons]="true"
+    [hidePageSize]="true"
+    [pageSize]="1"
+    [pageIndex]="doc.currentIndex"
+    (page)="pageEventChange(doc.docsIds[$event.pageIndex]!, doc.hasWorkshopIdInURL)">
+  </mat-paginator>
 
-<mat-paginator *ngIf="hasMoreThanOneDocument"
-  #paginator
-  class="paginator"
-  [length]="workshopDocumentsLength"
-  [showFirstLastButtons]="true"
-  [hidePageSize]="true"
-  [pageSize]="1"
-  (page)="pageEventChange($event)">
-</mat-paginator>
+  <div class="workshop-detail-content">
+    <workshop-viewer-terrence-dusell
+      [workshopDocument]="doc.id"></workshop-viewer-terrence-dusell>
+  </div>
+</ng-container>
 
-<div class="workshop-detail-content">
-  <workshop-viewer-terrence-dusell
-    [workshopDocument]="workshopDocument">
-  </workshop-viewer-terrence-dusell>
-  <!-- <table-of-contents
-    #toc
-    class="table-of-contents"
-    container=".container">
-  </table-of-contents> -->
-</div>
+<ng-template #loading><div>Loading ...</div></ng-template>
