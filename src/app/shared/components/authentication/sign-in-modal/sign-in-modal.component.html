@@ -15,7 +15,6 @@
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="signInClick()" [disabled]="signInForm.invalid || formLoading">Sign In</button>
     <button mat-flat-button type="button" (click)="showCreateAccount = true" [disabled]="formLoading">Create Account</button>
-    <button mat-flat-button type="button" (click)="test()">Test</button>
   </form>
   
   <form [formGroup]="createAccountForm" *ngIf="showCreateAccount">

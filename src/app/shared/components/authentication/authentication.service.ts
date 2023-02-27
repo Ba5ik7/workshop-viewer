@@ -17,7 +17,7 @@ export class AuthenticationService {
   signInFormSuccess$ = this.signInFormSuccessSubject.asObservable();
 
   signIn(user: IUser) {
-    this.httpClient.post<Object>('/api/auth/local/login', user)
+    this.httpClient.post<Object>('/api/authentication/sign-in', user)
     .subscribe({
       next: (token) => this.signInFormSuccessSubject.next(token),
       error: (httpError: HttpErrorResponse) => this.signInFormErrorSubject.next(httpError.status)
@@ -31,14 +31,10 @@ export class AuthenticationService {
   createAccountFormSuccess$ = this.createAccountFormSuccessSubject.asObservable();
 
   createAccount(user: IUser) {
-    this.httpClient.post<IUser>('/api/auth/local/create-account', user)
+    this.httpClient.post<IUser>('/api/authentication/sign-up', user)
     .subscribe({
       next: (user) => this.createAccountFormSuccessSubject.next(user),
       error: (httpError: HttpErrorResponse) => this.createAccountFormErrorSubject.next(httpError.status)
     });
-  }
-
-  test() {
-    this.httpClient.get('/api/auth/local/hello').subscribe();
   }
 }

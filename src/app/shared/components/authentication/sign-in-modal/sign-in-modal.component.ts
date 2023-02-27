@@ -23,6 +23,13 @@ import { AuthenticationService } from '../authentication.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignInModalComponent implements OnInit, OnDestroy {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private dialogRef: MatDialogRef<SignInModalComponent>,
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private userStateService: UserStateService
+  ) { }
 
   @ViewChild('createAccountEmail') createAccountEmail!: ElementRef;
   @ViewChild('signInEmail') signInEmail!: ElementRef;
@@ -63,14 +70,6 @@ export class SignInModalComponent implements OnInit, OnDestroy {
     password: ['', [Validators.required, PasswordValidator()]],
     confirmPassword: ['', Validators.required],
   }, { validators: MatchPasswordValidator('confirmPassword', 'password')});
-
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private dialogRef: MatDialogRef<SignInModalComponent>,
-    private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private userStateService: UserStateService
-  ) { }
 
   ngOnInit(): void {
     this.initSignForm();
@@ -156,9 +155,5 @@ export class SignInModalComponent implements OnInit, OnDestroy {
         formControlMessages[element] = this.errorMessages[error];
       }
     });
-  }
-
-  test() {
-    this.authenticationService.test();
   }
 }
