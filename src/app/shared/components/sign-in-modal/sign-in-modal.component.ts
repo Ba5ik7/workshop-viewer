@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpStatusCode } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
@@ -8,19 +9,33 @@ import {
   OnDestroy,
   ViewChild
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { Subject, takeUntil } from 'rxjs';
 import { UserStateService } from 'src/app/shared/services/user-state/user-state.service';
 import { MatchPasswordValidator } from 'src/app/shared/validators/match-passwords.validator';
 import { PasswordValidator } from 'src/app/shared/validators/password.validator';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from './authentication.service';
 
 @Component({
+  standalone: true,
   selector: 'sign-in-modal',
   templateUrl: './sign-in-modal.component.html',
   styleUrls: ['./sign-in-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+  ]
 })
 export class SignInModalComponent implements OnInit, OnDestroy {
   constructor(
@@ -138,7 +153,7 @@ export class SignInModalComponent implements OnInit, OnDestroy {
 
   signSuccuessful(whatever: any): void {
     this.requestInProgress();
-    this.userStateService.setUser(whatever);
+    this.userStateService.signedIn.next(true);
     this.dialogRef.close();
   }
 

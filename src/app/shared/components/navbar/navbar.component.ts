@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Section } from '../../interfaces/section.interface';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import { UserStateService } from '../../services/user-state/user-state.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +12,15 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 })
 export class NavbarComponent {
 
-  sections$!: Observable<{ [key: string]: Section }>;
+  sections$ = this.navigationService.sections$;
+  signedIn$ = this.userStateService.signedIn$;
 
-  constructor(navigationService: NavigationService) {
-    this.sections$ = navigationService.sections$;
+  constructor(
+    private navigationService: NavigationService,
+    private userStateService: UserStateService
+  ) { }
+
+  openDialog(): void {
+    this.userStateService.openSignInModal.next(true);
   }
-
 }

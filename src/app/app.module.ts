@@ -8,7 +8,6 @@ import { NavbarModule } from './shared/components/navbar/navbar.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { HighlightOptions, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 import { NGX_EDITORJS_CLIENT_OPTIONS } from '@tmdjr/ngx-editorjs-client';
@@ -16,6 +15,7 @@ import { NgxEditorjsParagraphClientBlockComponent } from '@tmdjr/ngx-editorjs-pa
 import { NgxEditorjsBlockquotesClientBlockComponent } from '@tmdjr/ngx-editorjs-blockquotes-block';
 import { NgxEditorjsImageClientBlockComponent } from '@tmdjr/ngx-editorjs-image-block';
 import { NgxEditorjsCodeClientBlockComponent } from '@tmdjr/ngx-editorjs-code-block';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -26,8 +26,8 @@ import { NgxEditorjsCodeClientBlockComponent } from '@tmdjr/ngx-editorjs-code-bl
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    NavbarModule
+    NavbarModule,
+    MatDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

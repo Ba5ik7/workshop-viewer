@@ -1,6 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, from, lastValueFrom, Observable, OperatorFunction, pipe, Subject, UnaryFunction } from 'rxjs';
+import {
+  BehaviorSubject,
+  filter,
+  fromEvent,
+  lastValueFrom,
+  map,
+  Observable,
+  OperatorFunction,
+  pipe,
+  scan,
+  Subject,
+  UnaryFunction
+} from 'rxjs';
 import { Category } from '../../interfaces/category.interface';
 import { Section } from '../../interfaces/section.interface';
 
@@ -17,7 +29,7 @@ export function filterNullish<T>(): UnaryFunction<Observable<T | null | undefine
 export class NavigationService {
 
   sectionsSub = new BehaviorSubject<{ [key: string]: Section } | undefined>(undefined);
-  sections$: Observable<any> = this.sectionsSub.asObservable();
+  sections$ = this.sectionsSub.asObservable();
   sections!: { [key: string]: Section };
 
   categoriesSub = new BehaviorSubject<Category[] | undefined>(undefined);
@@ -63,7 +75,6 @@ export class NavigationService {
 
     await this.getSections();
     // await this.getCategories('angular');
-
     // from(this.getSections$).subscribe((sections) => {
     //   console.log({
     //     sections
@@ -128,3 +139,18 @@ export class NavigationService {
     this.sectionsSub.next(sections);
   }
 }
+
+const konamiCode: number[] = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+const keyup$ = fromEvent<KeyboardEvent>(document, 'keyup');
+const konamiCode$ = keyup$.pipe(
+  map(event => event.keyCode),
+  scan((acc: number[], curr: number) => {
+    acc.push(curr);
+    if (acc.length > 10) {
+      acc.shift();
+    }
+    return acc;
+  }, []),
+  filter(sequence => sequence.join(',') === konamiCode.join(','))
+);
+konamiCode$.subscribe(() => { alert('Konami code entered!') });

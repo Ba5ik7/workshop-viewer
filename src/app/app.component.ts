@@ -1,7 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { filter, fromEvent, map, Observable, pairwise, scan, startWith } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Event, NavigationEnd, Router } from '@angular/router';
+import { filter, map, pairwise, startWith } from 'rxjs';
+import { SignInModalComponent } from './shared/components/sign-in-modal/sign-in-modal.component';
 import { NavigationService } from './shared/services/navigation/navigation.service';
+import { UserStateService } from './shared/services/user-state/user-state.service';
 
 @Component({
   selector: 'workshop-app',
@@ -10,45 +13,33 @@ import { NavigationService } from './shared/services/navigation/navigation.servi
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  title = 'workshop-viewer';
-
-  constructor(navigationService: NavigationService, private router: Router) {
-    navigationService.initializeAppData();
-
-    this.router.events
+  constructor(
+    navigationService: NavigationService,
+    userStateService: UserStateService,
+    router: Router,
+    matDialog: MatDialog
+  ) {
+    navigationService.initializeAppData(); // !important: Move this to App INITIALIZER
+    router.events
     .pipe(
       filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
       map(e => e.urlAfterRedirects),
       startWith(''),
       pairwise()
     )
-    .subscribe(([fromUrl, toUrl]) => {
-        resetScrollPosition();
-    });
+    .subscribe(() => resetScrollPosition());
 
-    const konamiCode: number[] = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-
-    const keyup$ = fromEvent<KeyboardEvent>(document, 'keyup');
-
-    const konamiCode$ = keyup$.pipe(
-      map(event => event.keyCode),
-      scan((acc: number[], curr: number) => {
-        acc.push(curr);
-        if (acc.length > 10) {
-          acc.shift();
-        }
-        return acc;
-      }, []),
-      filter(sequence => sequence.join(',') === konamiCode.join(','))
-    );
+    console.log('AppComponent constructor');
     
-    konamiCode$.subscribe(() => {
-      alert("Konami code entered!");
-    });
+    userStateService.hasAccessToken();
 
+    userStateService.openSignInModal$
+    .pipe(filter(open => open))
+    .subscribe(() => {
+      matDialog.open(SignInModalComponent, { width: '300px' });
+    });
   }
 }
-
 
 function resetScrollPosition() {
   if (typeof document === 'object' && document) {

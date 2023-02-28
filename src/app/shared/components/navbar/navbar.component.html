@@ -11,10 +11,17 @@
     <span>{{section.value.sectionTitle}}</span>
   </a>
   <div class="flex-spacer"></div>
-  <authentication></authentication>
-  <theme-picker></theme-picker>
 
-  <a mat-button class="docs-button docs-navbar-hide-small"
+  <theme-picker></theme-picker>
+  
+  <ng-container *ngIf="signedIn$ | async; else authentication">
+    <profile-fab></profile-fab>
+  </ng-container>
+  <ng-template #authentication>
+    <a mat-button (click)="openDialog()">Sign In</a>
+  </ng-template>
+
+  <!-- <a mat-button class="docs-button docs-navbar-hide-small"
       href="https://github.com/Ba5ik7/workshop-viewer"
       target="_blank"
       aria-label="GitHub Repository">
@@ -23,7 +30,7 @@
          src="/assets/img/github-circle-white-transparent.svg"
          alt="github">
     GitHub
-  </a>
+  </a> -->
 </nav>
 <nav class="docs-navbar docs-navbar-show-small" aria-label="Section Nav Bar">
   <a mat-button class="docs-navbar-link"
