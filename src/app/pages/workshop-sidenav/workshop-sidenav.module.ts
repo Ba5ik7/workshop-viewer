@@ -7,10 +7,10 @@ import { WorkshopSidenavComponent } from './workshop-sidenav.component';
 import { FooterModule } from 'src/app/shared/components/footer/footer.module';
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { WorkshopMenuModule } from './workshop-menu/workshop-menu.module';
 
 

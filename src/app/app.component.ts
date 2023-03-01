@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { filter, map, pairwise, startWith } from 'rxjs';
 import { SignInModalComponent } from './shared/components/sign-in-modal/sign-in-modal.component';

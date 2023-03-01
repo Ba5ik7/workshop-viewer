@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, filter, map, of, switchMap, tap } from 'rxjs';
 // import { TableOfContentsComponent } from 'src/app/shared/components/table-of-contents/table-of-contents';

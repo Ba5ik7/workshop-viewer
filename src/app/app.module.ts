@@ -15,7 +15,7 @@ import { NgxEditorjsParagraphClientBlockComponent } from '@tmdjr/ngx-editorjs-pa
 import { NgxEditorjsBlockquotesClientBlockComponent } from '@tmdjr/ngx-editorjs-blockquotes-block';
 import { NgxEditorjsImageClientBlockComponent } from '@tmdjr/ngx-editorjs-image-block';
 import { NgxEditorjsCodeClientBlockComponent } from '@tmdjr/ngx-editorjs-code-block';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 
 @NgModule({
   declarations: [

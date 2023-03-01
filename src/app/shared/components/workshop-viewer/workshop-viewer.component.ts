@@ -1,25 +1,26 @@
-import { CdkPortalOutlet, ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
+// import { CdkPortalOutlet, ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
-  ApplicationRef,
+  // ApplicationRef,
   Component,
-  ComponentFactoryResolver,
+  // ComponentFactoryResolver,
   ElementRef,
-  Injector,
+  // Injector,
   Input,
   OnDestroy,
   OnInit,
   SecurityContext,
-  ViewContainerRef, 
-  ViewEncapsulation} from '@angular/core';
+  // ViewContainerRef, 
+  ViewEncapsulation
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgxEditorjsOutputBlock } from '@tmdjr/ngx-editorjs-client';
 import { Subject, takeUntil } from 'rxjs';
-import { Category } from '../../interfaces/category.interface';
+// import { Category } from '../../interfaces/category.interface';
 import { WorkshopDocument } from '../../interfaces/workshop-document.interface';
 import { NavigationService } from '../../services/navigation/navigation.service';
-import { CodeHighlighterComponent } from '../code-highlighter/code-highlighter.component';
-import { LiveExampleComponent } from './live-example/live-example.component';
-import { NextPageComponent } from './next-page/next-page.component';
+// import { CodeHighlighterComponent } from '../code-highlighter/code-highlighter.component';
+// import { LiveExampleComponent } from './live-example/live-example.component';
+// import { NextPageComponent } from './next-page/next-page.component';
 import { WorkshopViewerService } from './workshop-viewer.service';
 
 @Component({
@@ -44,34 +45,34 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
   
   destory: Subject<boolean> = new Subject();
 
-  private static initExampleViewer(exampleViewerComponent: LiveExampleComponent,
-    example: string,
-    file: string | null,
-    region: string | null) {
-    exampleViewerComponent.example = example;
-    if (file) {
-      // if the html div has field `file` then it should be in compact view to show the code
-      // snippet
-      exampleViewerComponent.view = 'snippet';
-      exampleViewerComponent.showCompactToggle = true;
-      exampleViewerComponent.file = file;
-      if (region) {
-        // `region` should only exist when `file` exists but not vice versa
-        // It is valid for embedded example snippets to show the whole file (esp short files)
-        exampleViewerComponent.region = region;
-      }
-    } else {
-      // otherwise it is an embedded demo
-      exampleViewerComponent.view = 'demo';
-    }
+  // private static initExampleViewer(exampleViewerComponent: LiveExampleComponent,
+  //   example: string,
+  //   file: string | null,
+  //   region: string | null) {
+  //   exampleViewerComponent.example = example;
+  //   if (file) {
+  //     // if the html div has field `file` then it should be in compact view to show the code
+  //     // snippet
+  //     exampleViewerComponent.view = 'snippet';
+  //     exampleViewerComponent.showCompactToggle = true;
+  //     exampleViewerComponent.file = file;
+  //     if (region) {
+  //       // `region` should only exist when `file` exists but not vice versa
+  //       // It is valid for embedded example snippets to show the whole file (esp short files)
+  //       exampleViewerComponent.region = region;
+  //     }
+  //   } else {
+  //     // otherwise it is an embedded demo
+  //     exampleViewerComponent.view = 'demo';
+  //   }
 
-  }   
+  // }   
 
   constructor(
-    private appRef: ApplicationRef,
-    private injector: Injector,
-    private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    // private appRef: ApplicationRef,
+    // private injector: Injector,
+    // private viewContainerRef: ViewContainerRef,
+    // private componentFactoryResolver: ComponentFactoryResolver,
     private workshopViewerService: WorkshopViewerService,
     private navigationService: NavigationService,
     private elementRef: ElementRef,
@@ -103,56 +104,56 @@ export class WorkshopViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-  private loadLiveExamples(componentName: string, componentClass: any): void {
-    const exampleElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
-    [...exampleElements].forEach((element: Element) => {
-      const example = element.getAttribute(componentName);
-      const region = element.getAttribute('region');
-      const file = element.getAttribute('file');
-      const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
-      const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
-      const exampleViewer = portalHost.attach(examplePortal);
-      const exampleViewerComponent = exampleViewer.instance as LiveExampleComponent;
-      if (example !== null) {
-        WorkshopViewerComponent.initExampleViewer(exampleViewerComponent, example, file, region);
-      }
-    });
-  }
+  // private loadLiveExamples(componentName: string, componentClass: any): void {
+  //   const exampleElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
+  //   [...exampleElements].forEach((element: Element) => {
+  //     const example = element.getAttribute(componentName);
+  //     const region = element.getAttribute('region');
+  //     const file = element.getAttribute('file');
+  //     const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
+  //     const examplePortal = new ComponentPortal(componentClass, this.viewContainerRef);
+  //     const exampleViewer = portalHost.attach(examplePortal);
+  //     const exampleViewerComponent = exampleViewer.instance as LiveExampleComponent;
+  //     if (example !== null) {
+  //       WorkshopViewerComponent.initExampleViewer(exampleViewerComponent, example, file, region);
+  //     }
+  //   });
+  // }
 
-  private loadCodeHighlighter(componentName: string, componentClass: any): void {
-    const highlightJsElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
-    [...highlightJsElements].forEach((element: Element) => {
-      // const textContent = element.textContent;
-      const code = element.getAttribute('code');
-      const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
-      const highlightJsPortal = new ComponentPortal(componentClass, this.viewContainerRef);
-      const highlightJsViewer = portalHost.attach(highlightJsPortal);
-      const highlightJsComponent = highlightJsViewer.instance as CodeHighlighterComponent;
-      highlightJsComponent.code = code ?? '';      
-    });
-  }
+  // private loadCodeHighlighter(componentName: string, componentClass: any): void {
+  //   const highlightJsElements = this.elementRef.nativeElement.querySelectorAll(`[${componentName}]`);
+  //   [...highlightJsElements].forEach((element: Element) => {
+  //     // const textContent = element.textContent;
+  //     const code = element.getAttribute('code');
+  //     const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
+  //     const highlightJsPortal = new ComponentPortal(componentClass, this.viewContainerRef);
+  //     const highlightJsViewer = portalHost.attach(highlightJsPortal);
+  //     const highlightJsComponent = highlightJsViewer.instance as CodeHighlighterComponent;
+  //     highlightJsComponent.code = code ?? '';      
+  //   });
+  // }
 
-  private loadNextPage() {
-    const nextPageElements = this.elementRef.nativeElement.querySelectorAll('next-page');
-    [...nextPageElements].forEach((element: Element) => {
-      const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
-      const nextPagePortal = new ComponentPortal(NextPageComponent, this.viewContainerRef);
-      const nextPageViewer = portalHost.attach(nextPagePortal);
+  // private loadNextPage() {
+  //   const nextPageElements = this.elementRef.nativeElement.querySelectorAll('next-page');
+  //   [...nextPageElements].forEach((element: Element) => {
+  //     const portalHost = new DomPortalOutlet(element, this.componentFactoryResolver, this.appRef, this.injector);
+  //     const nextPagePortal = new ComponentPortal(NextPageComponent, this.viewContainerRef);
+  //     const nextPageViewer = portalHost.attach(nextPagePortal);
 
-      const nextPageComponent = nextPageViewer.instance as NextPageComponent;
-      nextPageComponent.title = element.getAttribute('title') ?? 'Missing Title';
-      nextPageComponent.icon =  element.getAttribute('icon') ?? '';
-      nextPageComponent.clickEvent = element.getAttribute('click-event') ?? '';
-      nextPageComponent.nextClick
-      .pipe(takeUntil(this.destory))
-      .subscribe((event => {
-        // TODO setup real pagnation
-        console.log(event);
-        console.log('62aa78b1e0c43119ba4c2acc');
-        // this.workshopDocuments = ['62aa78b1e0c43119ba4c2acc'];
-      }))
-    });
-  }
+  //     const nextPageComponent = nextPageViewer.instance as NextPageComponent;
+  //     nextPageComponent.title = element.getAttribute('title') ?? 'Missing Title';
+  //     nextPageComponent.icon =  element.getAttribute('icon') ?? '';
+  //     nextPageComponent.clickEvent = element.getAttribute('click-event') ?? '';
+  //     nextPageComponent.nextClick
+  //     .pipe(takeUntil(this.destory))
+  //     .subscribe((event => {
+  //       // TODO setup real pagnation
+  //       console.log(event);
+  //       console.log('62aa78b1e0c43119ba4c2acc');
+  //       // this.workshopDocuments = ['62aa78b1e0c43119ba4c2acc'];
+  //     }))
+  //   });
+  // }
 
   ngOnDestroy(): void {
     this.destory.next(true);
