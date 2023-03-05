@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-account',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent {
-
+  @HostBinding('class.main-content') readonly mainContentClass = true;
 }
