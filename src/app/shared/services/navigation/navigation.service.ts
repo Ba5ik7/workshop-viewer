@@ -23,6 +23,11 @@ export function filterNullish<T>(): UnaryFunction<Observable<T | null | undefine
   );
 }
 
+const sectionSelectedHeaderMap: Map<string, { headerSvgPath: string, sectionTitle: string }> = new Map([
+  ['dashboard', { headerSvgPath: '/assets/img/dashboard-color.png', sectionTitle: 'Dashboard' }],
+  ['chat', { headerSvgPath: '/assets/img/users-color.png', sectionTitle: 'Chat' }],
+]);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -109,13 +114,19 @@ export class NavigationService {
   }
 
   private async setSectionProperties(section: string): Promise<void> {
-    await this.getCategories(section);
-    
-    this.sectionRoute = section;
-    this.sectionSub.next(this.sections[section]);  
-    this.sectionTitleSub.next(this.sections[section].sectionTitle);
-    this.headerSvgPathSub.next(this.sections[section].headerSvgPath);
-    this.sectionNavListSub.next(this.categories);
+    const staticSection = sectionSelectedHeaderMap.get(section);
+    if(staticSection) {
+      this.sectionTitleSub.next(staticSection?.sectionTitle);
+      this.headerSvgPathSub.next(staticSection?.headerSvgPath);
+      this.categoryTitleSub.next('Overview');
+    } else {
+      await this.getCategories(section);
+      this.sectionRoute = section;
+      this.sectionSub.next(this.sections[section]);  
+      this.sectionTitleSub.next(this.sections[section].sectionTitle);
+      this.headerSvgPathSub.next(this.sections[section].headerSvgPath);
+      this.sectionNavListSub.next(this.categories);
+    }
   }
 
   private setCategoryProperties(category: string): void {
