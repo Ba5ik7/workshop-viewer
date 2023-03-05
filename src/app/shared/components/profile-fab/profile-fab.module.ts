@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileFabComponent } from './profile-fab.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -9,7 +12,10 @@ import { ProfileFabComponent } from './profile-fab.component';
     ProfileFabComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule
   ],
   exports: [
     ProfileFabComponent
