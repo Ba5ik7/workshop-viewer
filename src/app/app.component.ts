@@ -29,8 +29,7 @@ export class AppComponent {
     )
     .subscribe(() => resetScrollPosition());
 
-    // todo: move this to a service
-    userStateService.isUserLoggedIn();
+    userStateService.isUserLoggedIn().subscribe(); // !important: Move this to App INITIALIZER
 
     userStateService.openSignInModal$
     .pipe(filter(open => open))

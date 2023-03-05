@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { UserStateService } from '../../services/user-state/user-state.service';
+import { AuthenticationService } from '../sign-in-modal/authentication.service';
 
 @Component({
   selector: 'profile-fab',
@@ -24,7 +26,10 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@
   encapsulation: ViewEncapsulation.None,
 })
 export class ProfileFabComponent {
+
+  constructor(private userStateService: UserStateService) { }
+
   signOut(): void {
-    console.log('sign out');
+    this.userStateService.signOut();
   }
 }

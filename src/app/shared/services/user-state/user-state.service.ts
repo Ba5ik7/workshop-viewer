@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, of, tap } from 'rxjs';
 import { IUserMetadata } from '../../interfaces/user-metadata.interface';
 
 @Injectable({
@@ -21,10 +21,19 @@ export class UserStateService {
 
   // is the user logged in?
   isUserLoggedIn() {
-    this.httpClient.get<boolean>('/api/authentication/is-user-logged-in')
-    .subscribe({
-      next: () => this.signedIn.next(true),
-      error: () => this.signedIn.next(false)
-    });
+    return this.httpClient.get<boolean>('/api/authentication/is-user-logged-in')
+    .pipe(
+      tap(() => this.signedIn.next(true)),
+      catchError(() => {
+        this.signedIn.next(false)
+        return of(false)
+      })
+    );
+  }
+
+  signOut() {
+    this.httpClient.get('/api/authentication/sign-out')
+    .pipe(tap(() => this.signedIn.next(false)))
+    .subscribe();
   }
 }
