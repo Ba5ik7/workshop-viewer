@@ -29,9 +29,8 @@ export class AppComponent {
     )
     .subscribe(() => resetScrollPosition());
 
-    console.log('AppComponent constructor');
-    
-    userStateService.hasAccessToken();
+    // todo: move this to a service
+    userStateService.isUserLoggedIn();
 
     userStateService.openSignInModal$
     .pipe(filter(open => open))
