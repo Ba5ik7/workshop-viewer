@@ -10,14 +10,14 @@
     <img class="workshop-logo" [src]="section.value.menuSvgPath">
     <span>{{section.value.sectionTitle}}</span>
   </a>
-  <div class="flex-spacer"></div>
 
-  <theme-picker></theme-picker>
+  <div class="flex-spacer"></div>
   
   <ng-container *ngIf="signedIn$ | async; else authentication">
     <profile-fab></profile-fab>
   </ng-container>
   <ng-template #authentication>
+    <theme-picker></theme-picker>
     <a mat-button (click)="openDialog()">Sign In</a>
   </ng-template>
 
