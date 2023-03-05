@@ -1,6 +1,12 @@
-import { NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
-
+import { Injectable, NgModule } from '@angular/core';
+import { 
+  ActivatedRouteSnapshot, 
+  DetachedRouteHandle, 
+  RouteReuseStrategy, 
+  RouterModule,
+  Routes
+} from '@angular/router';
+@Injectable()
 export class WorkshopReuseStrategy extends RouteReuseStrategy {
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null { return null; }
   shouldAttach(route: ActivatedRouteSnapshot): boolean { return false; }
