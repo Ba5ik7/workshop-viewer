@@ -4,6 +4,7 @@ import { ProfileFabComponent } from './profile-fab.component';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -13,6 +14,7 @@ import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-m
   ],
   imports: [
     CommonModule,
+    RouterModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule

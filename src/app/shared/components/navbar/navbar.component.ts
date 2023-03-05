@@ -1,6 +1,4 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Section } from '../../interfaces/section.interface';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { UserStateService } from '../../services/user-state/user-state.service';
 
