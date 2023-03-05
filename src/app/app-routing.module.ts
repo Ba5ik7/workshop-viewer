@@ -41,6 +41,7 @@ const routes: Routes = [
     path: ':section',
     loadChildren: () => import('./pages/workshop-sidenav/workshop-sidenav.module').then(m => m.WorkshopSidenavModule)
   },
+  { path: 'account', loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule) },
   { path: '**', redirectTo: '/404' },
 ];
 
