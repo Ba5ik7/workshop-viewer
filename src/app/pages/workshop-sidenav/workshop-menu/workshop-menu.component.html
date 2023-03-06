@@ -11,7 +11,7 @@
       </a>
       <mat-divider></mat-divider>
       <a mat-list-item *ngFor="let category of categories"
-          [routerLink]="'/' + section + '/' + category.id"
+          [routerLink]="category.id"
           routerLinkActive="workshop-menu-nav-item-selected">
         {{category.name}}
       </a>
